@@ -178,13 +178,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 defaultValue: 320,
               ).value,
               child: BlurContainer(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
+                      child: Text(
                         "Let's get started",
                         style: GoogleFonts.inter(
                           fontSize: 40,
@@ -194,8 +194,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 10),
-                      Text(
+                    ),
+                    const SizedBox(height: 10),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
+                      child: Text(
                         "Bring your personal email, connect your work later",
                         style: GoogleFonts.inter(
                           fontSize: 16,
@@ -204,8 +207,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 30),
-                      ElevatedButton(
+                    ),
+                    const SizedBox(height: 30),
+                    SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
                         onPressed: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -213,6 +219,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             const FaIcon(
                               FontAwesomeIcons.google,
                               color: Colors.black,
+                              size: 20,
                             ),
                             const SizedBox(width: 10),
                             Flexible(
@@ -221,13 +228,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 style: GoogleFonts.inter(
                                   color: Colors.black,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      ElevatedButton(
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
+                        clipBehavior: Clip.none,
                         onPressed: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -235,6 +247,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             const FaIcon(
                               FontAwesomeIcons.facebook,
                               color: Colors.black,
+                              size: 20,
                             ),
                             const SizedBox(width: 10),
                             Flexible(
@@ -243,35 +256,46 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 style: GoogleFonts.inter(
                                   color: Colors.black,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(height: 15),
-                      ElevatedButton(
+                    ),
+                    const SizedBox(height: 15),
+                    SizedBox(
+                      width: 250,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: WidgetStatePropertyAll(
+                            Colors.white.withOpacity(0.4),
+                          ),
+                        ),
                         onPressed: () {},
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
                               Icons.mail,
-                              color: Colors.black,
+                              color: Colors.white,
+                              size: 20,
                             ),
                             const SizedBox(width: 10),
                             Flexible(
                               child: Text(
                                 "Continue with email",
                                 style: GoogleFonts.inter(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                 ),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
