@@ -2,10 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stellarlist/injections/injections.dart';
+import 'package:stellarlist/services/google_auth_service/google_env.dart';
 import 'package:stellarlist/services/shared_preferences/shared_prefer.dart';
 
 class GoogleAuthService {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    clientId: GoogleEnv.id,
+  );
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 

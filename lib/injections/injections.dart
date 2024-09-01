@@ -12,6 +12,8 @@ abstract class Injections {
       () => SharedPref(),
     );
 
+    await getIt<SharedPref>().initPref();
+
     getIt.registerLazySingleton<GoogleAuthService>(
       () => GoogleAuthService(),
     );
