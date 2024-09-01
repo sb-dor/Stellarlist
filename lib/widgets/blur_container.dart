@@ -15,8 +15,8 @@ class BlurContainer extends StatelessWidget {
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(
-          sigmaX: 100,
-          sigmaY: 100,
+          sigmaX: 200,
+          sigmaY: 200,
           tileMode: TileMode.mirror,
         ),
         child: child,

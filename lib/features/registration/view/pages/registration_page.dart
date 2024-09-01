@@ -1,7 +1,11 @@
 import 'package:auto_route/annotations.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:stellarlist/features/registration/data/models/registration_introduction_model.dart';
 import 'package:stellarlist/widgets/blur_container.dart';
 
 @RoutePage()
@@ -13,6 +17,20 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  late final CarouselSliderController _carouselSliderController;
+  double _currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _carouselSliderController = CarouselSliderController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +49,31 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 55),
+                    if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.480,
+                        height: 55,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SmoothIndicator(
+                              offset: _currentPage,
+                              onDotClicked: (index) => setState(() {
+                                _currentPage = index.toDouble();
+                              }),
+                              size: Size(100, 0),
+                              count: RegistrationIntroductionModel.data.length,
+                              effect: ExpandingDotsEffect(
+                                expansionFactor: 2,
+                                dotColor: Colors.grey.shade900,
+                                activeDotColor: Colors.white,
+                                dotHeight: 8,
+                                dotWidth: 50,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     Expanded(
                       child: SizedBox(
                         width: ResponsiveValue<double?>(
@@ -45,7 +87,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           defaultValue: double.infinity,
                         ).value,
                         child: CarouselSlider.builder(
-                          itemCount: 15,
+                          carouselController: _carouselSliderController,
+                          itemCount: RegistrationIntroductionModel.data.length,
                           options: CarouselOptions(
                             height: ResponsiveValue<double?>(
                               context,
@@ -58,17 +101,53 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               defaultValue: null,
                             ).value,
                             viewportFraction: 0.640,
-                            autoPlay: true,
                             autoPlayInterval: const Duration(seconds: 4),
                             padEnds: false,
+                            onPageChanged: (i, reason) {
+                              _currentPage = i.toDouble();
+                              setState(() {});
+                            },
+                            onScrolled: (i) {
+                              // _currentPage = i ?? 0;
+                              // setState(() {});
+                            },
+                            autoPlay: ResponsiveValue(
+                              context,
+                              conditionalValues: [
+                                const Condition.equals(name: MOBILE, value: false),
+                              ],
+                              defaultValue: true,
+                            ).value,
                             // enlargeCenterPage: true,
                           ),
                           itemBuilder: (context, index, index2) {
+                            final data = RegistrationIntroductionModel.data[index];
                             return Container(
                               margin: const EdgeInsets.only(right: 20, left: 20),
                               decoration: BoxDecoration(
-                                color: Colors.blue,
+                                color: data.color,
                                 borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 50),
+                                    SizedBox(
+                                      width: 300,
+                                      child: Text(
+                                        data.title,
+                                        style: GoogleFonts.inter(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                          height: 1.2,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             );
                           },
@@ -98,33 +177,99 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ],
                 defaultValue: 320,
               ).value,
-              child: const BlurContainer(
+              child: BlurContainer(
                 child: Padding(
-                  padding: EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
+                  padding: const EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Let's get started",
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                           fontSize: 40,
                           color: Colors.white,
                           height: 1,
+                          fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         "Bring your personal email, connect your work later",
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                           fontSize: 16,
                           color: Colors.white54,
                           height: 1.3,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.google,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                "Continue with Google",
+                                style: GoogleFonts.inter(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FaIcon(
+                              FontAwesomeIcons.facebook,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                "Continue with Facebook",
+                                style: GoogleFonts.inter(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.mail,
+                              color: Colors.black,
+                            ),
+                            SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                "Continue with email",
+                                style: GoogleFonts.inter(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
