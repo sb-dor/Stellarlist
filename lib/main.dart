@@ -29,6 +29,7 @@ class _StellarListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      title: "Stellarlist", // for web title on the top of section
       debugShowCheckedModeBanner: kDebugMode,
       builder: (context, child) {
         return ResponsiveBreakpoints.builder(

@@ -41,6 +41,7 @@ dependencies:
   auto_route: 9.2.0
   drift: ^2.19.1+1
   url_strategy: ^0.3.0
+  carousel_slider: ^5.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,8 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 
 @RoutePage()
 class AuthCheckPage extends StatefulWidget {
@@ -14,7 +16,11 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
   @override
   void initState() {
     super.initState();
-    // check auth logic
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        AutoRouter.of(context).push(const RegistrationRoute());
+      }
+    });
   }
 
   @override
