@@ -51,7 +51,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   children: [
                     if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
                       SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.480,
+                        width: MediaQuery.of(context).size.width * 0.38,
                         height: 55,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -61,13 +61,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               onDotClicked: (index) => setState(() {
                                 _currentPage = index.toDouble();
                               }),
-                              size: Size(100, 0),
+                              size: const Size(100, 0),
                               count: RegistrationIntroductionModel.data.length,
                               effect: ExpandingDotsEffect(
-                                expansionFactor: 2,
+                                expansionFactor: 4,
                                 dotColor: Colors.grey.shade900,
                                 activeDotColor: Colors.white,
-                                dotHeight: 8,
+                                dotHeight: 3,
                                 dotWidth: 50,
                               ),
                             ),
@@ -101,15 +101,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               defaultValue: null,
                             ).value,
                             viewportFraction: 0.640,
-                            autoPlayInterval: const Duration(seconds: 4),
+                            autoPlayInterval: const Duration(seconds: 6),
                             padEnds: false,
-                            onPageChanged: (i, reason) {
-                              _currentPage = i.toDouble();
-                              setState(() {});
-                            },
+
                             onScrolled: (i) {
-                              // _currentPage = i ?? 0;
-                              // setState(() {});
+                              if (i != null) {
+                                _currentPage = i % RegistrationIntroductionModel.data.length;
+                                debugPrint("scrolling $i");
+                                setState(() {});
+                              }
                             },
                             autoPlay: ResponsiveValue(
                               context,
@@ -132,7 +132,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                                 width: double.infinity,
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 50),
+                                    const SizedBox(height: 50),
                                     SizedBox(
                                       width: 300,
                                       child: Text(
@@ -210,11 +210,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.google,
                               color: Colors.black,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Flexible(
                               child: Text(
                                 "Continue with Google",
@@ -232,11 +232,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            FaIcon(
+                            const FaIcon(
                               FontAwesomeIcons.facebook,
                               color: Colors.black,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Flexible(
                               child: Text(
                                 "Continue with Facebook",
@@ -254,11 +254,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.mail,
                               color: Colors.black,
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             Flexible(
                               child: Text(
                                 "Continue with email",
