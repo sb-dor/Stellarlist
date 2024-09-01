@@ -1,5 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stellarlist/core/domain/entities/user_entity.dart';
+import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
+import 'package:stellarlist/features/registration/domain/usecases/registration_usecase.dart';
 
 part 'registration_provider.g.dart';
 
@@ -8,5 +10,9 @@ class RegistrationProvider extends _$RegistrationProvider {
   @override
   Future<UserEntity?> build() async {
     return null;
+  }
+
+  Future<void> googleAuth(RegistrationRepo repo) async {
+    await RegistrationUseCase(repo).google();
   }
 }

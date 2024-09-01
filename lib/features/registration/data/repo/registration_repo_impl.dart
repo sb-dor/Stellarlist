@@ -1,7 +1,12 @@
 import 'package:stellarlist/core/domain/entities/user_entity.dart';
+import 'package:stellarlist/features/registration/data/source/registration_source.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 
 class RegistrationRepoImpl implements RegistrationRepo {
+  final RegistrationSource _registrationSource;
+
+  RegistrationRepoImpl(this._registrationSource);
+
   @override
   Future<UserEntity?> email() {
     // TODO: implement email
@@ -15,8 +20,5 @@ class RegistrationRepoImpl implements RegistrationRepo {
   }
 
   @override
-  Future<UserEntity?> google() {
-    // TODO: implement google
-    throw UnimplementedError();
-  }
+  Future<UserEntity?> google() => _registrationSource.google();
 }

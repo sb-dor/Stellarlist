@@ -6,17 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stellarlist/features/registration/data/models/registration_introduction_model.dart';
+import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
+import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
+import 'package:stellarlist/injections/injections.dart';
 import 'package:stellarlist/widgets/blur_container.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @RoutePage()
-class RegistrationPage extends StatefulWidget {
+class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
 
   @override
-  State<RegistrationPage> createState() => _RegistrationPageState();
+  ConsumerState createState() => _RegistrationPageState();
 }
 
-class _RegistrationPageState extends State<RegistrationPage> {
+class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   late final CarouselSliderController _carouselSliderController;
   double _currentPage = 0;
 
@@ -107,7 +111,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             onScrolled: (i) {
                               if (i != null) {
                                 _currentPage = i % RegistrationIntroductionModel.data.length;
-                                debugPrint("scrolling $i");
                                 setState(() {});
                               }
                             },
@@ -212,7 +215,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     SizedBox(
                       width: 250,
                       child: ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await ref.read(registrationProviderProvider.notifier).googleAuth(
+                                getIt<RegistrationRepo>(),
+                              );
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
