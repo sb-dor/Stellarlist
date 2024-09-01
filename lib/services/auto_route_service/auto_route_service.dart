@@ -10,11 +10,16 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: AuthCheckRoute.page,
           path: '/auth-check',
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(
           page: RegistrationRoute.page,
           path: '/registration',
         ),
+        AutoRoute(
+          page: ResponsiveFrameworkTestUi.page,
+          path: '/test-responsive-ui',
+          initial: true,
+        )
       ];
 }

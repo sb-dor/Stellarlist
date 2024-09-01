@@ -39,6 +39,12 @@ class _StellarListApp extends StatelessWidget {
             const Breakpoint(start: 801, end: 1920, name: DESKTOP),
             const Breakpoint(start: 1921, end: double.infinity, name: "4k"),
           ],
+          breakpointsLandscape: [
+            const Breakpoint(start: 0, end: 600, name: MOBILE),
+            const Breakpoint(start: 601, end: 1024, name: TABLET),
+            const Breakpoint(start: 1025, end: 2560, name: DESKTOP),
+            const Breakpoint(start: 2561, end: double.infinity, name: "4k"),
+          ],
         );
       },
       routerConfig: _appRouter.config(),
