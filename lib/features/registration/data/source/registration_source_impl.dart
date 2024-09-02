@@ -20,7 +20,8 @@ class RegistrationSourceImpl implements RegistrationSource {
 
   @override
   Future<UserModel?> google() async {
-    await _googleAuthService.signInWithGoogle();
-    return null;
+    final user = await _googleAuthService.signInWithGoogle();
+    if (user == null) return null;
+    return UserModel.fromGoogleSignInAccount(user);
   }
 }

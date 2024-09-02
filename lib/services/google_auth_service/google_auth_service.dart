@@ -14,15 +14,17 @@ class GoogleAuthService {
 
   final SharedPref _sharedPref = getIt<SharedPref>();
 
-  Future<void> signInWithGoogle() async {
+  Future<GoogleSignInAccount?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       // If the user cancels the sign-in process, return
-      if (googleUser == null) return;
+      if (googleUser == null) return null;
 
       // Get Google authentication object
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      debugPrint("google auth: ${googleUser}");
 
       // Save access token to shared preferences
       if (googleAuth.accessToken != null) {
@@ -48,9 +50,12 @@ class GoogleAuthService {
 
       // Sign in to Firebase with the new credential
       await _firebaseAuth.signInWithCredential(googleAuthCredential);
+
+      return googleUser;
     } catch (e) {
       // Print any errors that occur
       debugPrint("error is $e");
+      return null;
     }
   }
 }

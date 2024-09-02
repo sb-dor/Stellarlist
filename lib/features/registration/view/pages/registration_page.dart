@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,13 +22,11 @@ class RegistrationPage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
-  late final CarouselSliderController _carouselSliderController;
   double _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
-    _carouselSliderController = CarouselSliderController();
   }
 
   @override
@@ -37,6 +36,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final registerWatch = ref.watch(registrationProviderProvider);
     return Scaffold(
       backgroundColor: Colors.black,
       body: SizedBox(
@@ -91,7 +91,6 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                           defaultValue: double.infinity,
                         ).value,
                         child: CarouselSlider.builder(
-                          carouselController: _carouselSliderController,
                           itemCount: RegistrationIntroductionModel.data.length,
                           options: CarouselOptions(
                             height: ResponsiveValue<double?>(
@@ -219,6 +218,9 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                           await ref.read(registrationProviderProvider.notifier).googleAuth(
                                 getIt<RegistrationRepo>(),
                               );
+                          if (registerWatch.value != null && context.mounted) {
+                            // AutoRouter.of(context).replaceAll(routes);
+                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -291,7 +293,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                             const SizedBox(width: 10),
                             Flexible(
                               child: Text(
-                                "Continue with email",
+                                "Continue with email: ${registerWatch.value?.name}",
                                 style: GoogleFonts.inter(
                                   color: Colors.white,
                                 ),

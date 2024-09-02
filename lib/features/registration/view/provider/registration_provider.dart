@@ -13,6 +13,7 @@ class RegistrationProvider extends _$RegistrationProvider {
   }
 
   Future<void> googleAuth(RegistrationRepo repo) async {
-    await RegistrationUseCase(repo).google();
+    final result = await RegistrationUseCase(repo).google();
+    state = AsyncData<UserEntity?>(result);
   }
 }
