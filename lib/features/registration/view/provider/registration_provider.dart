@@ -13,10 +13,10 @@ class RegistrationProvider extends _$RegistrationProvider {
     return RegistrationStateModel();
   }
 
-  void changeStateToEmailRegistration() {
+  void changeStateToEmailRegistration(LetsGetStartedState getStartedState) {
     state = AsyncData(
       state.value?.clone(
-        letsGetStartedState: LetsGetStartedState.showEmailRegistration,
+        letsGetStartedState: getStartedState,
       ),
     );
   }

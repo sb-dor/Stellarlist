@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
+import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
 import 'package:stellarlist/injections/injections.dart';
 
 class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
@@ -18,6 +19,8 @@ class _LetsGetStartedRegistrationWidgetState
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 100 / 2.85, right: 100 / 2.85),
@@ -114,7 +117,9 @@ class _LetsGetStartedRegistrationWidgetState
               ),
             ),
             onPressed: () {
-              ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration();
+              ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration(
+                    LetsGetStartedState.showEmailRegistration,
+                  );
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

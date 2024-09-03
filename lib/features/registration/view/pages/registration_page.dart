@@ -17,6 +17,7 @@ import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.da
 import 'package:stellarlist/widgets/blur_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'widgets/email_registration_widget.dart';
 import 'widgets/lets_get_started_registration_widget.dart';
 import 'widgets/registration_carousel_slider_widget.dart';
 
@@ -81,23 +82,28 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                 defaultValue: 320,
               ).value,
               child: BlurContainer(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: Stack(
                   children: [
-                    AnimatedVisibility(
-                      visible: registerWatch.value?.letsGetStartedState ==
-                          LetsGetStartedState.showRegistrationButtons,
-                      enter: slideIn(initialOffset: Offset.zero),
-                      exit: slideOut(targetOffset: const Offset(0, 0.5)) + fadeOut(),
-                      child: const LetsGetStartedRegistrationWidget(),
+                    Positioned(
+                      bottom: 0,
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(seconds: 1),
+
+                        child: LetsGetStartedRegistrationWidget(),
+                      ),
                     ),
-                    AnimatedVisibility(
-                      visible: registerWatch.value?.letsGetStartedState ==
-                          LetsGetStartedState.showEmailRegistration,
-                      enter: slideIn(initialOffset: const Offset(0, 0.5)),
-                      exit: slideOut(targetOffset: Offset.zero) + fadeOut(),
-                      child: const LetsGetStartedRegistrationWidget(),
+                    Positioned(
+                      bottom: 0,
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(seconds: 1),
+                        child: const EmailRegistrationWidget(),
+                      ),
                     ),
                   ],
                 ),
