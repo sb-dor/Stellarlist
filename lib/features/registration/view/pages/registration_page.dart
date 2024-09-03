@@ -10,6 +10,7 @@ import 'package:stellarlist/features/registration/data/models/registration_intro
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/injections/injections.dart';
+import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 import 'package:stellarlist/widgets/blur_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -23,14 +24,24 @@ class RegistrationPage extends ConsumerStatefulWidget {
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   double _currentPage = 0;
+  late ProviderSubscription _providerSubscription;
 
   @override
   void initState() {
     super.initState();
+    ref.listenManual(registrationProviderProvider, (prev, next) {
+      if (next.value != null && context.mounted) {
+        AutoRouter.of(context).pushAndPopUntil(
+          const HomeRoute(),
+          predicate: (_) => true,
+        );
+      }
+    });
   }
 
   @override
   void dispose() {
+    _providerSubscription.close();
     super.dispose();
   }
 
@@ -218,9 +229,6 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                           await ref.read(registrationProviderProvider.notifier).googleAuth(
                                 getIt<RegistrationRepo>(),
                               );
-                          if (registerWatch.value != null && context.mounted) {
-                            // AutoRouter.of(context).replaceAll(routes);
-                          }
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -293,7 +301,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                             const SizedBox(width: 10),
                             Flexible(
                               child: Text(
-                                "Continue with email: ${registerWatch.value?.name}",
+                                "Continue with email",
                                 style: GoogleFonts.inter(
                                   color: Colors.white,
                                 ),
