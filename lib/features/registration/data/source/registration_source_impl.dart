@@ -1,4 +1,4 @@
-import 'package:stellarlist/core/data/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stellarlist/features/registration/data/source/registration_source.dart';
 import 'package:stellarlist/injections/injections.dart';
 import 'package:stellarlist/services/google_auth_service/google_auth_service.dart';
@@ -7,21 +7,19 @@ class RegistrationSourceImpl implements RegistrationSource {
   final GoogleAuthService _googleAuthService = getIt<GoogleAuthService>();
 
   @override
-  Future<UserModel?> email() {
+  Future<User?> email() {
     // TODO: implement facebook
     throw UnimplementedError();
   }
 
   @override
-  Future<UserModel?> facebook() {
+  Future<User?> facebook() {
     // TODO: implement facebook
     throw UnimplementedError();
   }
 
   @override
-  Future<UserModel?> google() async {
-    final user = await _googleAuthService.signInWithGoogle();
-    if (user == null) return null;
-    return UserModel.fromGoogleSignInAccount(user);
+  Future<User?> google() async {
+    return await _googleAuthService.signInWithGoogle();
   }
 }

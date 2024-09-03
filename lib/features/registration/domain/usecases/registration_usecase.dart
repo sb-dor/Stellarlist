@@ -1,4 +1,4 @@
-import 'package:stellarlist/core/domain/entities/user_entity.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 
 class RegistrationUseCase {
@@ -6,9 +6,9 @@ class RegistrationUseCase {
 
   RegistrationUseCase(this._registrationRepo);
 
-  Future<UserEntity?> google() => _registrationRepo.google();
+  Future<User?> google() => _registrationRepo.google();
 
-  Future<UserEntity?> facebook() => _registrationRepo.facebook();
+  Future<User?> facebook() => _registrationRepo.facebook();
 
-  Future<UserEntity?> email() => _registrationRepo.email();
+  Future<User?> email() => _registrationRepo.email();
 }

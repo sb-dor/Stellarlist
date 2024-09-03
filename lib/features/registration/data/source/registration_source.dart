@@ -1,9 +1,9 @@
-import 'package:stellarlist/core/data/models/user_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class RegistrationSource {
-  Future<UserModel?> google();
+  Future<User?> google();
 
-  Future<UserModel?> facebook();
+  Future<User?> facebook();
 
-  Future<UserModel?> email();
+  Future<User?> email();
 }

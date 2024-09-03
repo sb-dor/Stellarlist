@@ -7,12 +7,12 @@ part of 'registration_provider.dart';
 // **************************************************************************
 
 String _$registrationProviderHash() =>
-    r'224e7828dd069a9b45fb1ed46b52dc1dd2e6d817';
+    r'82b053d2c3b473511f8279c14fa8dd7e51e15e6f';
 
 /// See also [RegistrationProvider].
 @ProviderFor(RegistrationProvider)
-final registrationProviderProvider =
-    AsyncNotifierProvider<RegistrationProvider, UserEntity?>.internal(
+final registrationProviderProvider = AsyncNotifierProvider<RegistrationProvider,
+    RegistrationStateModel?>.internal(
   RegistrationProvider.new,
   name: r'registrationProviderProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,6 +22,6 @@ final registrationProviderProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$RegistrationProvider = AsyncNotifier<UserEntity?>;
+typedef _$RegistrationProvider = AsyncNotifier<RegistrationStateModel?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

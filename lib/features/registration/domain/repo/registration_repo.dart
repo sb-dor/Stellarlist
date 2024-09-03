@@ -1,9 +1,9 @@
-import 'package:stellarlist/core/domain/entities/user_entity.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract interface class RegistrationRepo {
-  Future<UserEntity?> google();
+  Future<User?> google();
 
-  Future<UserEntity?> facebook();
+  Future<User?> facebook();
 
-  Future<UserEntity?> email();
+  Future<User?> email();
 }

@@ -14,7 +14,8 @@ class GoogleAuthService {
 
   final SharedPref _sharedPref = getIt<SharedPref>();
 
-  Future<GoogleSignInAccount?> signInWithGoogle() async {
+  // user if from firebase user
+  Future<User?> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
@@ -51,7 +52,11 @@ class GoogleAuthService {
       // Sign in to Firebase with the new credential
       await _firebaseAuth.signInWithCredential(googleAuthCredential);
 
-      return googleUser;
+      final data =  _firebaseAuth.currentUser;
+
+      debugPrint("user unique id: ${data?.uid}");
+
+      return data;
     } catch (e) {
       // Print any errors that occur
       debugPrint("error is $e");
