@@ -10,6 +10,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:stellarlist/features/registration/data/models/registration_introduction_model.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
+import 'package:stellarlist/features/registration/view/pages/animations/slide_and_fade_animation.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
 import 'package:stellarlist/injections/injections.dart';
@@ -89,9 +90,9 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(seconds: 1),
-
+                      child: SlideAndFadeAnimation(
+                        animate: registerWatch.value?.letsGetStartedState !=
+                            LetsGetStartedState.showRegistrationButtons,
                         child: LetsGetStartedRegistrationWidget(),
                       ),
                     ),
@@ -100,10 +101,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: AnimatedSwitcher(
-                        duration: const Duration(seconds: 1),
-                        child: const EmailRegistrationWidget(),
-                      ),
+                      child: const EmailRegistrationWidget(),
                     ),
                   ],
                 ),
