@@ -7,7 +7,7 @@ class SlideAndFadeAnimation extends StatefulWidget {
   const SlideAndFadeAnimation({
     super.key,
     required this.child,
-    this.animate = true,
+    this.animate = false,
   });
 
   @override
@@ -59,6 +59,7 @@ class _SlideAndFadeAnimationState extends State<SlideAndFadeAnimation>
       ),
     );
 
+    debugPrint("data: ${widget.animate}");
     if (widget.animate) {
       _slideAnimationController.forward();
       _fadeAnimationController.forward();

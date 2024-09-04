@@ -9,20 +9,18 @@ part 'registration_provider.g.dart';
 @Riverpod(keepAlive: true)
 class RegistrationProvider extends _$RegistrationProvider {
   @override
-  Future<RegistrationStateModel?> build() async {
+  RegistrationStateModel? build() {
     return RegistrationStateModel();
   }
 
   void changeStateToEmailRegistration(LetsGetStartedState getStartedState) {
-    state = AsyncData(
-      state.value?.clone(
-        letsGetStartedState: getStartedState,
-      ),
+    state = state?.clone(
+      letsGetStartedState: getStartedState,
     );
   }
 
   Future<void> googleAuth(RegistrationRepo repo) async {
     final user = await RegistrationUseCase(repo).google();
-    state = AsyncData(state.value?.clone(user: user));
+    state = state?.clone(user: user);
   }
 }

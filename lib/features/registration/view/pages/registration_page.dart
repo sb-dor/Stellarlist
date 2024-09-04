@@ -31,14 +31,14 @@ class RegistrationPage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
-  late ProviderSubscription<AsyncValue<RegistrationStateModel?>> _providerSubscription;
+  late ProviderSubscription<RegistrationStateModel?> _providerSubscription;
 
   @override
   void initState() {
     super.initState();
-    _providerSubscription = ref.listenManual<AsyncValue<RegistrationStateModel?>>(
-        registrationProviderProvider, (prev, next) {
-      if (next.value?.user != null && context.mounted) {
+    _providerSubscription =
+        ref.listenManual<RegistrationStateModel?>(registrationProviderProvider, (prev, next) {
+      if (next?.user != null && context.mounted) {
         AutoRouter.of(context).replaceAll([
           const HomeRoute(),
         ]);
@@ -55,6 +55,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     final registerWatch = ref.watch(registrationProviderProvider);
+    debugPrint("dsata: ${registerWatch?.letsGetStartedState}");
     return Scaffold(
       backgroundColor: Colors.black,
       body: SizedBox(
@@ -91,7 +92,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       left: 0,
                       right: 0,
                       child: SlideAndFadeAnimation(
-                        animate: registerWatch.value?.letsGetStartedState !=
+                        animate: registerWatch?.letsGetStartedState !=
                             LetsGetStartedState.showRegistrationButtons,
                         child: LetsGetStartedRegistrationWidget(),
                       ),
