@@ -94,7 +94,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       child: SlideAndFadeAnimation(
                         animate: registerWatch?.letsGetStartedState !=
                             LetsGetStartedState.showRegistrationButtons,
-                        child: LetsGetStartedRegistrationWidget(),
+                        child: const LetsGetStartedRegistrationWidget(),
                       ),
                     ),
                     Positioned(
@@ -102,7 +102,18 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: const EmailRegistrationWidget(),
+                      child: SlideAndFadeAnimation(
+                        animate: registerWatch?.letsGetStartedState ==
+                            LetsGetStartedState.showEmailRegistration,
+                        beginSlide: const Offset(0, 250),
+                        endSlide: Offset.zero,
+                        startShowWidget: false,
+                        startAnimationHide: false,
+                        endAnimationHide: true,
+                        beginOpacity: 0.0,
+                        endOpacity: 1.0,
+                        child: const EmailRegistrationWidget(),
+                      ),
                     ),
                   ],
                 ),
