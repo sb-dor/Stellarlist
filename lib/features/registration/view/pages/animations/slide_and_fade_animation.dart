@@ -97,8 +97,10 @@ class _SlideAndFadeAnimationState extends State<SlideAndFadeAnimation>
         setState(() {});
       });
     } else {
-      if (!widget.endAnimationHide) _hideAnimation = widget.endAnimationHide;
-      setState(() {});
+      if (!widget.endAnimationHide) {
+        _hideAnimation = widget.endAnimationHide;
+        setState(() {});
+      }
       _slideAnimationController.reverse();
       _fadeAnimationController.reverse().whenComplete(() {
         if (widget.endAnimationHide) {

@@ -92,6 +92,8 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       left: 0,
                       right: 0,
                       child: SlideAndFadeAnimation(
+                        endSlide: Offset(0, 100),
+                        duration: const Duration(milliseconds: 200),
                         animate: registerWatch?.letsGetStartedState !=
                             LetsGetStartedState.showRegistrationButtons,
                         child: const LetsGetStartedRegistrationWidget(),
@@ -105,13 +107,14 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       child: SlideAndFadeAnimation(
                         animate: registerWatch?.letsGetStartedState ==
                             LetsGetStartedState.showEmailRegistration,
-                        beginSlide: const Offset(0, 250),
+                        beginSlide: const Offset(0, 100),
                         endSlide: Offset.zero,
                         startShowWidget: false,
                         startAnimationHide: false,
                         endAnimationHide: true,
                         beginOpacity: 0.0,
                         endOpacity: 1.0,
+                        duration: const Duration(milliseconds: 200),
                         child: const EmailRegistrationWidget(),
                       ),
                     ),
