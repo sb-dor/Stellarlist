@@ -1,23 +1,12 @@
-import 'package:animated_visibility/animated_visibility.dart';
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:stellarlist/features/registration/data/models/registration_introduction_model.dart';
-import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/pages/animations/slide_and_fade_animation.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
-import 'package:stellarlist/injections/injections.dart';
 import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 import 'package:stellarlist/widgets/blur_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'widgets/email_registration_widget.dart';
 import 'widgets/lets_get_started_registration_widget.dart';
 import 'widgets/registration_carousel_slider_widget.dart';
@@ -92,7 +81,7 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       left: 0,
                       right: 0,
                       child: SlideAndFadeAnimation(
-                        endSlide: Offset(0, 100),
+                        endSlide: const Offset(0, 100),
                         duration: const Duration(milliseconds: 200),
                         animate: registerWatch?.letsGetStartedState !=
                             LetsGetStartedState.showRegistrationButtons,

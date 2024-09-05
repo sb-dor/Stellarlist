@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:stellarlist/features/auth_check/view/page/auth_check_page.dart';
 import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 
 @AutoRouterConfig()

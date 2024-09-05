@@ -1,4 +1,3 @@
-import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -32,7 +31,7 @@ class _AuthCheckPageState extends State<AuthCheckPage> {
               ? ResponsiveRowColumnType.ROW
               : ResponsiveRowColumnType.COLUMN,
           rowMainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: const [
             ResponsiveRowColumnItem(
               child: Text("Text Size is"),
             ),

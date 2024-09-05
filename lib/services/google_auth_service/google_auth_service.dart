@@ -25,7 +25,7 @@ class GoogleAuthService {
       // Get Google authentication object
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      debugPrint("google auth: ${googleUser}");
+      debugPrint("google auth: $googleUser");
 
       // Save access token to shared preferences
       if (googleAuth.accessToken != null) {
