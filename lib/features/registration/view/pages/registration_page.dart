@@ -80,10 +80,10 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: SlideAndFadeAnimation(
-                        endSlide: const Offset(0, 100),
-                        duration: const Duration(milliseconds: 200),
-                        animate: registerWatch?.letsGetStartedState !=
+                      child: SlideFadeTransition(
+                        finalSlideOffset: const Offset(0, 100),
+                        animationDuration: const Duration(milliseconds: 200),
+                        shouldAnimate: registerWatch?.letsGetStartedState !=
                             LetsGetStartedState.showRegistrationButtons,
                         child: const LetsGetStartedRegistrationWidget(),
                       ),
@@ -93,17 +93,17 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
                       top: 0,
                       left: 0,
                       right: 0,
-                      child: SlideAndFadeAnimation(
-                        animate: registerWatch?.letsGetStartedState ==
+                      child: SlideFadeTransition(
+                        shouldAnimate: registerWatch?.letsGetStartedState ==
                             LetsGetStartedState.showEmailRegistration,
-                        beginSlide: const Offset(0, 100),
-                        endSlide: Offset.zero,
-                        startShowWidget: false,
-                        startAnimationHide: false,
-                        endAnimationHide: true,
-                        beginOpacity: 0.0,
-                        endOpacity: 1.0,
-                        duration: const Duration(milliseconds: 200),
+                        initialSlideOffset: const Offset(0, 100),
+                        finalSlideOffset: Offset.zero,
+                        isInitiallyVisible: false,
+                        hideOnStartAnimation: false,
+                        hideOnEndAnimation: true,
+                        initialOpacity: 0.0,
+                        finalOpacity: 1.0,
+                        animationDuration: const Duration(milliseconds: 200),
                         child: const EmailRegistrationWidget(),
                       ),
                     ),

@@ -1,110 +1,105 @@
 import 'package:flutter/material.dart';
 
-class SlideAndFadeAnimation extends StatefulWidget {
+class SlideFadeTransition extends StatefulWidget {
   final Widget child;
-  final bool animate;
+  final bool shouldAnimate;
 
-  final Offset beginSlide;
-  final Offset endSlide;
-  final double beginOpacity;
-  final double endOpacity;
-  final Duration? duration;
+  final Offset initialSlideOffset;
+  final Offset finalSlideOffset;
+  final double initialOpacity;
+  final double finalOpacity;
+  final Duration? animationDuration;
 
-  final bool startShowWidget;
-  final bool startAnimationHide;
-  final bool endAnimationHide;
+  final bool isInitiallyVisible;
+  final bool hideOnStartAnimation;
+  final bool hideOnEndAnimation;
 
-  const SlideAndFadeAnimation({
+  const SlideFadeTransition({
     super.key,
     required this.child,
-    this.beginSlide = Offset.zero,
-    this.endSlide = const Offset(0.0, 250),
-    this.beginOpacity = 1.0,
-    this.endOpacity = 0.0,
-    this.duration,
-    this.animate = false,
-    this.startShowWidget = true,
-    this.startAnimationHide = true,
-    this.endAnimationHide = false,
+    this.initialSlideOffset = Offset.zero,
+    this.finalSlideOffset = const Offset(0.0, 250),
+    this.initialOpacity = 1.0,
+    this.finalOpacity = 0.0,
+    this.animationDuration,
+    this.shouldAnimate = false,
+    this.isInitiallyVisible = true,
+    this.hideOnStartAnimation = true,
+    this.hideOnEndAnimation = false,
   });
 
   @override
-  State<SlideAndFadeAnimation> createState() => _SlideAndFadeAnimationState();
+  State<SlideFadeTransition> createState() => _SlideFadeTransitionState();
 }
 
-class _SlideAndFadeAnimationState extends State<SlideAndFadeAnimation>
+class _SlideFadeTransitionState extends State<SlideFadeTransition>
     with TickerProviderStateMixin {
-  late AnimationController _slideAnimationController;
-  late AnimationController _fadeAnimationController;
+  late AnimationController _slideController;
+  late AnimationController _fadeController;
 
   late Animation<Offset> _slideAnimation;
   late Animation<double> _fadeAnimation;
 
-  bool _hideAnimation = false;
+  bool _isHidden = false;
 
   @override
   void initState() {
     super.initState();
-    _hideAnimation = widget.startShowWidget;
-    _slideAnimationController = AnimationController(
+    _isHidden = !widget.isInitiallyVisible;
+
+    _slideController = AnimationController(
       vsync: this,
-      duration: widget.duration ??
-          const Duration(
-            milliseconds: 500,
-          ),
+      duration: widget.animationDuration ?? const Duration(milliseconds: 500),
     );
 
-    _fadeAnimationController = AnimationController(
+    _fadeController = AnimationController(
       vsync: this,
-      duration: widget.duration ??
-          const Duration(
-            milliseconds: 500,
-          ),
+      duration: widget.animationDuration ?? const Duration(milliseconds: 500),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: widget.beginSlide,
-      end: widget.endSlide,
+      begin: widget.initialSlideOffset,
+      end: widget.finalSlideOffset,
     ).animate(
       CurvedAnimation(
-        parent: _slideAnimationController,
+        parent: _slideController,
         curve: Curves.linear,
       ),
     );
 
     _fadeAnimation = Tween<double>(
-      begin: widget.beginOpacity,
-      end: widget.endOpacity,
+      begin: widget.initialOpacity,
+      end: widget.finalOpacity,
     ).animate(
       CurvedAnimation(
-        parent: _fadeAnimationController,
+        parent: _fadeController,
         curve: Curves.linear,
       ),
     );
   }
 
   @override
-  void didUpdateWidget(covariant SlideAndFadeAnimation oldWidget) {
+  void didUpdateWidget(covariant SlideFadeTransition oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.animate) {
-      if (!widget.startShowWidget) {
-        _hideAnimation = false;
+    if (widget.shouldAnimate) {
+      if (!widget.isInitiallyVisible) {
+        _isHidden = false;
         setState(() {});
       }
-      _slideAnimationController.forward();
-      _fadeAnimationController.forward().whenComplete(() {
-        _hideAnimation = widget.startAnimationHide;
+      _slideController.forward();
+      _fadeController.forward().whenComplete(() {
+        _isHidden = widget.hideOnStartAnimation;
         setState(() {});
       });
     } else {
-      if (!widget.endAnimationHide) {
-        _hideAnimation = widget.endAnimationHide;
+      if (!widget.hideOnEndAnimation) {
+        _isHidden = widget.hideOnEndAnimation;
         setState(() {});
       }
-      _slideAnimationController.reverse();
-      _fadeAnimationController.reverse().whenComplete(() {
-        if (widget.endAnimationHide) {
-          _hideAnimation = widget.endAnimationHide;
+      _slideController.reverse();
+      _fadeController.reverse().whenComplete(() {
+        if (widget.hideOnEndAnimation) {
+          _isHidden = widget.hideOnEndAnimation;
         }
       });
     }
@@ -112,31 +107,31 @@ class _SlideAndFadeAnimationState extends State<SlideAndFadeAnimation>
 
   @override
   void dispose() {
-    _slideAnimationController.dispose();
-    _fadeAnimationController.dispose();
+    _slideController.dispose();
+    _fadeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _hideAnimation
+    return _isHidden
         ? const SizedBox.shrink()
         : AnimatedBuilder(
-            animation: Listenable.merge(
-              [
-                _slideAnimation,
-                _fadeAnimation,
-              ],
-            ),
-            builder: (context, animation) {
-              return Transform.translate(
-                offset: _slideAnimation.value,
-                child: Opacity(
-                  opacity: _fadeAnimation.value,
-                  child: widget.child,
-                ),
-              );
-            },
-          );
+      animation: Listenable.merge(
+        [
+          _slideAnimation,
+          _fadeAnimation,
+        ],
+      ),
+      builder: (context, animation) {
+        return Transform.translate(
+          offset: _slideAnimation.value,
+          child: Opacity(
+            opacity: _fadeAnimation.value,
+            child: widget.child,
+          ),
+        );
+      },
+    );
   }
 }
