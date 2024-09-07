@@ -22,4 +22,8 @@ class RegistrationProvider extends _$RegistrationProvider {
     final user = await RegistrationUseCase(repo).google();
     state = state?.clone(user: user);
   }
+
+  void changeContinueWithEmailHover(bool value) {
+    state = state?.clone(continueWithEmailHover: value);
+  }
 }

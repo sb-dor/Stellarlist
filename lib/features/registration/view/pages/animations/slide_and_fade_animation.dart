@@ -32,8 +32,7 @@ class SlideFadeTransition extends StatefulWidget {
   State<SlideFadeTransition> createState() => _SlideFadeTransitionState();
 }
 
-class _SlideFadeTransitionState extends State<SlideFadeTransition>
-    with TickerProviderStateMixin {
+class _SlideFadeTransitionState extends State<SlideFadeTransition> with TickerProviderStateMixin {
   late AnimationController _slideController;
   late AnimationController _fadeController;
 
@@ -117,21 +116,21 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition>
     return _isHidden
         ? const SizedBox.shrink()
         : AnimatedBuilder(
-      animation: Listenable.merge(
-        [
-          _slideAnimation,
-          _fadeAnimation,
-        ],
-      ),
-      builder: (context, animation) {
-        return Transform.translate(
-          offset: _slideAnimation.value,
-          child: Opacity(
-            opacity: _fadeAnimation.value,
-            child: widget.child,
-          ),
-        );
-      },
-    );
+            animation: Listenable.merge(
+              [
+                _slideAnimation,
+                _fadeAnimation,
+              ],
+            ),
+            builder: (context, animation) {
+              return Transform.translate(
+                offset: _slideAnimation.value,
+                child: Opacity(
+                  opacity: _fadeAnimation.value,
+                  child: widget.child,
+                ),
+              );
+            },
+          );
   }
 }

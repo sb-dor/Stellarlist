@@ -16,10 +16,21 @@ class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
 
 class _LetsGetStartedRegistrationWidgetState
     extends ConsumerState<LetsGetStartedRegistrationWidget> {
-  bool _continuteWithEmailHover = false;
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("inited");
+  }
+
+  @override
+  void dispose() {
+    debugPrint("disposed");
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final registerWatch = ref.watch(registrationProviderProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -110,26 +121,28 @@ class _LetsGetStartedRegistrationWidgetState
           ),
         ),
         const SizedBox(height: 15),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onEnter: (v) => setState(() {
-            _continuteWithEmailHover = true;
-          }),
-          onExit: (v) => setState(() {
-            _continuteWithEmailHover = false;
-          }),
-          child: GestureDetector(
-            onTap: () {
-              ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration(
-                    LetsGetStartedState.showEmailRegistration,
-                  );
+        GestureDetector(
+          onTap: () {
+            ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration(
+                  LetsGetStartedState.showEmailRegistration,
+                );
+          },
+          child: MouseRegion(
+            cursor: SystemMouseCursors.click,
+            onEnter: (v) {
+              ref.read(registrationProviderProvider.notifier).changeContinueWithEmailHover(true);
+            },
+            onExit: (v) {
+              ref.read(registrationProviderProvider.notifier).changeContinueWithEmailHover(false);
             },
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 100),
               width: 250,
               padding: const EdgeInsets.symmetric(vertical: 5),
               decoration: BoxDecoration(
-                color: _continuteWithEmailHover ? Colors.white : Colors.white.withOpacity(0.4),
+                color: (registerWatch?.continueWithEmailHover ?? false)
+                    ? Colors.white
+                    : Colors.white.withOpacity(0.4),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(
@@ -137,7 +150,9 @@ class _LetsGetStartedRegistrationWidgetState
                 children: [
                   Icon(
                     Icons.mail_outline,
-                    color: _continuteWithEmailHover ? Colors.black : Colors.white,
+                    color: (registerWatch?.continueWithEmailHover ?? false)
+                        ? Colors.black
+                        : Colors.white,
                     size: 20,
                   ),
                   const SizedBox(width: 10),
@@ -145,7 +160,9 @@ class _LetsGetStartedRegistrationWidgetState
                     child: Text(
                       "Continue with email",
                       style: GoogleFonts.inter(
-                        color: _continuteWithEmailHover ? Colors.black : Colors.white,
+                        color: (registerWatch?.continueWithEmailHover ?? false)
+                            ? Colors.black
+                            : Colors.white,
                       ),
                       textAlign: TextAlign.center,
                     ),

@@ -48,11 +48,11 @@ class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselS
                       size: const Size(100, 0),
                       count: RegistrationIntroductionModel.data.length,
                       effect: ExpandingDotsEffect(
-                        expansionFactor: 4,
+                        expansionFactor: 3,
                         dotColor: Colors.grey.shade900,
                         activeDotColor: Colors.white,
                         dotHeight: 3,
-                        dotWidth: 50,
+                        dotWidth: MediaQuery.of(context).size.width * 0.05,
                       ),
                     ),
                   ],
