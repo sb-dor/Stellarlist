@@ -15,6 +15,14 @@ class RegistrationCarouselSliderWidget extends StatefulWidget {
 class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselSliderWidget> {
   double _currentPage = 0;
 
+  late final CarouselSliderController _carouselSliderController;
+
+  @override
+  void initState() {
+    super.initState();
+    _carouselSliderController = CarouselSliderController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -62,69 +70,106 @@ class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselS
                   ],
                   defaultValue: double.infinity,
                 ).value,
-                child: CarouselSlider.builder(
-                  itemCount: RegistrationIntroductionModel.data.length,
-                  options: CarouselOptions(
-                    height: ResponsiveValue<double?>(
-                      context,
-                      conditionalValues: [
-                        Condition.smallerThan(
-                          breakpoint: 920,
-                          value: MediaQuery.of(context).size.height * 0.90,
-                        ),
-                      ],
-                      defaultValue: null,
-                    ).value,
-                    viewportFraction: 0.640,
-                    autoPlayInterval: const Duration(seconds: 6),
-                    padEnds: false,
-
-                    onScrolled: (i) {
-                      if (i != null) {
-                        _currentPage = i % RegistrationIntroductionModel.data.length;
-                        setState(() {});
-                      }
-                    },
-                    autoPlay: ResponsiveValue(
-                      context,
-                      conditionalValues: [
-                        const Condition.equals(name: MOBILE, value: false),
-                      ],
-                      defaultValue: true,
-                    ).value,
-                    // enlargeCenterPage: true,
-                  ),
-                  itemBuilder: (context, index, index2) {
-                    final data = RegistrationIntroductionModel.data[index];
-                    return Container(
-                      margin: const EdgeInsets.only(right: 20, left: 20),
-                      decoration: BoxDecoration(
-                        color: data.color,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 50),
-                            SizedBox(
-                              width: 300,
-                              child: Text(
-                                data.title,
-                                style: GoogleFonts.inter(
-                                  color: Colors.white,
-                                  fontSize: 30,
-                                  height: 1.2,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center,
+                child: Stack(
+                  children: [
+                    Positioned.fill(
+                      child: CarouselSlider.builder(
+                        carouselController: _carouselSliderController,
+                        itemCount: RegistrationIntroductionModel.data.length,
+                        options: CarouselOptions(
+                          height: ResponsiveValue<double?>(
+                            context,
+                            conditionalValues: [
+                              Condition.smallerThan(
+                                breakpoint: 920,
+                                value: MediaQuery.of(context).size.height * 0.90,
                               ),
-                            )
-                          ],
+                            ],
+                            defaultValue: null,
+                          ).value,
+                          viewportFraction: 0.640,
+                          autoPlayInterval: const Duration(seconds: 6),
+                          padEnds: false,
+
+                          onScrolled: (i) {
+                            if (i != null) {
+                              _currentPage = i % RegistrationIntroductionModel.data.length;
+                              setState(() {});
+                            }
+                          },
+                          autoPlay: ResponsiveValue(
+                            context,
+                            conditionalValues: [
+                              const Condition.equals(name: MOBILE, value: false),
+                            ],
+                            defaultValue: true,
+                          ).value,
+                          // enlargeCenterPage: true,
+                        ),
+                        itemBuilder: (context, index, index2) {
+                          final data = RegistrationIntroductionModel.data[index];
+                          return Container(
+                            margin: const EdgeInsets.only(right: 20, left: 20),
+                            decoration: BoxDecoration(
+                              color: data.color,
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 50),
+                                  SizedBox(
+                                    width: 300,
+                                    child: Text(
+                                      data.title,
+                                      style: GoogleFonts.inter(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        height: 1.2,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+                      Positioned(
+                        top: 0,
+                        bottom: 0,
+                        left: 20,
+                        width: MediaQuery.of(context).size.width / 3.5,
+                        child: GestureDetector(
+                          onTap: () {
+                            _carouselSliderController.previousPage();
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                          ),
                         ),
                       ),
-                    );
-                  },
+                    if (ResponsiveBreakpoints.of(context).largerThan(MOBILE))
+                      Positioned(
+                        top: 0,
+                        bottom: 0,
+                        right: MediaQuery.of(context).size.width / 2.7,
+                        width: MediaQuery.of(context).size.width / 3.5,
+                        child: GestureDetector(
+                          onTap: () {
+                            _carouselSliderController.nextPage();
+                          },
+                          child: Container(
+                            color: Colors.transparent,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ),

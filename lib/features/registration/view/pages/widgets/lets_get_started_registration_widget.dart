@@ -16,6 +16,8 @@ class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
 
 class _LetsGetStartedRegistrationWidgetState
     extends ConsumerState<LetsGetStartedRegistrationWidget> {
+  bool _continuteWithEmailHover = false;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -108,38 +110,48 @@ class _LetsGetStartedRegistrationWidgetState
           ),
         ),
         const SizedBox(height: 15),
-        SizedBox(
-          width: 250,
-          child: ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(
-                Colors.white.withOpacity(0.4),
-              ),
-            ),
-            onPressed: () {
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (v) => setState(() {
+            _continuteWithEmailHover = true;
+          }),
+          onExit: (v) => setState(() {
+            _continuteWithEmailHover = false;
+          }),
+          child: GestureDetector(
+            onTap: () {
               ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration(
                     LetsGetStartedState.showEmailRegistration,
                   );
             },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(
-                  Icons.mail,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                const SizedBox(width: 10),
-                Flexible(
-                  child: Text(
-                    "Continue with email",
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                    ),
-                    textAlign: TextAlign.center,
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              width: 250,
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              decoration: BoxDecoration(
+                color: _continuteWithEmailHover ? Colors.white : Colors.white.withOpacity(0.4),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.mail_outline,
+                    color: _continuteWithEmailHover ? Colors.black : Colors.white,
+                    size: 20,
                   ),
-                ),
-              ],
+                  const SizedBox(width: 10),
+                  Flexible(
+                    child: Text(
+                      "Continue with email",
+                      style: GoogleFonts.inter(
+                        color: _continuteWithEmailHover ? Colors.black : Colors.white,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

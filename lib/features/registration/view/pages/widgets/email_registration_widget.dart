@@ -20,6 +20,7 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         MouseRegion(
+          cursor: SystemMouseCursors.click,
           onEnter: (v) => setState(() {
             _closeButton = true;
           }),
@@ -32,7 +33,8 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
                     LetsGetStartedState.showRegistrationButtons,
                   );
             },
-            child: Container(
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
               width: 30,
               height: 30,
               decoration: BoxDecoration(
