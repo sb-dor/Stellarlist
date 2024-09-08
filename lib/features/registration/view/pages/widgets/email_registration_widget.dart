@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,6 +7,7 @@ import 'package:stellarlist/features/registration/view/provider/registration_pro
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
 import 'package:stellarlist/injections/injections.dart';
 import 'package:stellarlist/services/auth_services/auth_service.dart';
+import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 
 class EmailRegistrationWidget extends ConsumerStatefulWidget {
   const EmailRegistrationWidget({super.key});
@@ -114,6 +116,13 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
                           );
                       _sendLinkHover = true;
                       setState(() {});
+                      Future.delayed(const Duration(seconds: 1), () {
+                        if (context.mounted) {
+                          AutoRouter.of(context).replaceAll([
+                            const AnEmailOnTheWayRoute(),
+                          ]);
+                        }
+                      });
                       Future.delayed(const Duration(seconds: 3), () {
                         _sendLinkHover = false;
                         if (context.mounted) setState(() {});

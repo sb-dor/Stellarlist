@@ -19,6 +19,10 @@ class AppRouter extends RootStackRouter {
           page: HomeRoute.page,
           path: '/home',
         ),
+        AutoRoute(
+          page: AnEmailOnTheWayRoute.page,
+          path: '/email-verification'
+        ),
         // AutoRoute(
         //   page: ResponsiveFrameworkTestUi.page,
         //   path: '/test-responsive-ui',

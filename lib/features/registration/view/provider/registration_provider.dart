@@ -25,6 +25,7 @@ class RegistrationProvider extends _$RegistrationProvider {
   }
 
   Future<void> emailLink(RegistrationRepo repo, {AuthData? authData}) async {
+    state = state?.clone(sentEmail: authData?.email);
     final user = await RegistrationUseCase(repo).emailLink(authData: authData);
     state = state?.clone(user: user);
   }
