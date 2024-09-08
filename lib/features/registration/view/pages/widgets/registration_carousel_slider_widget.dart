@@ -144,7 +144,7 @@ class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselS
                         top: 0,
                         bottom: 0,
                         left: 20,
-                        width: MediaQuery.of(context).size.width / 3.5,
+                        width: MediaQuery.of(context).size.width / 8,
                         child: GestureDetector(
                           onTap: () {
                             _carouselSliderController.previousPage();
@@ -159,7 +159,7 @@ class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselS
                         top: 0,
                         bottom: 0,
                         right: MediaQuery.of(context).size.width / 2.7,
-                        width: MediaQuery.of(context).size.width / 3.5,
+                        width: MediaQuery.of(context).size.width / 8,
                         child: GestureDetector(
                           onTap: () {
                             _carouselSliderController.nextPage();
@@ -169,6 +169,7 @@ class _RegistrationCarouselSliderWidgetState extends State<RegistrationCarouselS
                           ),
                         ),
                       ),
+                    
                   ],
                 ),
               ),
