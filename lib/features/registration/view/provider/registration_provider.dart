@@ -12,7 +12,7 @@ class RegistrationProvider extends _$RegistrationProvider {
     return RegistrationStateModel();
   }
 
-  void changeStateToEmailRegistration(LetsGetStartedState getStartedState) {
+  void changeStateInEmailRegistration(LetsGetStartedState getStartedState) {
     state = state?.clone(
       letsGetStartedState: getStartedState,
     );
@@ -21,9 +21,5 @@ class RegistrationProvider extends _$RegistrationProvider {
   Future<void> googleAuth(RegistrationRepo repo) async {
     final user = await RegistrationUseCase(repo).google();
     state = state?.clone(user: user);
-  }
-
-  void changeContinueWithEmailHover(bool value) {
-    state = state?.clone(continueWithEmailHover: value);
   }
 }

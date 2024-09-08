@@ -91,6 +91,10 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition> with TickerPr
         setState(() {});
       });
     } else {
+      if (!widget.isInitiallyVisible) {
+        _isHidden = true;
+        setState(() {});
+      }
       if (!widget.hideOnEndAnimation) {
         _isHidden = widget.hideOnEndAnimation;
         setState(() {});
@@ -99,6 +103,7 @@ class _SlideFadeTransitionState extends State<SlideFadeTransition> with TickerPr
       _fadeController.reverse().whenComplete(() {
         if (widget.hideOnEndAnimation) {
           _isHidden = widget.hideOnEndAnimation;
+          debugPrint("is hidden: $_isHidden");
         }
       });
     }

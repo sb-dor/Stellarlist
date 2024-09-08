@@ -20,39 +20,34 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GestureDetector(
-          onTap: () {
-            // ref.read(registrationProviderProvider.notifier).changeContinueWithEmailHover(false);
-          },
-          child: MouseRegion(
-            cursor: SystemMouseCursors.click,
-            onEnter: (v) => setState(() {
-              _closeButton = true;
-            }),
-            onExit: (v) => setState(() {
-              _closeButton = false;
-            }),
-            child: GestureDetector(
-              onTap: () {
-                ref.read(registrationProviderProvider.notifier).changeStateToEmailRegistration(
-                      LetsGetStartedState.showRegistrationButtons,
-                    );
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 100),
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: _closeButton ? Colors.white : Colors.grey,
-                    ),
-                    color: Colors.transparent),
-                child: Icon(
-                  Icons.close,
-                  size: 20,
-                  color: _closeButton ? Colors.white : Colors.grey,
-                ),
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (v) => setState(() {
+            _closeButton = true;
+          }),
+          onExit: (v) => setState(() {
+            _closeButton = false;
+          }),
+          child: GestureDetector(
+            onTap: () {
+              ref.read(registrationProviderProvider.notifier).changeStateInEmailRegistration(
+                    LetsGetStartedState.showRegistrationButtons,
+                  );
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(
+                    color: _closeButton ? Colors.white : Colors.grey,
+                  ),
+                  color: Colors.transparent),
+              child: Icon(
+                Icons.close,
+                size: 20,
+                color: _closeButton ? Colors.white : Colors.grey,
               ),
             ),
           ),

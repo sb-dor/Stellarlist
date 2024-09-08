@@ -75,37 +75,25 @@ class _RegistrationPageState extends ConsumerState<RegistrationPage> {
               child: BlurContainer(
                 child: Stack(
                   children: [
-                    Positioned(
-                      bottom: 0,
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: SlideFadeTransition(
-                        finalSlideOffset: const Offset(0, 100),
-                        animationDuration: const Duration(milliseconds: 200),
-                        shouldAnimate: registerWatch?.letsGetStartedState !=
-                            LetsGetStartedState.showRegistrationButtons,
-                        child: const LetsGetStartedRegistrationWidget(),
-                      ),
+                    SlideFadeTransition(
+                      finalSlideOffset: const Offset(0, 100),
+                      animationDuration: const Duration(milliseconds: 200),
+                      shouldAnimate: registerWatch?.letsGetStartedState !=
+                          LetsGetStartedState.showRegistrationButtons,
+                      child: const LetsGetStartedRegistrationWidget(),
                     ),
-                    Positioned(
-                      bottom: 0,
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: SlideFadeTransition(
-                        shouldAnimate: registerWatch?.letsGetStartedState ==
-                            LetsGetStartedState.showEmailRegistration,
-                        initialSlideOffset: const Offset(0, 100),
-                        finalSlideOffset: Offset.zero,
-                        isInitiallyVisible: false,
-                        hideOnStartAnimation: false,
-                        hideOnEndAnimation: true,
-                        initialOpacity: 0.0,
-                        finalOpacity: 1.0,
-                        animationDuration: const Duration(milliseconds: 200),
-                        child: const EmailRegistrationWidget(),
-                      ),
+                    SlideFadeTransition(
+                      shouldAnimate: registerWatch?.letsGetStartedState ==
+                          LetsGetStartedState.showEmailRegistration,
+                      initialSlideOffset: const Offset(0, 100),
+                      finalSlideOffset: Offset.zero,
+                      isInitiallyVisible: false,
+                      hideOnStartAnimation: false,
+                      hideOnEndAnimation: true,
+                      initialOpacity: 0.0,
+                      finalOpacity: 1.0,
+                      animationDuration: const Duration(milliseconds: 200),
+                      child: const EmailRegistrationWidget(),
                     ),
                   ],
                 ),
