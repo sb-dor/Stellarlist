@@ -12,7 +12,21 @@ class EmailRegistrationWidget extends ConsumerStatefulWidget {
 }
 
 class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidget> {
-  bool _closeButton = false;
+  bool _closeButton = false, _sendLinkHover = false;
+
+  late TextEditingController _emailController;
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +80,85 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
             textAlign: TextAlign.center,
           ),
         ),
+        const SizedBox(height: 30),
+        Container(
+          width: 320,
+          height: 40,
+          margin: const EdgeInsets.only(left: 10, right: 10),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: Colors.white.withOpacity(0.4),
+            ),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: Center(
+                  child: TextField(
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                    ),
+                    cursorColor: Colors.white,
+                    onSubmitted: (v) {
+                      _sendLinkHover = true;
+                      setState(() {});
+                      Future.delayed(const Duration(seconds: 3), () {
+                        _sendLinkHover = false;
+                        if (context.mounted) setState(() {});
+                      });
+                    },
+                    decoration: InputDecoration(
+                      isDense: true,
+                      contentPadding: const EdgeInsets.only(left: 10),
+                      enabledBorder: InputBorder.none,
+                      errorBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: "Type your Email",
+                      hintStyle: GoogleFonts.inter(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                top: 0,
+                right: 0,
+                child: MouseRegion(
+                  onEnter: (v) => setState(() {
+                    _sendLinkHover = true;
+                  }),
+                  onExit: (v) => setState(() {
+                    _sendLinkHover = false;
+                  }),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    margin: const EdgeInsets.only(top: 2, bottom: 2, right: 2),
+                    width: 90,
+                    decoration: BoxDecoration(
+                      color: _sendLinkHover ? Colors.white : Colors.white.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Send link",
+                        style: GoogleFonts.inter(
+                          fontWeight: FontWeight.w500,
+                          color: _sendLinkHover ? Colors.black : Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
       ],
     );
   }
