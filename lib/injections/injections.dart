@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:stellarlist/injections/auth_service_injections/auth_service_injections.dart';
 import 'package:stellarlist/injections/registration_injections/registration_injections.dart';
-import 'package:stellarlist/services/google_auth_service/google_auth_service.dart';
 import 'package:stellarlist/services/shared_preferences/shared_prefer.dart';
 
 final getIt = GetIt.instance;
@@ -14,9 +14,7 @@ abstract class Injections {
 
     await getIt<SharedPref>().initPref();
 
-    getIt.registerLazySingleton<GoogleAuthService>(
-      () => GoogleAuthService(),
-    );
+    await AuthServiceInjections.inject();
 
     await RegistrationInjections.inject();
   }

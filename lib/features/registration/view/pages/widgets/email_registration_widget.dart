@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
+import 'package:stellarlist/injections/injections.dart';
+import 'package:stellarlist/services/auth_services/auth_service.dart';
 
 class EmailRegistrationWidget extends ConsumerStatefulWidget {
   const EmailRegistrationWidget({super.key});
@@ -103,6 +106,12 @@ class _EmailRegistrationWidgetState extends ConsumerState<EmailRegistrationWidge
                     ),
                     cursorColor: Colors.white,
                     onSubmitted: (v) {
+                      ref.read(registrationProviderProvider.notifier).emailLink(
+                            getIt<RegistrationRepo>(),
+                            authData: AuthData(
+                              email: v.trim(),
+                            ),
+                          );
                       _sendLinkHover = true;
                       setState(() {});
                       Future.delayed(const Duration(seconds: 3), () {
