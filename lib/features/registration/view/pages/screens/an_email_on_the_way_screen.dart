@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
+import 'package:stellarlist/services/shortcuts_service/shortcuts_service.dart';
 
 @RoutePage()
 class AnEmailOnTheWayScreen extends ConsumerStatefulWidget {
@@ -76,13 +77,19 @@ class _AnEmailOnTheWayScreenState extends ConsumerState<AnEmailOnTheWayScreen> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 10),
-                        MouseRegion(
-                          onEnter: (v) => setState(() {
-                            _hoverToResendButton = true;
-                          }),
-                          onExit: (v) => setState(() {
-                            _hoverToResendButton = false;
-                          }),
+                        FocusableActionDetector(
+                          onShowHoverHighlight: (hovered) {
+                            if (hovered) {
+                              setState(() {
+                                _hoverToResendButton = true;
+                              });
+                            } else {
+                              setState(() {
+                                _hoverToResendButton = false;
+                              });
+                            }
+                          },
+                          mouseCursor: SystemMouseCursors.click,
                           child: AnimatedContainer(
                             duration: const Duration(milliseconds: 100),
                             decoration: BoxDecoration(

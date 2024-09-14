@@ -6,6 +6,7 @@ import 'package:stellarlist/features/registration/domain/repo/registration_repo.
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
 import 'package:stellarlist/injections/injections.dart';
+import 'package:stellarlist/services/shortcuts_service/shortcuts_service.dart';
 
 class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
   const LetsGetStartedRegistrationWidget({super.key});
@@ -17,6 +18,15 @@ class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
 class _LetsGetStartedRegistrationWidgetState
     extends ConsumerState<LetsGetStartedRegistrationWidget> {
   bool _onShowEmailRegistrationHover = false;
+
+  late final ShortcutsI enterShortcut;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    enterShortcut = EnterShortCut(onInvoke: () {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,14 +124,21 @@ class _LetsGetStartedRegistrationWidgetState
           ),
         ),
         const SizedBox(height: 15),
-        MouseRegion(
-          cursor: SystemMouseCursors.click,
-          onExit: (v) => setState(() {
-            _onShowEmailRegistrationHover = false;
-          }),
-          onEnter: (v) => setState(() {
-            _onShowEmailRegistrationHover = true;
-          }),
+        FocusableActionDetector(
+          mouseCursor: SystemMouseCursors.click,
+          onShowHoverHighlight: (hovered) {
+            if (hovered) {
+              setState(() {
+                _onShowEmailRegistrationHover = false;
+              });
+            } else {
+              setState(() {
+                _onShowEmailRegistrationHover = true;
+              });
+            }
+          },
+          shortcuts: enterShortcut.shortCuts,
+          actions: enterShortcut.actions,
           child: GestureDetector(
             onTap: () {
               ref.read(registrationProviderProvider.notifier).changeStateInEmailRegistration(
