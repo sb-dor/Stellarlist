@@ -12,7 +12,7 @@ abstract class ShortcutsI {
   Map<Type, Action<Intent>>? actions;
 }
 
-class EnterShortCut implements ShortcutsI {
+class EnterShortCut extends ShortcutsI {
   final VoidCallback onInvoke;
 
   EnterShortCut({required this.onInvoke}) {
@@ -27,10 +27,4 @@ class EnterShortCut implements ShortcutsI {
       LogicalKeySet(LogicalKeyboardKey.enter): const IntentActionHelper(),
     };
   }
-
-  @override
-  Map<Type, Action<Intent>>? actions;
-
-  @override
-  Map<ShortcutActivator, Intent>? shortCuts;
 }

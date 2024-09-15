@@ -19,15 +19,6 @@ class _LetsGetStartedRegistrationWidgetState
     extends ConsumerState<LetsGetStartedRegistrationWidget> {
   bool _onShowEmailRegistrationHover = false;
 
-  late final ShortcutsI enterShortcut;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    enterShortcut = EnterShortCut(onInvoke: () {});
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -137,8 +128,6 @@ class _LetsGetStartedRegistrationWidgetState
               });
             }
           },
-          shortcuts: enterShortcut.shortCuts,
-          actions: enterShortcut.actions,
           child: GestureDetector(
             onTap: () {
               ref.read(registrationProviderProvider.notifier).changeStateInEmailRegistration(
@@ -175,7 +164,7 @@ class _LetsGetStartedRegistrationWidgetState
                               );
                         },
                         child: Text(
-                          "Continue with Facebook",
+                          "Continue with Email",
                           style: GoogleFonts.inter(
                             color: _onShowEmailRegistrationHover ? Colors.black : Colors.white,
                           ),
