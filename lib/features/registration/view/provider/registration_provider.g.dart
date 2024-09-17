@@ -7,7 +7,7 @@ part of 'registration_provider.dart';
 // **************************************************************************
 
 String _$registrationProviderHash() =>
-    r'aff3a915826e3645bf349bf951808bd61dd1dc92';
+    r'f1a7de43bd2fdaae054b0844119d8b40b077d5b4';
 
 /// See also [RegistrationProvider].
 @ProviderFor(RegistrationProvider)

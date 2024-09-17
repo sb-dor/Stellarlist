@@ -7,4 +7,6 @@ abstract interface class RegistrationRepo {
   Future<User?> facebook();
 
   Future<User?> emailLink({AuthData? authData});
+
+  Future<User?> checkAuth();
 }

@@ -10,7 +10,7 @@ class AuthData {
 }
 
 abstract interface class AuthService {
-
   Future<User?> auth({AuthData? authData});
 
+  Future<User?> checkAuth({AuthData? authData});
 }

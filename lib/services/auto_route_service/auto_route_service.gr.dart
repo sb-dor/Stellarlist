@@ -9,9 +9,9 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i6;
-import 'package:stellarlist/features/auth_check/view/page/auth_check_page.dart'
-    as _i2;
 import 'package:stellarlist/features/home/view/pages/home_page.dart' as _i3;
+import 'package:stellarlist/features/registration/view/pages/auth_check_page.dart'
+    as _i2;
 import 'package:stellarlist/features/registration/view/pages/registration_page.dart'
     as _i4;
 import 'package:stellarlist/features/registration/view/pages/screens/an_email_on_the_way_screen.dart'

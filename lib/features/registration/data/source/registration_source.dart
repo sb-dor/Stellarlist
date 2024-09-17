@@ -7,4 +7,6 @@ abstract interface class RegistrationSource {
   Future<User?> facebook();
 
   Future<User?> emailLink({AuthData? authData});
+
+  Future<User?> checkAuth();
 }

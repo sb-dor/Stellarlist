@@ -7,4 +7,10 @@ class FacebookAuthService implements AuthService {
     // TODO: implement auth
     throw UnimplementedError();
   }
+
+  @override
+  Future<User?> checkAuth({AuthData? authData}) {
+    // TODO: implement checkAuth
+    throw UnimplementedError();
+  }
 }

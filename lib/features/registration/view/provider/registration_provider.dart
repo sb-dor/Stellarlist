@@ -19,6 +19,11 @@ class RegistrationProvider extends _$RegistrationProvider {
     );
   }
 
+  Future<void> checkAuth(RegistrationRepo repo) async {
+    final user = await RegistrationUseCase(repo).checkAuth();
+    state = state?.clone(user: user);
+  }
+
   Future<bool> googleAuth(RegistrationRepo repo) async {
     final user = await RegistrationUseCase(repo).google();
     state = state?.clone(user: user);

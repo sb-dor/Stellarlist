@@ -56,13 +56,9 @@ class _LetsGetStartedRegistrationWidgetState
           width: 250,
           child: ElevatedButton(
             onPressed: () async {
-              final value = await ref.read(registrationProviderProvider.notifier).googleAuth(
+              await ref.read(registrationProviderProvider.notifier).googleAuth(
                     getIt<RegistrationRepo>(),
                   );
-
-              if (context.mounted && value) {
-                AutoRouter.of(context).replaceAll([]);
-              }
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

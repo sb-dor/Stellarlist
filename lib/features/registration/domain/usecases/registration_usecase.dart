@@ -12,4 +12,6 @@ class RegistrationUseCase {
   Future<User?> facebook() => _registrationRepo.facebook();
 
   Future<User?> emailLink({AuthData? authData}) => _registrationRepo.emailLink(authData: authData);
+
+  Future<User?> checkAuth() => _registrationRepo.checkAuth();
 }

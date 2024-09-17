@@ -32,4 +32,10 @@ class EmailLinkAuthService implements AuthService {
     }
     return null;
   }
+
+  @override
+  Future<User?> checkAuth({AuthData? authData}) {
+    // TODO: implement checkAuth
+    throw UnimplementedError();
+  }
 }

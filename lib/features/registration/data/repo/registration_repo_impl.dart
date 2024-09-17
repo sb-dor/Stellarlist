@@ -17,4 +17,7 @@ class RegistrationRepoImpl implements RegistrationRepo {
 
   @override
   Future<User?> google() => _registrationSource.google();
+
+  @override
+  Future<User?> checkAuth() => _registrationSource.checkAuth();
 }
