@@ -32,10 +32,10 @@ class RegistrationSourceImpl implements RegistrationSource {
     final String? authType = _sharedPref.getStringByKey(key: 'auth_type');
     if (authType == AuthServiceType.google.name) {
       // Handle Google auth
-      return await getIt<AuthService>(instanceName: AuthServiceType.google.name).auth();
+      return await getIt<AuthService>(instanceName: AuthServiceType.google.name).checkAuth();
     } else if (authType == AuthServiceType.facebook.name) {
       // Handle Facebook auth
-      return await getIt<AuthService>(instanceName: AuthServiceType.facebook.name).auth();
+      return await getIt<AuthService>(instanceName: AuthServiceType.facebook.name).checkAuth();
     } else if (authType == AuthServiceType.emailLink.name) {
       // Handle Email auth
     }

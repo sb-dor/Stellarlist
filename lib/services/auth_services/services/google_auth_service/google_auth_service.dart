@@ -97,6 +97,8 @@ class GoogleAuthService implements AuthService {
 
       final data = _firebaseAuth.currentUser;
 
+      debugPrint("sign in with cred data: ${data}");
+
       return data;
     } catch (e) {
       debugPrint("check google auth error is $e");
