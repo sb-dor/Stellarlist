@@ -3,7 +3,7 @@ import 'package:stellarlist/core/domain/entities/label/label.dart';
 import 'package:stellarlist/core/domain/entities/task/task.dart';
 import 'package:uuid/uuid.dart';
 
-base class Section {
+ class Section {
   final String id;
   final String? title;
   final List<Task>? tasks;

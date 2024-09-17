@@ -2,8 +2,8 @@ import 'package:stellarlist/core/domain/entities/assignee/assignee.dart';
 import 'package:stellarlist/core/domain/entities/label/label.dart';
 import 'package:uuid/uuid.dart';
 
-base class Task {
-  final String id;
+ class Task {
+  final String? id;
   final String? title;
   final Assignee? assignee;
   final Label? label;
