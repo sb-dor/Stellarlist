@@ -14,19 +14,29 @@ class AutoRouteGuardHelper extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    // final context = router.navigatorKey.currentContext; // currenct context;
+    // Get the current value of the user without watching for changes
+    var user = ref.read(
+      registrationProviderProvider.select(
+        (user) => user?.user,
+      ),
+    );
 
-    var registrationModel = ref.watch(registrationProviderProvider);
-
-    debugPrint("checking here for auth guard: ${registrationModel?.user}");
-    if (registrationModel?.user != null) {
+    debugPrint("checking here for auth guard: $user");
+    if (user != null) {
       resolver.next(true);
     } else {
       await ref.read(registrationProviderProvider.notifier).checkAuth(
             getIt<RegistrationRepo>(),
           );
 
-      if (registrationModel?.user != null) {
+      // Re-check the user value after authentication attempt
+      user = ref.read(
+        registrationProviderProvider.select(
+          (user) => user?.user,
+        ),
+      );
+
+      if (user != null) {
         resolver.next(true);
       } else {
         resolver.redirect(
@@ -55,7 +65,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           page: RegistrationRoute.page,
           path: '/registration',
-          guards: [AutoRouteGuardHelper(ref)],
+          // guards: [AutoRouteGuardHelper(ref)],
         ),
 
         AutoRoute(

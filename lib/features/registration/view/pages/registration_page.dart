@@ -20,27 +20,26 @@ class RegistrationPage extends ConsumerStatefulWidget {
 }
 
 class _RegistrationPageState extends ConsumerState<RegistrationPage> {
-  // late ProviderSubscription<RegistrationStateModel?> _providerSubscription;
+  late ProviderSubscription<RegistrationStateModel?> _providerSubscription;
 
   @override
   void initState() {
     super.initState();
-    // _providerSubscription =
-    //     ref.listenManual<RegistrationStateModel?>(registrationProviderProvider, (prev, next) {
-    //   if (next?.user != null && context.mounted) {
-    //     AutoRouter.of(context).replaceAll([
-    //       const HomeRoute(),
-    //     ]);
-    //   }
-    // });
+    _providerSubscription =
+        ref.listenManual<RegistrationStateModel?>(registrationProviderProvider, (prev, next) {
+      if (next?.user != null && context.mounted) {
+        AutoRouter.of(context).replaceAll([
+          const HomeRoute(),
+        ]);
+      }
+    });
   }
 
   @override
   void dispose() {
-    // _providerSubscription.close();
+    _providerSubscription.close();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
