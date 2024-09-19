@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/firebase_options.dart';
+import 'package:stellarlist/injections/auto_router_injection/auto_router_injection.dart';
 import 'package:stellarlist/injections/injections.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'services/auto_route_service/auto_route_service.dart';
@@ -26,11 +27,22 @@ void main() async {
   runApp(const ProviderScope(child: _StellarListApp()));
 }
 
-class _StellarListApp extends ConsumerWidget {
+class _StellarListApp extends ConsumerStatefulWidget {
   const _StellarListApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => __StellarListAppState();
+}
+
+class __StellarListAppState extends ConsumerState<_StellarListApp> {
+  @override
+  void initState() {
+    super.initState();
+    AutoRouterInjections.inject(ref);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp.router(
       title: "Stellarlist", // for web title on the top of section
       debugShowCheckedModeBanner: kDebugMode,
@@ -51,7 +63,7 @@ class _StellarListApp extends ConsumerWidget {
           ],
         );
       },
-      routerConfig: AppRouter(ref).config(),
+      routerConfig: getIt<AppRouter>().config(),
     );
   }
 }
