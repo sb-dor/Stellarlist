@@ -14,37 +14,78 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
   @override
   Widget build(BuildContext context) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
-    return AnimatedContainer(
-      width: 260,
-      height: MediaQuery.of(context).size.height,
-      duration: const Duration(seconds: 1),
-      decoration: BoxDecoration(
-        color: HexColor('#232233'),
-      ),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.search,
-                  color: Colors.white,
-                  size: 20,
+    return MouseRegion(
+      onEnter: (value) {
+        ref.read(animatedSidebarProviderProvider.notifier).hovered(true);
+      },
+      onExit: (value) {
+        ref.read(animatedSidebarProviderProvider.notifier).hovered(false);
+        if (!(animSidebarProvider.stuck ?? false)) {
+          ref.read(animatedSidebarProviderProvider.notifier).openCloseSideBar(
+                closed: true,
+                stuck: false,
+              );
+        }
+      },
+      child: AnimatedContainer(
+        width: (animSidebarProvider.stuck ?? false) ? 265 : 250,
+        height: MediaQuery.of(context).size.height,
+        duration: const Duration(milliseconds: 300),
+        decoration: BoxDecoration(
+          color: HexColor('#232233'),
+          borderRadius:
+              (animSidebarProvider.stuck ?? false) ? BorderRadius.zero : BorderRadius.circular(20),
+        ),
+        child: Column(
+          children: [
+            Visibility(
+              visible: (animSidebarProvider.hovered ?? false),
+              maintainState: true,
+              maintainAnimation: true,
+              child: AnimatedOpacity(
+                opacity: (animSidebarProvider.hovered ?? false) ? 1 : 0,
+                duration: const Duration(milliseconds: 300),
+                child: AnimatedPadding(
+                  duration: const Duration(milliseconds: 300),
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.search,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if ((animSidebarProvider.stuck ?? false)) {
+                            ref.read(animatedSidebarProviderProvider.notifier).openCloseSideBar(
+                                  closed: true,
+                                  stuck: false,
+                                );
+                          } else {
+                            ref.read(animatedSidebarProviderProvider.notifier).openCloseSideBar(
+                                  closed: false,
+                                  stuck: true,
+                                );
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.view_sidebar_outlined,
+                          color: Colors.grey,
+                          size: 20,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: Icon(
-                  Icons.view_sidebar_outlined,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

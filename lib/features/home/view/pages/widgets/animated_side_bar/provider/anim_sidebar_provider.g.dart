@@ -7,7 +7,7 @@ part of 'anim_sidebar_provider.dart';
 // **************************************************************************
 
 String _$animatedSidebarProviderHash() =>
-    r'7d1ee722dfea52365c96c325873725c1f6e3433e';
+    r'085f10e337e4cdf3b3a4b140fe91f53a0ceb24a8';
 
 /// See also [AnimatedSidebarProvider].
 @ProviderFor(AnimatedSidebarProvider)

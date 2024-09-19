@@ -9,4 +9,18 @@ class AnimatedSidebarProvider extends _$AnimatedSidebarProvider {
   AnimatedSidebarStateModel build() {
     return AnimatedSidebarStateModel();
   }
+
+  void hovered(bool hovered) {
+    state = state.clone(hovered: hovered);
+  }
+
+  void openCloseSideBar({
+    required bool closed,
+    required bool stuck,
+  }) {
+    state = state.clone(
+      closed: closed,
+      stuck: stuck,
+    );
+  }
 }
