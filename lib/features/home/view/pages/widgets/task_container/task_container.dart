@@ -12,7 +12,7 @@ class _TaskContainerState extends State<TaskContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(15),
+      margin: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
       decoration: BoxDecoration(
         color: AppColors.containerColor,
         borderRadius: BorderRadius.circular(15),
