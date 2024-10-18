@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 
 class AnimatedSideBar extends ConsumerStatefulWidget {
@@ -32,9 +33,15 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
         height: MediaQuery.of(context).size.height,
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
-          color: HexColor('#232233'),
+          color: AppColors.containerColor,
           borderRadius:
               (animSidebarProvider.stuck ?? false) ? BorderRadius.zero : BorderRadius.circular(20),
+          border: (animSidebarProvider.stuck ?? false)
+              ? null
+              : Border.all(
+                  color: Colors.grey,
+                  width: 0.1,
+                ),
         ),
         child: Column(
           children: [

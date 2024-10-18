@@ -1,8 +1,10 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/animated_side_bar.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
+import 'package:stellarlist/features/home/view/pages/widgets/task_container/task_container.dart';
 
 @RoutePage()
 class HomePage extends ConsumerStatefulWidget {
@@ -17,6 +19,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
           AnimatedPositioned(
@@ -51,7 +54,21 @@ class _HomePageState extends ConsumerState<HomePage> {
                 color: Colors.transparent,
               ),
             ),
-          )
+          ),
+          Positioned(
+            top: 0,
+            bottom: 0,
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: PageView.builder(
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return TaskContainer();
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
