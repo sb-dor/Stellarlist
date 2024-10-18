@@ -1,12 +1,11 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
-import 'package:stellarlist/injections/injections.dart';
 
 class LetsGetStartedRegistrationWidget extends ConsumerStatefulWidget {
   const LetsGetStartedRegistrationWidget({super.key});

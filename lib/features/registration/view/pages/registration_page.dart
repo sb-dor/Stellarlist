@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:stellarlist/core/services/auto_route_service/auto_route_service.gr.dart';
+import 'package:stellarlist/core/widgets/blur_container.dart';
 import 'package:stellarlist/features/registration/view/pages/animations/slide_and_fade_animation.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
-import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
-import 'package:stellarlist/widgets/blur_container.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'widgets/email_registration_widget.dart';
 import 'widgets/lets_get_started_registration_widget.dart';

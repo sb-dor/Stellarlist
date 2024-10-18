@@ -3,12 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:stellarlist/core/services/auto_route_service/auto_route_service.dart';
 import 'package:stellarlist/firebase_options.dart';
-import 'package:stellarlist/injections/auto_router_injection/auto_router_injection.dart';
-import 'package:stellarlist/injections/injections.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'services/auto_route_service/auto_route_service.dart';
-import 'package:stellarlist/services/auto_route_service/observers/route_observer.dart' as obs;
+import 'package:stellarlist/core/services/auto_route_service/observers/route_observer.dart' as obs;
+import 'core/injections/auto_router_injection/auto_router_injection.dart';
+import 'core/injections/injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

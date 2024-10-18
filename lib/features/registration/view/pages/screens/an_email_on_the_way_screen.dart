@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
-import 'package:stellarlist/services/shortcuts_service/shortcuts_service.dart';
 
 @RoutePage()
 class AnEmailOnTheWayScreen extends ConsumerStatefulWidget {
@@ -16,7 +15,7 @@ class AnEmailOnTheWayScreen extends ConsumerStatefulWidget {
 }
 
 class _AnEmailOnTheWayScreenState extends ConsumerState<AnEmailOnTheWayScreen> {
-  bool _hoverToResendButton = false, _hoverToAnotherAccountButton = false;
+  bool _hoverToResendButton = false;
 
   @override
   Widget build(BuildContext context) {

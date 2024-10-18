@@ -1,8 +1,8 @@
-import 'package:stellarlist/injections/injections.dart';
-import 'package:stellarlist/services/auth_services/auth_service.dart';
-import 'package:stellarlist/services/auth_services/services/email_link_auth_service/email_link_auth_service.dart';
-import 'package:stellarlist/services/auth_services/services/facebook_auth_service/facebook_auth_service.dart';
-import 'package:stellarlist/services/auth_services/services/google_auth_service/google_auth_service.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/auth_services/auth_service.dart';
+import 'package:stellarlist/core/services/auth_services/services/email_link_auth_service/email_link_auth_service.dart';
+import 'package:stellarlist/core/services/auth_services/services/facebook_auth_service/facebook_auth_service.dart';
+import 'package:stellarlist/core/services/auth_services/services/google_auth_service/google_auth_service.dart';
 
 enum AuthServiceType { google, emailLink, facebook }
 

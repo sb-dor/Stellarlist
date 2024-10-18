@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:stellarlist/core/injections/auth_service_injections/auth_service_injections.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/auth_services/auth_service.dart';
+import 'package:stellarlist/core/services/shared_preferences/shared_prefer.dart';
 import 'package:stellarlist/features/registration/data/source/registration_source.dart';
-import 'package:stellarlist/injections/auth_service_injections/auth_service_injections.dart';
-import 'package:stellarlist/injections/injections.dart';
-import 'package:stellarlist/services/auth_services/auth_service.dart';
-import 'package:stellarlist/services/shared_preferences/shared_prefer.dart';
 
 class RegistrationSourceImpl implements RegistrationSource {
   final SharedPref _sharedPref = getIt<SharedPref>();

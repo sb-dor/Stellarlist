@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
-
+import 'auto_route_service.gr.dart';
 import 'route_guards/route_auth_guard.dart';
 import 'route_guards/route_email_ver_guard.dart';
 

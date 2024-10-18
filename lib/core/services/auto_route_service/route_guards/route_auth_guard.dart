@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/auto_route_service/auto_route_service.gr.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
-import 'package:stellarlist/injections/injections.dart';
-import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
 
 class RouteAuthGuard extends AutoRouteGuard {
   final WidgetRef ref;

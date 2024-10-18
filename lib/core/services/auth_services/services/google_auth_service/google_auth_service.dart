@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:stellarlist/injections/injections.dart';
-import 'package:stellarlist/services/auth_services/auth_service.dart';
-import 'package:stellarlist/services/shared_preferences/shared_prefer.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/auth_services/auth_service.dart';
+import 'package:stellarlist/core/services/shared_preferences/shared_prefer.dart';
 import 'google_env.dart';
 
 class GoogleAuthService implements AuthService {

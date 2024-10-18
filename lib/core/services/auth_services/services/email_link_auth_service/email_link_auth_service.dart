@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:stellarlist/services/auth_services/auth_service.dart';
-import 'package:stellarlist/services/auth_services/services/email_link_auth_service/email_link_auth_env.dart';
+import 'package:stellarlist/core/services/auth_services/auth_service.dart';
+import 'email_link_auth_env.dart';
 
 // https://medium.com/@akhilaand/passwordless-email-sign-in-using-flutter-and-firebase-dynamic-link-ace3906c70a7
 

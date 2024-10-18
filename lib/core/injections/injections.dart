@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
-import 'package:stellarlist/injections/auth_service_injections/auth_service_injections.dart';
-import 'package:stellarlist/injections/registration_injections/registration_injections.dart';
-import 'package:stellarlist/services/shared_preferences/shared_prefer.dart';
+import 'package:stellarlist/core/services/shared_preferences/shared_prefer.dart';
+import 'auth_service_injections/auth_service_injections.dart';
+import 'registration_injections/registration_injections.dart';
 
 final getIt = GetIt.instance;
 

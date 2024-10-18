@@ -2,13 +2,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/auth_services/auth_service.dart';
+import 'package:stellarlist/core/services/shortcuts_service/shortcuts_service.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
-import 'package:stellarlist/injections/injections.dart';
-import 'package:stellarlist/services/auth_services/auth_service.dart';
-import 'package:stellarlist/services/auto_route_service/auto_route_service.gr.dart';
-import 'package:stellarlist/services/shortcuts_service/shortcuts_service.dart';
 
 class EmailRegistrationWidget extends ConsumerStatefulWidget {
   const EmailRegistrationWidget({super.key});
