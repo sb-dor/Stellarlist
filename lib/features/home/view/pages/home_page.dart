@@ -15,6 +15,22 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(
+      viewportFraction: 0.6,
+    );
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
@@ -22,6 +38,30 @@ class _HomePageState extends ConsumerState<HomePage> {
       backgroundColor: AppColors.backgroundColor,
       body: Stack(
         children: [
+          Positioned(
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Row(
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 100),
+                  width: (animSidebarProvider.stuck ?? false) ? 265 : 0,
+                ),
+                Expanded(
+                  child: PageView.builder(
+                    controller: _pageController,
+                    itemCount: 5,
+                    padEnds: false,
+                    itemBuilder: (context, index) {
+                      return TaskContainer();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
           AnimatedPositioned(
             bottom: (animSidebarProvider.stuck ?? false) ? 0 : 5,
             left: (animSidebarProvider.stuck ?? false)
@@ -52,20 +92,6 @@ class _HomePageState extends ConsumerState<HomePage> {
               child: Container(
                 width: 15,
                 color: Colors.transparent,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            bottom: 0,
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: PageView.builder(
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return TaskContainer();
-                },
               ),
             ),
           ),

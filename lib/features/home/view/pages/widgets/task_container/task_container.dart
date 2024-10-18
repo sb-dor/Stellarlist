@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 
 class TaskContainer extends StatefulWidget {
   const TaskContainer({super.key});
@@ -10,6 +11,12 @@ class TaskContainer extends StatefulWidget {
 class _TaskContainerState extends State<TaskContainer> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Container(
+      margin: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        color: AppColors.containerColor,
+        borderRadius: BorderRadius.circular(15),
+      ),
+    );
   }
 }
