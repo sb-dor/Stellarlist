@@ -53,6 +53,7 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
             Visibility(
               visible: (animSidebarProvider.hovered ?? false),
               maintainState: true,
+              maintainAnimation: true,
               child: SizedBox(
                 height: 65,
                 child: AnimatedOpacity(
@@ -124,6 +125,49 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
               icon: Icons.list,
               title: "List",
               onTap: () {},
+            ),
+            const SizedBox(height: 50),
+            Padding(
+              padding: const EdgeInsets.only(left: 25, right: 15),
+              child: SizedBox(
+                height: 40,
+                child: Row(
+                  children: [
+                    Text(
+                      "Favorites",
+                      style: GoogleFonts.inter(color: Colors.grey.shade700),
+                    ),
+                    const Expanded(child: SizedBox.shrink()),
+                    Visibility(
+                      maintainAnimation: true,
+                      maintainState: true,
+                      visible: (animSidebarProvider.hovered ?? false),
+                      child: AnimatedOpacity(
+                        opacity: (animSidebarProvider.hovered ?? false) ? 1 : 0,
+                        duration: const Duration(milliseconds: 300),
+                        child: Row(
+                          children: [
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.add_link,
+                                size: 20,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(
+                                Icons.playlist_add_sharp,
+                                size: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
           ],
         ),
