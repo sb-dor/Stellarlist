@@ -12,4 +12,11 @@ part 'label_model.g.dart';
   }) = _LabelModel;
 
   factory LabelModel.fromJson(Map<String, Object?> json) => _$LabelModelFromJson(json);
+
+  static LabelModel? fromEntity(Label? label) {
+    if (label == null) return null;
+    return LabelModel(
+      id: label.id,
+    );
+  }
 }

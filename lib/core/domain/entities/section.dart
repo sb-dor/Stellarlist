@@ -4,13 +4,14 @@ import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:uuid/uuid.dart';
 
- class Section {
+class Section {
   final String? id;
   final String? title;
   final List<TaskList>? taskLists;
 
   Section({
+    required this.id,
+    required this.taskLists,
     this.title = "New Section",
-    this.taskLists = const [],
-  }) : id = const Uuid().v4();
+  });
 }

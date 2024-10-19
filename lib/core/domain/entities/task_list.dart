@@ -6,5 +6,9 @@ class TaskList {
   final String? title;
   final List<Task>? tasks;
 
-  TaskList({this.title = "New Task", this.tasks = const []}) : id = const Uuid().v4();
+  TaskList({
+    required this.id,
+    required this.tasks,
+    this.title = "New Task",
+  });
 }

@@ -56,7 +56,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     itemScrollController: _itemScrollController,
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: homeProvider.selectedFavorite?.taskList?.tasks?.length ?? 0, // temp
                     itemBuilder: (context, index) {
                       final checkScreenSizeConValue =
                           ResponsiveBreakpoints.of(context).largerThan(TABLET);

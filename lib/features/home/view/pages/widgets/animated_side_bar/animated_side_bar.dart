@@ -66,6 +66,7 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
                 itemBuilder: (context, index) {
                   final favorite =
                       FavoriteModelFunctions.fromEntity(homeProvider.favorites?[index]);
+                  debugPrint("list id: ${favorite?.id}");
                   return AsbSectionWidget(
                     icon: Icons.note_alt,
                     title: favorite?.title() ?? '',

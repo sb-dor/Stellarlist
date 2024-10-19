@@ -19,4 +19,15 @@ class TaskModel extends Task with _$TaskModel {
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, Object?> json) => _$TaskModelFromJson(json);
+
+  static TaskModel? fromEntity(Task? task) {
+    if (task == null) return null;
+    return TaskModel(
+      id: task.id,
+      title: task.title,
+      section: SectionModel.fromEntity(task.section),
+      assignee: AssigneeModel.fromEntity(task.assignee),
+      label: LabelModel.fromEntity(task.label),
+    );
+  }
 }

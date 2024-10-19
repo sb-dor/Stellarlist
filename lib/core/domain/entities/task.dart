@@ -11,9 +11,10 @@ class Task {
   final Label? label;
 
   Task({
+    required this.id,
     required this.title,
     required this.section,
     required this.assignee,
     required this.label,
-  }) : id = const Uuid().v4();
+  });
 }

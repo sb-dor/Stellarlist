@@ -11,6 +11,7 @@ part 'favorite_model.freezed.dart';
 @immutable
 abstract class FavoriteModel extends Favorite with _$FavoriteModel {
   factory FavoriteModel({
+    String? id,
     SectionModel? section,
     TaskListModel? taskList,
   }) = _FavoriteModel;
@@ -20,6 +21,7 @@ abstract class FavoriteModel extends Favorite with _$FavoriteModel {
   static FavoriteModel? fromEntity(Favorite? favorite) {
     if (favorite == null) return null;
     return FavoriteModel(
+      id: favorite.id,
       section: SectionModel.fromEntity(favorite.section),
       taskList: TaskListModel.fromEntity(favorite.taskList),
     );

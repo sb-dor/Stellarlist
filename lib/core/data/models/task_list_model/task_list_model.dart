@@ -21,6 +21,7 @@ class TaskListModel extends TaskList with _$TaskListModel {
     return TaskListModel(
       id: taskList.id,
       title: taskList.title,
+      tasks: taskList.tasks?.map((el) => TaskModel.fromEntity(el)!).toList(),
     );
   }
 }
