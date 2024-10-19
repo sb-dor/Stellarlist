@@ -61,7 +61,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 5,
-                    padding: EdgeInsets.only(right: 15),
+                    padding: const EdgeInsets.only(right: 15),
                     itemBuilder: (context, index) {
                       if (index < 1) {
                         return GestureDetector(

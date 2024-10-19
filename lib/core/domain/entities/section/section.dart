@@ -4,7 +4,7 @@ import 'package:stellarlist/core/domain/entities/task/task.dart';
 import 'package:uuid/uuid.dart';
 
  class Section {
-  final String id;
+  final String? id;
   final String? title;
   final List<Task>? tasks;
 

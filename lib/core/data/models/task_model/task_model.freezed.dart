@@ -22,6 +22,7 @@ TaskModel _$TaskModelFromJson(Map<String, dynamic> json) {
 mixin _$TaskModel {
   String? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  SectionModel? get section => throw _privateConstructorUsedError;
   AssigneeModel? get assignee => throw _privateConstructorUsedError;
   LabelModel? get label => throw _privateConstructorUsedError;
 
@@ -41,8 +42,13 @@ abstract class $TaskModelCopyWith<$Res> {
       _$TaskModelCopyWithImpl<$Res, TaskModel>;
   @useResult
   $Res call(
-      {String? id, String? title, AssigneeModel? assignee, LabelModel? label});
+      {String? id,
+      String? title,
+      SectionModel? section,
+      AssigneeModel? assignee,
+      LabelModel? label});
 
+  $SectionModelCopyWith<$Res>? get section;
   $AssigneeModelCopyWith<$Res>? get assignee;
   $LabelModelCopyWith<$Res>? get label;
 }
@@ -64,6 +70,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? section = freezed,
     Object? assignee = freezed,
     Object? label = freezed,
   }) {
@@ -76,6 +83,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      section: freezed == section
+          ? _value.section
+          : section // ignore: cast_nullable_to_non_nullable
+              as SectionModel?,
       assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
@@ -85,6 +96,20 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           : label // ignore: cast_nullable_to_non_nullable
               as LabelModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of TaskModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SectionModelCopyWith<$Res>? get section {
+    if (_value.section == null) {
+      return null;
+    }
+
+    return $SectionModelCopyWith<$Res>(_value.section!, (value) {
+      return _then(_value.copyWith(section: value) as $Val);
+    });
   }
 
   /// Create a copy of TaskModel
@@ -125,8 +150,14 @@ abstract class _$$TaskModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String? id, String? title, AssigneeModel? assignee, LabelModel? label});
+      {String? id,
+      String? title,
+      SectionModel? section,
+      AssigneeModel? assignee,
+      LabelModel? label});
 
+  @override
+  $SectionModelCopyWith<$Res>? get section;
   @override
   $AssigneeModelCopyWith<$Res>? get assignee;
   @override
@@ -148,6 +179,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? section = freezed,
     Object? assignee = freezed,
     Object? label = freezed,
   }) {
@@ -160,6 +192,10 @@ class __$$TaskModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      section: freezed == section
+          ? _value.section
+          : section // ignore: cast_nullable_to_non_nullable
+              as SectionModel?,
       assignee: freezed == assignee
           ? _value.assignee
           : assignee // ignore: cast_nullable_to_non_nullable
@@ -175,7 +211,8 @@ class __$$TaskModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TaskModelImpl implements _TaskModel {
-  _$TaskModelImpl({this.id, this.title, this.assignee, this.label});
+  _$TaskModelImpl(
+      {this.id, this.title, this.section, this.assignee, this.label});
 
   factory _$TaskModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskModelImplFromJson(json);
@@ -185,13 +222,15 @@ class _$TaskModelImpl implements _TaskModel {
   @override
   final String? title;
   @override
+  final SectionModel? section;
+  @override
   final AssigneeModel? assignee;
   @override
   final LabelModel? label;
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, title: $title, assignee: $assignee, label: $label)';
+    return 'TaskModel(id: $id, title: $title, section: $section, assignee: $assignee, label: $label)';
   }
 
   @override
@@ -201,6 +240,7 @@ class _$TaskModelImpl implements _TaskModel {
             other is _$TaskModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.section, section) || other.section == section) &&
             (identical(other.assignee, assignee) ||
                 other.assignee == assignee) &&
             (identical(other.label, label) || other.label == label));
@@ -208,7 +248,8 @@ class _$TaskModelImpl implements _TaskModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, assignee, label);
+  int get hashCode =>
+      Object.hash(runtimeType, id, title, section, assignee, label);
 
   /// Create a copy of TaskModel
   /// with the given fields replaced by the non-null parameter values.
@@ -230,6 +271,7 @@ abstract class _TaskModel implements TaskModel {
   factory _TaskModel(
       {final String? id,
       final String? title,
+      final SectionModel? section,
       final AssigneeModel? assignee,
       final LabelModel? label}) = _$TaskModelImpl;
 
@@ -240,6 +282,8 @@ abstract class _TaskModel implements TaskModel {
   String? get id;
   @override
   String? get title;
+  @override
+  SectionModel? get section;
   @override
   AssigneeModel? get assignee;
   @override

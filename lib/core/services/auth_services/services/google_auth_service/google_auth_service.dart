@@ -12,7 +12,6 @@ class GoogleAuthService implements AuthService {
   );
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-
   final SharedPref _sharedPref = getIt<SharedPref>();
 
   // user if from firebase user
