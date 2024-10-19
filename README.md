@@ -1,6 +1,6 @@
 # stellarlist
 
-A new Flutter project.
+A new Flutter project (currently for WEB).
 
 ## Getting Started
 

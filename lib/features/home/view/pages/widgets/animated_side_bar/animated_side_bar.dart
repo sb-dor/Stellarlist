@@ -69,7 +69,9 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
                   return AsbSectionWidget(
                     icon: Icons.note_alt,
                     title: favorite?.title() ?? '',
-                    onTap: () {},
+                    onTap: () {
+                      ref.read(homeProviderProvider.notifier).addTaskForTaskListOnClick(favorite!);
+                    },
                   );
                 },
               ),

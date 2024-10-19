@@ -22,6 +22,7 @@ TaskListModel _$TaskListModelFromJson(Map<String, dynamic> json) {
 mixin _$TaskListModel {
   String? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  List<TaskModel>? get tasks => throw _privateConstructorUsedError;
 
   /// Serializes this TaskListModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,7 @@ abstract class $TaskListModelCopyWith<$Res> {
           TaskListModel value, $Res Function(TaskListModel) then) =
       _$TaskListModelCopyWithImpl<$Res, TaskListModel>;
   @useResult
-  $Res call({String? id, String? title});
+  $Res call({String? id, String? title, List<TaskModel>? tasks});
 }
 
 /// @nodoc
@@ -59,6 +60,7 @@ class _$TaskListModelCopyWithImpl<$Res, $Val extends TaskListModel>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? tasks = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -69,6 +71,10 @@ class _$TaskListModelCopyWithImpl<$Res, $Val extends TaskListModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      tasks: freezed == tasks
+          ? _value.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<TaskModel>?,
     ) as $Val);
   }
 }
@@ -81,7 +87,7 @@ abstract class _$$TaskListModelImplCopyWith<$Res>
       __$$TaskListModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? title});
+  $Res call({String? id, String? title, List<TaskModel>? tasks});
 }
 
 /// @nodoc
@@ -99,6 +105,7 @@ class __$$TaskListModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
+    Object? tasks = freezed,
   }) {
     return _then(_$TaskListModelImpl(
       id: freezed == id
@@ -109,6 +116,10 @@ class __$$TaskListModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      tasks: freezed == tasks
+          ? _value._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<TaskModel>?,
     ));
   }
 }
@@ -116,7 +127,8 @@ class __$$TaskListModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TaskListModelImpl implements _TaskListModel {
-  _$TaskListModelImpl({this.id, this.title});
+  _$TaskListModelImpl({this.id, this.title, final List<TaskModel>? tasks})
+      : _tasks = tasks;
 
   factory _$TaskListModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$TaskListModelImplFromJson(json);
@@ -125,10 +137,19 @@ class _$TaskListModelImpl implements _TaskListModel {
   final String? id;
   @override
   final String? title;
+  final List<TaskModel>? _tasks;
+  @override
+  List<TaskModel>? get tasks {
+    final value = _tasks;
+    if (value == null) return null;
+    if (_tasks is EqualUnmodifiableListView) return _tasks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'TaskListModel(id: $id, title: $title)';
+    return 'TaskListModel(id: $id, title: $title, tasks: $tasks)';
   }
 
   @override
@@ -137,12 +158,14 @@ class _$TaskListModelImpl implements _TaskListModel {
         (other.runtimeType == runtimeType &&
             other is _$TaskListModelImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.title, title) || other.title == title));
+            (identical(other.title, title) || other.title == title) &&
+            const DeepCollectionEquality().equals(other._tasks, _tasks));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title);
+  int get hashCode => Object.hash(
+      runtimeType, id, title, const DeepCollectionEquality().hash(_tasks));
 
   /// Create a copy of TaskListModel
   /// with the given fields replaced by the non-null parameter values.
@@ -161,8 +184,10 @@ class _$TaskListModelImpl implements _TaskListModel {
 }
 
 abstract class _TaskListModel implements TaskListModel {
-  factory _TaskListModel({final String? id, final String? title}) =
-      _$TaskListModelImpl;
+  factory _TaskListModel(
+      {final String? id,
+      final String? title,
+      final List<TaskModel>? tasks}) = _$TaskListModelImpl;
 
   factory _TaskListModel.fromJson(Map<String, dynamic> json) =
       _$TaskListModelImpl.fromJson;
@@ -171,6 +196,8 @@ abstract class _TaskListModel implements TaskListModel {
   String? get id;
   @override
   String? get title;
+  @override
+  List<TaskModel>? get tasks;
 
   /// Create a copy of TaskListModel
   /// with the given fields replaced by the non-null parameter values.
