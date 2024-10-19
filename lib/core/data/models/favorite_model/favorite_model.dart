@@ -8,11 +8,20 @@ part 'favorite_model.g.dart';
 part 'favorite_model.freezed.dart';
 
 @freezed
-class FavoriteModel extends Favorite with _$FavoriteModel {
+@immutable
+abstract class FavoriteModel extends Favorite with _$FavoriteModel {
   factory FavoriteModel({
     SectionModel? section,
     TaskListModel? taskList,
   }) = _FavoriteModel;
 
   factory FavoriteModel.fromJson(Map<String, Object?> json) => _$FavoriteModelFromJson(json);
+
+  static FavoriteModel? fromEntity(Favorite? favorite) {
+    if (favorite == null) return null;
+    return FavoriteModel(
+      section: SectionModel.fromEntity(favorite.section),
+      taskList: TaskListModel.fromEntity(favorite.taskList),
+    );
+  }
 }

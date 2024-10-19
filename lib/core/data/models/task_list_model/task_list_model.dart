@@ -13,4 +13,12 @@ class TaskListModel extends TaskList with _$TaskListModel {
   }) = _TaskListModel;
 
   factory TaskListModel.fromJson(Map<String, Object?> json) => _$TaskListModelFromJson(json);
+
+  static TaskListModel? fromEntity(TaskList? taskList) {
+    if (taskList == null) return null;
+    return TaskListModel(
+      id: taskList.id,
+      title: taskList.title,
+    );
+  }
 }

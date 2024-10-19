@@ -10,7 +10,7 @@ import 'package:uuid/uuid.dart';
   final List<TaskList>? taskLists;
 
   Section({
-    required this.title,
-    required this.taskLists,
+    this.title = "New Section",
+    this.taskLists = const [],
   }) : id = const Uuid().v4();
 }
