@@ -1,6 +1,6 @@
-import 'package:stellarlist/core/domain/entities/assignee/assignee.dart';
-import 'package:stellarlist/core/domain/entities/label/label.dart';
-import 'package:stellarlist/core/domain/entities/section/section.dart';
+import 'package:stellarlist/core/domain/entities/assignee.dart';
+import 'package:stellarlist/core/domain/entities/label.dart';
+import 'package:stellarlist/core/domain/entities/section.dart';
 import 'package:uuid/uuid.dart';
 
 class Task {

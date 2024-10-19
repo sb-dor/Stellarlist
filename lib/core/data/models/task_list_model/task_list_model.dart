@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:stellarlist/core/domain/entities/task_list/task_list.dart';
+import 'package:stellarlist/core/domain/entities/task_list.dart';
 
 part 'task_list_model.g.dart';
 

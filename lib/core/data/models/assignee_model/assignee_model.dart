@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:stellarlist/core/domain/entities/assignee/assignee.dart';
+import 'package:stellarlist/core/domain/entities/assignee.dart';
 
 part 'assignee_model.freezed.dart';
 

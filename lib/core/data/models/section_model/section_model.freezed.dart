@@ -22,7 +22,7 @@ SectionModel _$SectionModelFromJson(Map<String, dynamic> json) {
 mixin _$SectionModel {
   String? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
-  List<TaskModel>? get tasks => throw _privateConstructorUsedError;
+  List<TaskListModel>? get taskLists => throw _privateConstructorUsedError;
 
   /// Serializes this SectionModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class $SectionModelCopyWith<$Res> {
           SectionModel value, $Res Function(SectionModel) then) =
       _$SectionModelCopyWithImpl<$Res, SectionModel>;
   @useResult
-  $Res call({String? id, String? title, List<TaskModel>? tasks});
+  $Res call({String? id, String? title, List<TaskListModel>? taskLists});
 }
 
 /// @nodoc
@@ -60,7 +60,7 @@ class _$SectionModelCopyWithImpl<$Res, $Val extends SectionModel>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
-    Object? tasks = freezed,
+    Object? taskLists = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -71,10 +71,10 @@ class _$SectionModelCopyWithImpl<$Res, $Val extends SectionModel>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      tasks: freezed == tasks
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskModel>?,
+      taskLists: freezed == taskLists
+          ? _value.taskLists
+          : taskLists // ignore: cast_nullable_to_non_nullable
+              as List<TaskListModel>?,
     ) as $Val);
   }
 }
@@ -87,7 +87,7 @@ abstract class _$$SectionModelImplCopyWith<$Res>
       __$$SectionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? title, List<TaskModel>? tasks});
+  $Res call({String? id, String? title, List<TaskListModel>? taskLists});
 }
 
 /// @nodoc
@@ -105,7 +105,7 @@ class __$$SectionModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? title = freezed,
-    Object? tasks = freezed,
+    Object? taskLists = freezed,
   }) {
     return _then(_$SectionModelImpl(
       id: freezed == id
@@ -116,10 +116,10 @@ class __$$SectionModelImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
-      tasks: freezed == tasks
-          ? _value._tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as List<TaskModel>?,
+      taskLists: freezed == taskLists
+          ? _value._taskLists
+          : taskLists // ignore: cast_nullable_to_non_nullable
+              as List<TaskListModel>?,
     ));
   }
 }
@@ -127,8 +127,9 @@ class __$$SectionModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$SectionModelImpl implements _SectionModel {
-  _$SectionModelImpl({this.id, this.title, final List<TaskModel>? tasks})
-      : _tasks = tasks;
+  _$SectionModelImpl(
+      {this.id, this.title, final List<TaskListModel>? taskLists})
+      : _taskLists = taskLists;
 
   factory _$SectionModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SectionModelImplFromJson(json);
@@ -137,19 +138,19 @@ class _$SectionModelImpl implements _SectionModel {
   final String? id;
   @override
   final String? title;
-  final List<TaskModel>? _tasks;
+  final List<TaskListModel>? _taskLists;
   @override
-  List<TaskModel>? get tasks {
-    final value = _tasks;
+  List<TaskListModel>? get taskLists {
+    final value = _taskLists;
     if (value == null) return null;
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
+    if (_taskLists is EqualUnmodifiableListView) return _taskLists;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(value);
   }
 
   @override
   String toString() {
-    return 'SectionModel(id: $id, title: $title, tasks: $tasks)';
+    return 'SectionModel(id: $id, title: $title, taskLists: $taskLists)';
   }
 
   @override
@@ -159,13 +160,14 @@ class _$SectionModelImpl implements _SectionModel {
             other is _$SectionModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
+            const DeepCollectionEquality()
+                .equals(other._taskLists, _taskLists));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, title, const DeepCollectionEquality().hash(_tasks));
+      runtimeType, id, title, const DeepCollectionEquality().hash(_taskLists));
 
   /// Create a copy of SectionModel
   /// with the given fields replaced by the non-null parameter values.
@@ -187,7 +189,7 @@ abstract class _SectionModel implements SectionModel {
   factory _SectionModel(
       {final String? id,
       final String? title,
-      final List<TaskModel>? tasks}) = _$SectionModelImpl;
+      final List<TaskListModel>? taskLists}) = _$SectionModelImpl;
 
   factory _SectionModel.fromJson(Map<String, dynamic> json) =
       _$SectionModelImpl.fromJson;
@@ -197,7 +199,7 @@ abstract class _SectionModel implements SectionModel {
   @override
   String? get title;
   @override
-  List<TaskModel>? get tasks;
+  List<TaskListModel>? get taskLists;
 
   /// Create a copy of SectionModel
   /// with the given fields replaced by the non-null parameter values.

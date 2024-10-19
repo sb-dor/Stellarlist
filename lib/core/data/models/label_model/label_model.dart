@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:stellarlist/core/domain/entities/label/label.dart';
+import 'package:stellarlist/core/domain/entities/label.dart';
 
 part 'label_model.freezed.dart';
 
