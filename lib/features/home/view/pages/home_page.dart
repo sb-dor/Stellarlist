@@ -1,6 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/animated_side_bar.dart';
@@ -55,8 +56,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                   //     : 0
                   ,
                 ),
+                const SizedBox(width: 15),
                 Expanded(
-                  child: ScrollablePositionedList.builder(
+                  child: ScrollablePositionedList.separated(
+                    separatorBuilder: (context, index) => const SizedBox(width: 15),
                     itemScrollController: _itemScrollController,
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
@@ -66,10 +69,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                       if (index < 1) {
                         return GestureDetector(
                           onTap: () {
+                            // for test
+                            final checkScreenSizeConValue =
+                                ResponsiveBreakpoints.of(context).largerThan(TABLET);
                             _itemScrollController.scrollTo(
                               index: index,
                               duration: const Duration(seconds: 1),
-                              alignment: index == 0 ? 0 : 0.544,
+                              alignment: checkScreenSizeConValue
+                                  ? index == 0
+                                      ? 0
+                                      : 0.546
+                                  : 0,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                           },
@@ -78,10 +88,17 @@ class _HomePageState extends ConsumerState<HomePage> {
                       } else {
                         return GestureDetector(
                           onTap: () {
+                            // for test
+                            final checkScreenSizeConValue =
+                                ResponsiveBreakpoints.of(context).largerThan(TABLET);
                             _itemScrollController.scrollTo(
                               index: index + 1,
                               duration: const Duration(seconds: 1),
-                              alignment: index == 0 ? 0 : 0.544,
+                              alignment: checkScreenSizeConValue
+                                  ? index == 0
+                                      ? 0
+                                      : 0.546
+                                  : 0,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                           },

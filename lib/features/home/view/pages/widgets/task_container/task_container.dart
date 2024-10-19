@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
@@ -28,15 +29,28 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
       child: AnimatedContainer(
         duration: widget.firstWidget ? const Duration(milliseconds: 300) : Duration.zero,
         transformAlignment: Alignment.centerRight,
-        width: (animatedSideBarProvider.stuck ?? false)
-            ? widget.firstWidget
-                ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.53
-                : (mediaQueryWidth - Constants.appBarStuckWidth) * 0.430
-            : widget.firstWidget
-                ? mediaQueryWidth * 0.53
-                : mediaQueryWidth * 0.435,
+        width: ResponsiveValue<double?>(
+          context,
+          conditionalValues: [
+            Condition.smallerThan(
+              name: DESKTOP,
+              value: (animatedSideBarProvider.stuck ?? false)
+                  ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.95
+                  : mediaQueryWidth * 0.96,
+            ),
+            Condition.largerThan(
+              name: TABLET,
+              value: (animatedSideBarProvider.stuck ?? false)
+                  ? widget.firstWidget
+                      ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.53
+                      : (mediaQueryWidth - Constants.appBarStuckWidth) * 0.435
+                  : widget.firstWidget
+                      ? mediaQueryWidth * 0.53
+                      : mediaQueryWidth * 0.438,
+            ),
+          ],
+        ).value,
         margin: const EdgeInsets.only(
-          left: 15,
           top: 15,
           bottom: 15,
         ),
