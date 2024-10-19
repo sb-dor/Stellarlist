@@ -13,4 +13,8 @@ class HomeProvider extends _$HomeProvider {
   }
 
 //
+
+  void changeStartedToScrollTask(bool startedToScrollTask) {
+    state = state.clone(startedToScrollTask: startedToScrollTask);
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
+import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 
 class AnimatedSideBar extends ConsumerStatefulWidget {
@@ -31,7 +32,9 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
         }
       },
       child: AnimatedContainer(
-        width: (animSidebarProvider.stuck ?? false) ? 265 : 250,
+        width: (animSidebarProvider.stuck ?? false)
+            ? Constants.appBarStuckWidth
+            : Constants.appBarUnStuckWith,
         height: MediaQuery.of(context).size.height,
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
