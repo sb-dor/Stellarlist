@@ -35,18 +35,18 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
             Condition.smallerThan(
               name: DESKTOP,
               value: (animatedSideBarProvider.stuck ?? false)
-                  ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.95
+                  ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.94
                   : mediaQueryWidth * 0.96,
             ),
             Condition.largerThan(
               name: TABLET,
               value: (animatedSideBarProvider.stuck ?? false)
                   ? widget.firstWidget
-                      ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.53
-                      : (mediaQueryWidth - Constants.appBarStuckWidth) * 0.435
+                      ? (mediaQueryWidth - Constants.appBarStuckWidth) * 0.60
+                      : (mediaQueryWidth - Constants.appBarStuckWidth) * 0.40 - 45
                   : widget.firstWidget
-                      ? mediaQueryWidth * 0.53
-                      : mediaQueryWidth * 0.438,
+                      ? mediaQueryWidth * 0.60
+                      : mediaQueryWidth * 0.40 - 45,
             ),
           ],
         ).value,
@@ -56,7 +56,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
         ),
         decoration: BoxDecoration(
           color: AppColors.containerColor,
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
         ),
       ),
     );

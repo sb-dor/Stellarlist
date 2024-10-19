@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
+import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/animated_side_bar.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/task_container/task_container.dart';
@@ -41,22 +42,14 @@ class _HomePageState extends ConsumerState<HomePage> {
           Positioned(
             top: 0,
             bottom: 0,
-            left: 0,
-            right: 0,
+            left: 15,
+            right: 15,
             child: Row(
               children: [
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 100),
-                  width: (animSidebarProvider.stuck ?? false) ? 265 : 0
-                  // ? homeProvider.startedToScrollTask
-                  //     ? 200
-                  //     : 265
-                  // : homeProvider.startedToScrollTask
-                  //     ? 30
-                  //     : 0
-                  ,
+                  width: (animSidebarProvider.stuck ?? false) ? Constants.appBarStuckWidth : 0,
                 ),
-                const SizedBox(width: 15),
                 Expanded(
                   child: ScrollablePositionedList.separated(
                     separatorBuilder: (context, index) => const SizedBox(width: 15),
@@ -64,22 +57,23 @@ class _HomePageState extends ConsumerState<HomePage> {
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 5,
-                    padding: const EdgeInsets.only(right: 15),
                     itemBuilder: (context, index) {
+                      final checkScreenSizeConValue =
+                          ResponsiveBreakpoints.of(context).largerThan(TABLET);
+                      double alignment = checkScreenSizeConValue
+                          ? index == 0
+                              ? 0
+                              : 0.630
+                          : 0;
                       if (index < 1) {
                         return GestureDetector(
                           onTap: () {
                             // for test
-                            final checkScreenSizeConValue =
-                                ResponsiveBreakpoints.of(context).largerThan(TABLET);
+
                             _itemScrollController.scrollTo(
                               index: index,
-                              duration: const Duration(seconds: 1),
-                              alignment: checkScreenSizeConValue
-                                  ? index == 0
-                                      ? 0
-                                      : 0.546
-                                  : 0,
+                              duration: const Duration(milliseconds: 400),
+                              alignment: alignment,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                           },
@@ -89,16 +83,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                         return GestureDetector(
                           onTap: () {
                             // for test
-                            final checkScreenSizeConValue =
-                                ResponsiveBreakpoints.of(context).largerThan(TABLET);
+
                             _itemScrollController.scrollTo(
                               index: index + 1,
-                              duration: const Duration(seconds: 1),
-                              alignment: checkScreenSizeConValue
-                                  ? index == 0
-                                      ? 0
-                                      : 0.546
-                                  : 0,
+                              duration: const Duration(milliseconds: 400),
+                              alignment: alignment,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                           },
