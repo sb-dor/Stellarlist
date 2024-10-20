@@ -42,54 +42,57 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void addTaskForTaskListOnClick(Favorite favorite) {
-    final task = TaskModel(); // Create the new task
+    // Find the favorite from the current state, exit early if not found
+    FavoriteModel? favoriteWithTaskList = _findFavorite(favorite.id);
+    if (favoriteWithTaskList == null) return;
 
-    FavoriteModel? findFavoriteWithTaskList = FavoriteModel.fromEntity(
-      state.favorites?.firstWhereOrNull(
-        (el) => el.id == favorite.id,
-      ),
-    );
+    // Ensure the taskList exists, create one if null
+    favoriteWithTaskList = _ensureTaskListExists(favoriteWithTaskList);
 
-    // If no favorite was found, exit
-    if (findFavoriteWithTaskList == null) return;
+    // Add the new task to the taskList
+    final updatedTasks = List<TaskModel>.from(favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[])
+      ..add(TaskModel());
 
-    // If the taskList is null, create a new TaskListModel
-    if (findFavoriteWithTaskList.taskList == null) {
-      findFavoriteWithTaskList = findFavoriteWithTaskList.copyWith(
-        taskList: TaskListModel(
-          id: const Uuid().v4(),
-          tasks: [],
-        ),
-      );
-    }
-
-    // Print the current tasks for debugging
-    debugPrint("Tasks before update: ${findFavoriteWithTaskList.taskList?.tasks}");
-
-    // Create a new mutable list from the existing tasks
-    final updatedTasks = List<TaskModel>.from(findFavoriteWithTaskList.taskList?.tasks ?? [])
-      ..add(task); // Add the new task to the list
-
-    // Update the taskList with the new list of tasks
-    findFavoriteWithTaskList = findFavoriteWithTaskList.copyWith(
-      taskList: findFavoriteWithTaskList.taskList?.copyWith(
+    // Update the favorite's task list
+    favoriteWithTaskList = favoriteWithTaskList.copyWith(
+      taskList: favoriteWithTaskList.taskList!.copyWith(
         tasks: updatedTasks,
       ),
     );
 
-    // Print the updated tasks for debugging
-    debugPrint("Tasks after update: ${findFavoriteWithTaskList.taskList?.tasks}");
+    // Update the state with the modified favorite
+    _updateFavoriteInState(favoriteWithTaskList);
+  }
 
-    // Update the favorites list in the state
-    var list = state.favorites ?? <Favorite>[];
+  FavoriteModel? _findFavorite(String? id) {
+    return FavoriteModel.fromEntity(
+      state.favorites?.firstWhereOrNull((el) => el.id == id),
+    );
+  }
 
-    // Replace the modified favorite in the list
-    list[list.indexWhere((el) => el.id == findFavoriteWithTaskList?.id)] = findFavoriteWithTaskList;
+  FavoriteModel _ensureTaskListExists(FavoriteModel favorite) {
+    return favorite.taskList != null
+        ? favorite
+        : favorite.copyWith(
+            taskList: TaskListModel(
+              id: const Uuid().v4(),
+              tasks: [],
+            ),
+          );
+  }
 
-    // Update the state with the modified favorites list and the selected favorite
+  void _updateFavoriteInState(FavoriteModel updatedFavorite) {
+    // Update the favorites list with the modified favorite
+    final updatedFavorites = List<Favorite>.from(state.favorites ?? []);
+    final index = updatedFavorites.indexWhere((el) => el.id == updatedFavorite.id);
+    if (index != -1) {
+      updatedFavorites[index] = updatedFavorite;
+    }
+
+    // Update the state
     state = state.clone(
-      favorites: list,
-      selectedFavorite: findFavoriteWithTaskList,
+      favorites: updatedFavorites,
+      selectedFavorite: updatedFavorite,
     );
   }
 
