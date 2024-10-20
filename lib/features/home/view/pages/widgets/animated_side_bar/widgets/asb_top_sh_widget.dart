@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/features/home/view/pages/home_page.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
-import 'package:stellarlist/features/home/view/provider/home_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 class AsbTopShowHideWidget extends ConsumerWidget {
   const AsbTopShowHideWidget({super.key});

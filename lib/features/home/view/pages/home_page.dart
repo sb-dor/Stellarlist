@@ -8,7 +8,7 @@ import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/animated_side_bar.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/task_container/task_container.dart';
-import 'package:stellarlist/features/home/view/provider/home_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 final ItemScrollController itemScrollController = ItemScrollController();
 

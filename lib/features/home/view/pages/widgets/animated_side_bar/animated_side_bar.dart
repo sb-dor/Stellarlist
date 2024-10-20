@@ -6,7 +6,7 @@ import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/widgets/asb_section_widget.dart';
-import 'package:stellarlist/features/home/view/provider/home_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 import 'widgets/asb_favorites_row_button_widget.dart';
 import 'widgets/asb_main_sections_widget.dart';
 import 'widgets/asb_top_sh_widget.dart';

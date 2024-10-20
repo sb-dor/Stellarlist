@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
-import 'package:stellarlist/features/home/view/provider/home_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 class AsbFavoritesRowButtonWidget extends ConsumerWidget {
   const AsbFavoritesRowButtonWidget({super.key});
