@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class SlideAnimation extends StatelessWidget {
   final Widget child;
+  final VoidCallback? onEnd;
   final Offset? begin;
   final Offset? end;
   final Duration? duration;
@@ -9,15 +10,17 @@ class SlideAnimation extends StatelessWidget {
   final double? endInterval;
   final Curve? curve;
 
-  const SlideAnimation(
-      {super.key,
-      required this.child,
-      this.begin,
-      this.end,
-      this.duration,
-      this.beginInterval,
-      this.endInterval,
-      this.curve});
+  const SlideAnimation({
+    super.key,
+    required this.child,
+    this.onEnd,
+    this.begin,
+    this.end,
+    this.duration,
+    this.beginInterval,
+    this.endInterval,
+    this.curve,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +38,7 @@ class SlideAnimation extends StatelessWidget {
       builder: (context, position, child) {
         return this.child;
       },
+      onEnd: onEnd,
     );
   }
 }
