@@ -1,5 +1,5 @@
 import 'package:stellarlist/core/domain/entities/favorite.dart';
 
-abstract interface class HomeFeatureRepo {
+abstract class IFavoritesDataSource {
   Future<void> addFavorite(Favorite favorite);
 }

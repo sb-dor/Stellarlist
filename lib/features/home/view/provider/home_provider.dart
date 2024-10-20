@@ -7,6 +7,9 @@ import 'package:stellarlist/core/domain/entities/favorite.dart';
 import 'package:stellarlist/core/domain/entities/section.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:collection/collection.dart';
+import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/features/home/domain/usecases/home_feature_repo_usecase.dart';
+import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'state_model/home_state_model.dart';
 
@@ -41,7 +44,7 @@ class HomeProvider extends _$HomeProvider {
     );
   }
 
-  void addTaskForTaskListOnClick(Favorite favorite) {
+  void addTaskForTaskListOnClick(Favorite favorite) async {
     // Find the favorite from the current state, exit early if not found
     FavoriteModel? favoriteWithTaskList = _findFavorite(favorite.id);
     if (favoriteWithTaskList == null) return;
@@ -49,9 +52,14 @@ class HomeProvider extends _$HomeProvider {
     // Ensure the taskList exists, create one if null
     favoriteWithTaskList = _ensureTaskListExists(favoriteWithTaskList);
 
+    if ((favoriteWithTaskList.taskList?.tasks?.isNotEmpty ?? false)) return;
+
     // Add the new task to the taskList
-    final updatedTasks = List<TaskModel>.from(favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[])
-      ..add(TaskModel());
+    final updatedTasks = List<TaskModel>.from(
+      favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[],
+    )..add(
+        TaskModel(),
+      );
 
     // Update the favorite's task list
     favoriteWithTaskList = favoriteWithTaskList.copyWith(
@@ -62,6 +70,12 @@ class HomeProvider extends _$HomeProvider {
 
     // Update the state with the modified favorite
     _updateFavoriteInState(favoriteWithTaskList);
+
+    // update server here
+    final registrationProvider = ref.watch(registrationProviderProvider);
+
+    // registrationProvider.user;
+    await getIt.get<HomeFeatureRepoUseCase>().addFavorite(favoriteWithTaskList);
   }
 
   FavoriteModel? _findFavorite(String? id) {

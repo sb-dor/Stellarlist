@@ -35,20 +35,27 @@ class _EditorHelperState extends State<EditorHelper> {
     super.dispose();
   }
 
+  void _onEnd(String value) {
+    if ((_timerForFinishingEdit?.isActive ?? false)) {
+      _timerForFinishingEdit?.cancel();
+    }
+    _timerForFinishingEdit = Timer(
+      const Duration(milliseconds: 500),
+      () {
+        widget.onValueChanged(value.trim());
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: _textEditingController,
       onChanged: (value) {
-        if ((_timerForFinishingEdit?.isActive ?? false)) {
-          _timerForFinishingEdit?.cancel();
-        }
-        _timerForFinishingEdit = Timer(
-          const Duration(milliseconds: 500),
-          () {
-            widget.onValueChanged(value.trim());
-          },
-        );
+        _onEnd(value);
+      },
+      onSubmitted: (value) {
+        _onEnd(value);
       },
       onTapOutside: (v) => FocusManager.instance.primaryFocus?.unfocus(),
       style: const TextStyle(color: Colors.white),

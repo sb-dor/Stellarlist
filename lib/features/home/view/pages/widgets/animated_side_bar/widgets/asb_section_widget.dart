@@ -54,7 +54,7 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
                   child: EditorHelper(
                     title: widget.title,
                     onValueChanged: (String value) {
-                      debugPrint("editing finished");
+                      debugPrint("editing finished: $value");
                     },
                   ),
                 )

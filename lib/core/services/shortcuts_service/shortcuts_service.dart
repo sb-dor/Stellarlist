@@ -28,3 +28,18 @@ class EnterShortCut extends ShortcutsI {
     };
   }
 }
+
+// class MouseRightButtonShortCut extends ShortcutsI {
+//   final VoidCallback onInvoke;
+//
+//   MouseRightButtonShortCut({required this.onInvoke}) {
+//     actions = {
+//       IntentActionHelper: CallbackAction<Intent>(
+//         onInvoke: (Intent intent) => onInvoke(),
+//       )
+//     };
+//     shortCuts = {
+//       LogicalKeySet(LogicalKeyboardKey.ma)
+//     };
+//   }
+// }
