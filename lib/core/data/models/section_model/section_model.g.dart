@@ -19,5 +19,5 @@ Map<String, dynamic> _$$SectionModelImplToJson(_$SectionModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'taskLists': instance.taskLists,
+      'taskLists': instance.taskLists?.map((e) => e.toJson()).toList(),
     };

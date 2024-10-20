@@ -7,9 +7,8 @@ part 'favorite_model.g.dart';
 
 part 'favorite_model.freezed.dart';
 
-@freezed
-@immutable
-abstract class FavoriteModel extends Favorite with _$FavoriteModel {
+@Freezed()
+class FavoriteModel extends Favorite with _$FavoriteModel {
   factory FavoriteModel({
     String? id,
     SectionModel? section,

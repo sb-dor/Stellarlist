@@ -19,5 +19,5 @@ Map<String, dynamic> _$$TaskListModelImplToJson(_$TaskListModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'tasks': instance.tasks,
+      'tasks': instance.tasks?.map((e) => e.toJson()).toList(),
     };

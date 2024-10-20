@@ -25,7 +25,7 @@ Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'section': instance.section,
-      'assignee': instance.assignee,
-      'label': instance.label,
+      'section': instance.section?.toJson(),
+      'assignee': instance.assignee?.toJson(),
+      'label': instance.label?.toJson(),
     };

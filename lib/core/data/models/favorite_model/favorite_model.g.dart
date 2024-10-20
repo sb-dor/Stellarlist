@@ -20,6 +20,6 @@ _$FavoriteModelImpl _$$FavoriteModelImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$FavoriteModelImplToJson(_$FavoriteModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'section': instance.section,
-      'taskList': instance.taskList,
+      'section': instance.section?.toJson(),
+      'taskList': instance.taskList?.toJson(),
     };
