@@ -23,11 +23,13 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
+    ref.read(homeProviderProvider.notifier).initFavoritesStreamListener();
     super.initState();
   }
 
   @override
   void dispose() {
+    ref.read(homeProviderProvider.notifier).disposeSubscriptions();
     super.dispose();
   }
 

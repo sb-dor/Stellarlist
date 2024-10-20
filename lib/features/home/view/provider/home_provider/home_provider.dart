@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:stellarlist/core/data/models/favorite_model/favorite_model.dart';
@@ -8,6 +10,7 @@ import 'package:stellarlist/core/domain/entities/section.dart';
 import 'package:collection/collection.dart';
 import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/features/home/domain/usecases/home_feature_repo_usecase.dart';
+import 'package:stellarlist/features/home/view/provider/favorites_stream_provider/favorites_stream_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'state_model/home_state_model.dart';
@@ -16,10 +19,28 @@ part 'home_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class HomeProvider extends _$HomeProvider {
+  late final StreamSubscription<List<Favorite>> _favoritesListener;
+
   //
   @override
   HomeStateModel build() {
     return HomeStateModel();
+  }
+
+  void initFavoritesStreamListener() {
+    _favoritesListener =
+        ref.watch<FavoritesStreamProvider>(favoritesStreamProviderProvider.notifier).build().listen(
+              _addToFavorites,
+            );
+  }
+
+  void disposeSubscriptions() {
+    _favoritesListener.cancel();
+  }
+
+  void _addToFavorites(List<Favorite> favorites) {
+    debugPrint("coming favorites");
+    state = state.clone(favorites: favorites);
   }
 
 //
