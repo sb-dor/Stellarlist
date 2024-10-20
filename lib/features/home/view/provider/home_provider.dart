@@ -109,4 +109,6 @@ class HomeProvider extends _$HomeProvider {
       favorites: state.favorites?..add(favorite),
     );
   }
+
+  void addCurrentIndex(int index) => state = state.clone(currentTaskIndex: index);
 }

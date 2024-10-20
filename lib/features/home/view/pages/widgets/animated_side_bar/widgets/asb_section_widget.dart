@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/core/widgets/editor_helper.dart';
+import 'package:super_editor/super_editor.dart';
 
 class AsbSectionWidget extends StatefulWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
 
+  final bool titleNameChange;
+
   const AsbSectionWidget({
     super.key,
     required this.icon,
     required this.title,
     required this.onTap,
+    this.titleNameChange = false,
   });
 
   @override
@@ -44,14 +49,24 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
                 size: 15,
               ),
               const SizedBox(width: 10),
-              Text(
-                widget.title,
-                style: GoogleFonts.inter(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 14,
-                ),
-              )
+              if (widget.titleNameChange)
+                Expanded(
+                  child: EditorHelper(
+                    title: widget.title,
+                    onValueChanged: (String value) {
+                      debugPrint("editing finished");
+                    },
+                  ),
+                )
+              else
+                Text(
+                  widget.title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
+                  ),
+                )
             ],
           ),
         ),

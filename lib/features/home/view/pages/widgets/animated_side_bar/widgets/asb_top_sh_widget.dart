@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import 'package:stellarlist/features/home/view/pages/home_page.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider.dart';
 
 class AsbTopShowHideWidget extends ConsumerWidget {
   const AsbTopShowHideWidget({super.key});
@@ -8,6 +11,7 @@ class AsbTopShowHideWidget extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
+    final homeProvider = ref.watch(homeProviderProvider);
     return Column(
       children: [
         Visibility(
@@ -47,6 +51,23 @@ class AsbTopShowHideWidget extends ConsumerWidget {
                                 stuck: true,
                               );
                         }
+                        final checkScreenSizeConValue =
+                            ResponsiveBreakpoints.of(context).largerThan(TABLET);
+                        double alignment = checkScreenSizeConValue
+                            ? homeProvider.currentTaskIndex == 0
+                                ? 0
+                                : 0.630
+                            : 0;
+                        Future.delayed(
+                          const Duration(milliseconds: 500),
+                          () {
+                            itemScrollController.scrollTo(
+                              index: homeProvider.currentTaskIndex,
+                              duration: const Duration(milliseconds: 400),
+                              alignment: alignment,
+                            );
+                          },
+                        );
                       },
                       icon: const Icon(
                         Icons.view_sidebar_outlined,

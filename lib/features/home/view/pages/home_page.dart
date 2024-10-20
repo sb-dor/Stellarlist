@@ -10,6 +10,8 @@ import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/p
 import 'package:stellarlist/features/home/view/pages/widgets/task_container/task_container.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider.dart';
 
+final ItemScrollController itemScrollController = ItemScrollController();
+
 @RoutePage()
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -19,8 +21,6 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-  final ItemScrollController _itemScrollController = ItemScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -53,7 +53,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                 Expanded(
                   child: ScrollablePositionedList.separated(
                     separatorBuilder: (context, index) => const SizedBox(width: 15),
-                    itemScrollController: _itemScrollController,
+                    itemScrollController: itemScrollController,
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: homeProvider.selectedFavorite?.taskList?.tasks?.length ?? 0,
@@ -71,12 +71,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                           onTap: () {
                             // for test
 
-                            _itemScrollController.scrollTo(
+                            itemScrollController.scrollTo(
                               index: index,
                               duration: const Duration(milliseconds: 400),
                               alignment: alignment,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
+                            ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
                           },
                           child: const TaskContainer(firstWidget: true),
                         );
@@ -85,12 +86,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                           onTap: () {
                             // for test
 
-                            _itemScrollController.scrollTo(
+                            itemScrollController.scrollTo(
                               index: index + 1,
                               duration: const Duration(milliseconds: 400),
                               alignment: alignment,
                             );
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
+                            ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
                           },
                           child: const TaskContainer(firstWidget: false),
                         );
