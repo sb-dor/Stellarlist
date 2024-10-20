@@ -5,6 +5,7 @@ import 'package:stellarlist/core/domain/entities/favorite.dart';
 class FavoriteModelFunctions extends Favorite {
   FavoriteModelFunctions({
     super.id,
+    super.userId,
     SectionModel? super.section,
     TaskListModel? super.taskList,
   });
@@ -13,6 +14,7 @@ class FavoriteModelFunctions extends Favorite {
     if (favorite == null) return null;
     return FavoriteModelFunctions(
       id: favorite.id,
+      userId: favorite.userId,
       section: SectionModel.fromEntity(favorite.section),
       taskList: TaskListModel.fromEntity(favorite.taskList),
     );

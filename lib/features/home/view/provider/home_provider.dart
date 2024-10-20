@@ -30,8 +30,9 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void addTaskList() {
-    final favorite = FavoriteModel(
+    final favorite = Favorite(
       id: const Uuid().v4(),
+      userId: ref.watch(registrationProviderProvider)?.user?.uid,
       section: null,
       taskList: TaskListModel(
         id: const Uuid().v4(),
@@ -58,7 +59,7 @@ class HomeProvider extends _$HomeProvider {
     final updatedTasks = List<TaskModel>.from(
       favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[],
     )..add(
-        TaskModel(),
+        TaskModel(id: const Uuid().v4(), title: "Title for task"),
       );
 
     // Update the favorite's task list
@@ -113,6 +114,7 @@ class HomeProvider extends _$HomeProvider {
   void addSection() {
     final favorite = Favorite(
       id: const Uuid().v4(),
+      userId: ref.watch(registrationProviderProvider)?.user?.uid,
       section: Section(
         id: const Uuid().v4(),
         taskLists: [],

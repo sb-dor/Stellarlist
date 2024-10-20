@@ -21,6 +21,7 @@ FavoriteModel _$FavoriteModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FavoriteModel {
   String? get id => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
   SectionModel? get section => throw _privateConstructorUsedError;
   TaskListModel? get taskList => throw _privateConstructorUsedError;
 
@@ -40,7 +41,11 @@ abstract class $FavoriteModelCopyWith<$Res> {
           FavoriteModel value, $Res Function(FavoriteModel) then) =
       _$FavoriteModelCopyWithImpl<$Res, FavoriteModel>;
   @useResult
-  $Res call({String? id, SectionModel? section, TaskListModel? taskList});
+  $Res call(
+      {String? id,
+      String? userId,
+      SectionModel? section,
+      TaskListModel? taskList});
 
   $SectionModelCopyWith<$Res>? get section;
   $TaskListModelCopyWith<$Res>? get taskList;
@@ -62,6 +67,7 @@ class _$FavoriteModelCopyWithImpl<$Res, $Val extends FavoriteModel>
   @override
   $Res call({
     Object? id = freezed,
+    Object? userId = freezed,
     Object? section = freezed,
     Object? taskList = freezed,
   }) {
@@ -69,6 +75,10 @@ class _$FavoriteModelCopyWithImpl<$Res, $Val extends FavoriteModel>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       section: freezed == section
           ? _value.section
@@ -118,7 +128,11 @@ abstract class _$$FavoriteModelImplCopyWith<$Res>
       __$$FavoriteModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, SectionModel? section, TaskListModel? taskList});
+  $Res call(
+      {String? id,
+      String? userId,
+      SectionModel? section,
+      TaskListModel? taskList});
 
   @override
   $SectionModelCopyWith<$Res>? get section;
@@ -140,6 +154,7 @@ class __$$FavoriteModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? userId = freezed,
     Object? section = freezed,
     Object? taskList = freezed,
   }) {
@@ -147,6 +162,10 @@ class __$$FavoriteModelImplCopyWithImpl<$Res>
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
               as String?,
       section: freezed == section
           ? _value.section
@@ -163,7 +182,7 @@ class __$$FavoriteModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FavoriteModelImpl implements _FavoriteModel {
-  _$FavoriteModelImpl({this.id, this.section, this.taskList});
+  _$FavoriteModelImpl({this.id, this.userId, this.section, this.taskList});
 
   factory _$FavoriteModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FavoriteModelImplFromJson(json);
@@ -171,13 +190,15 @@ class _$FavoriteModelImpl implements _FavoriteModel {
   @override
   final String? id;
   @override
+  final String? userId;
+  @override
   final SectionModel? section;
   @override
   final TaskListModel? taskList;
 
   @override
   String toString() {
-    return 'FavoriteModel(id: $id, section: $section, taskList: $taskList)';
+    return 'FavoriteModel(id: $id, userId: $userId, section: $section, taskList: $taskList)';
   }
 
   @override
@@ -186,6 +207,7 @@ class _$FavoriteModelImpl implements _FavoriteModel {
         (other.runtimeType == runtimeType &&
             other is _$FavoriteModelImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.section, section) || other.section == section) &&
             (identical(other.taskList, taskList) ||
                 other.taskList == taskList));
@@ -193,7 +215,7 @@ class _$FavoriteModelImpl implements _FavoriteModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, section, taskList);
+  int get hashCode => Object.hash(runtimeType, id, userId, section, taskList);
 
   /// Create a copy of FavoriteModel
   /// with the given fields replaced by the non-null parameter values.
@@ -214,6 +236,7 @@ class _$FavoriteModelImpl implements _FavoriteModel {
 abstract class _FavoriteModel implements FavoriteModel {
   factory _FavoriteModel(
       {final String? id,
+      final String? userId,
       final SectionModel? section,
       final TaskListModel? taskList}) = _$FavoriteModelImpl;
 
@@ -222,6 +245,8 @@ abstract class _FavoriteModel implements FavoriteModel {
 
   @override
   String? get id;
+  @override
+  String? get userId;
   @override
   SectionModel? get section;
   @override

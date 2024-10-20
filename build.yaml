@@ -1,3 +1,5 @@
+# https://github.com/rrousselGit/freezed/issues/86
+
 targets:
   $default:
     builders:

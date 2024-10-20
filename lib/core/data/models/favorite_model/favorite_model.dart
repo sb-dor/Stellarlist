@@ -7,10 +7,11 @@ part 'favorite_model.g.dart';
 
 part 'favorite_model.freezed.dart';
 
-@Freezed()
+@freezed
 class FavoriteModel extends Favorite with _$FavoriteModel {
   factory FavoriteModel({
     String? id,
+    String? userId,
     SectionModel? section,
     TaskListModel? taskList,
   }) = _FavoriteModel;
@@ -21,6 +22,7 @@ class FavoriteModel extends Favorite with _$FavoriteModel {
     if (favorite == null) return null;
     return FavoriteModel(
       id: favorite.id,
+      userId: favorite.userId,
       section: SectionModel.fromEntity(favorite.section),
       taskList: TaskListModel.fromEntity(favorite.taskList),
     );

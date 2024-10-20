@@ -12,7 +12,6 @@ import 'core/injections/injections.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Injections.inject();
 
   if (defaultTargetPlatform != TargetPlatform.linux) {
     await Firebase.initializeApp(
@@ -23,6 +22,8 @@ void main() async {
   if (kIsWeb) {
     setPathUrlStrategy();
   }
+
+  await Injections.inject();
 
   runApp(const ProviderScope(child: _StellarListApp()));
 }
