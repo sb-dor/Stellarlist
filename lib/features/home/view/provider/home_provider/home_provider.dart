@@ -68,6 +68,7 @@ class HomeProvider extends _$HomeProvider {
   void addTaskForTaskListOnClick(Favorite favorite) async {
     // Find the favorite from the current state, exit early if not found
     FavoriteModel? favoriteWithTaskList = _findFavorite(favorite.id);
+
     if (favoriteWithTaskList == null) return;
 
     // Ensure the taskList exists, create one if null
@@ -93,8 +94,6 @@ class HomeProvider extends _$HomeProvider {
     _updateFavoriteInState(favoriteWithTaskList);
 
     // update server here
-    final registrationProvider = ref.watch(registrationProviderProvider);
-
     // registrationProvider.user;
     await getIt.get<HomeFeatureRepoUseCase>().addFavorite(favoriteWithTaskList);
   }
@@ -147,4 +146,20 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void addCurrentIndex(int index) => state = state.clone(currentTaskIndex: index);
+
+  void changeTaskListName(Favorite favorite, String value) async {
+    var findFavorite = _findFavorite(favorite.id);
+
+    if (findFavorite == null) return;
+
+    findFavorite = findFavorite.copyWith(
+      taskList: findFavorite.taskList!.copyWith(
+        title: value,
+      ),
+    );
+
+    _updateFavoriteInState(findFavorite);
+
+    await getIt<HomeFeatureRepoUseCase>().updateFavorite(findFavorite);
+  }
 }

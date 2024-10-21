@@ -7,6 +7,7 @@ class AsbSectionWidget extends StatefulWidget {
   final IconData icon;
   final String title;
   final VoidCallback onTap;
+  final ValueChanged<String>? onTextChanged;
 
   final bool titleNameChange;
 
@@ -15,6 +16,7 @@ class AsbSectionWidget extends StatefulWidget {
     required this.icon,
     required this.title,
     required this.onTap,
+    this.onTextChanged,
     this.titleNameChange = false,
   });
 
@@ -54,7 +56,9 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
                   child: EditorHelper(
                     title: widget.title,
                     onValueChanged: (String value) {
-                      debugPrint("editing finished: $value");
+                      if (widget.onTextChanged != null) {
+                        widget.onTextChanged!(value.trim());
+                      }
                     },
                   ),
                 )

@@ -8,4 +8,6 @@ class HomeFeatureRepoUseCase {
   final HomeFeatureRepo _featureRepo = getIt<HomeFeatureRepo>();
 
   Future<void> addFavorite(Favorite favorite) => _featureRepo.addFavorite(favorite);
+
+  Future<void> updateFavorite(Favorite favorite) => _featureRepo.updateFavorite(favorite);
 }

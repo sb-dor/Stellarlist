@@ -10,11 +10,11 @@ import 'package:stellarlist/core/utils/firebase_database_references.dart';
 import 'i_favorites_data_source.dart';
 
 class FavoritesFirebaseDataSource implements IFavoritesDataSource {
+  final _favoritesRef = FirebaseDatabaseReferences.favorites;
   final _firebaseRTDatabase = FirebaseDatabase.instance;
 
   @override
   Future<void> addFavorite(Favorite favorite) async {
-
     // inside database it will create :
     // favorites :
     //      users_id ------- which will represent all users favorites
@@ -26,7 +26,7 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
 
     DatabaseReference databaseReference = _firebaseRTDatabase.ref(
       // favorites/user_id
-      "${FirebaseDatabaseReferences.favorites}${favorite.userId}",
+      "$_favoritesRef/${favorite.userId}",
     );
 
     // set your own Id for record
@@ -36,7 +36,7 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
   @override
   Stream<List<FavoriteModel>> favorites(User? user) async* {
     final DatabaseReference databaseReference = _firebaseRTDatabase.ref(
-      "${FirebaseDatabaseReferences.favorites}/${user?.uid}",
+      "$_favoritesRef/${user?.uid}",
     );
 
     yield* databaseReference.onValue.asyncMap(
@@ -57,8 +57,13 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
   }
 
   @override
-  Future<void> updateFavorite(Favorite favorite) {
-    // TODO: implement updateFavorite
-    throw UnimplementedError();
+  Future<void> updateFavorite(Favorite favorite) async {
+    final favoriteModel = FavoriteModel.fromEntity(favorite);
+
+    final DatabaseReference reference = _firebaseRTDatabase.ref(
+      "$_favoritesRef/${favoriteModel?.userId}",
+    );
+
+    await reference.child(favorite.id!).update(favoriteModel!.toJson());
   }
 }
