@@ -16,6 +16,13 @@ class TaskListModel extends TaskList with _$TaskListModel {
 
   factory TaskListModel.fromJson(Map<String, Object?> json) => _$TaskListModelFromJson(json);
 
+  factory TaskListModel.fromFirebaseJson(Map<Object?, Object?> json, {String? remoteId}) {
+    return TaskListModel(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+    );
+  }
+
   static TaskListModel? fromEntity(TaskList? taskList) {
     if (taskList == null) return null;
     return TaskListModel(

@@ -17,6 +17,13 @@ class SectionModel extends Section with _$SectionModel {
 
   factory SectionModel.fromJson(Map<String, Object?> json) => _$SectionModelFromJson(json);
 
+  factory SectionModel.fromFirebaseJson(Map<Object?, Object?> json, {String? remoteId}) {
+    return SectionModel(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+    );
+  }
+
   static SectionModel? fromEntity(Section? section) {
     if (section == null) return null;
     return SectionModel(

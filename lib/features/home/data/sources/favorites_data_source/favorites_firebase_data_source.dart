@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,6 +14,14 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
 
   @override
   Future<void> addFavorite(Favorite favorite) async {
+
+    // inside database it will create :
+    // favorites :
+    //      users_id ------- which will represent all users favorites
+    //        favorite
+    //        favorite
+    //        favorite
+
     final model = FavoriteModel.fromEntity(favorite);
 
     DatabaseReference databaseReference = _firebaseRTDatabase.ref(
@@ -20,7 +29,8 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
       "${FirebaseDatabaseReferences.favorites}${favorite.userId}",
     );
 
-    await databaseReference.push().set(model?.toJson());
+    // set your own Id for record
+    await databaseReference.child(model!.id!).set(model.toJson());
   }
 
   @override
@@ -30,27 +40,18 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
     );
 
     yield* databaseReference.onValue.asyncMap(
-          (DatabaseEvent event) {
+      (DatabaseEvent event) {
         if (event.snapshot.value == null) return <FavoriteModel>[];
-
-        // Cast the data to Map<dynamic, dynamic>
-        final Map<dynamic, dynamic> rawData =
-        event.snapshot.value as Map<dynamic, dynamic>;
-        debugPrint("coming raw data: $rawData");
-
-        // Convert to Map<String, Object?> safely
-        return rawData.entries
-            .map(
-              (entry) {
-            // Ensure that each entry.value is correctly cast as Map<String, Object?>
-            final value = entry.value as Map<dynamic, dynamic>;
-            final Map<String, Object?> favoriteData = value.map((key, value) =>
-                MapEntry(key as String, value)); // Convert to Map<String, Object?>
-
-            return FavoriteModel.fromJson(favoriteData);
+        final Map<Object?, Object?> data =
+            event.snapshot.value as Map<Object?, Object?>; // because runtime is this one
+        return data.entries.map(
+          (entry) {
+            // Handle casting each entry.value to Map<String, dynamic>
+            return FavoriteModel.fromFirebaseJson(
+              entry.value as Map<Object?, Object?>,
+            );
           },
-        )
-            .toList();
+        ).toList();
       },
     );
   }

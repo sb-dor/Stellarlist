@@ -18,6 +18,23 @@ class FavoriteModel extends Favorite with _$FavoriteModel {
 
   factory FavoriteModel.fromJson(Map<String, Object?> json) => _$FavoriteModelFromJson(json);
 
+  factory FavoriteModel.fromFirebaseJson(Map<Object?, Object?> json, {String? remoteId}) {
+    return FavoriteModel(
+      id: json['id'] as String?,
+      userId: json['user_id'] as String?,
+      section: json['section'] == null
+          ? null
+          : SectionModel.fromFirebaseJson(
+              json['section'] as Map<Object?, Object?>,
+            ),
+      taskList: json['task_list'] == null
+          ? null
+          : TaskListModel.fromFirebaseJson(
+              json['task_list'] as Map<Object?, Object?>,
+            ),
+    );
+  }
+
   static FavoriteModel? fromEntity(Favorite? favorite) {
     if (favorite == null) return null;
     return FavoriteModel(
