@@ -55,4 +55,10 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
       },
     );
   }
+
+  @override
+  Future<void> updateFavorite(Favorite favorite) {
+    // TODO: implement updateFavorite
+    throw UnimplementedError();
+  }
 }
