@@ -41,7 +41,7 @@ class _EditorHelperState extends State<EditorHelper> {
       _timerForFinishingEdit?.cancel();
     }
     _timerForFinishingEdit = Timer(
-      const Duration(milliseconds: 500),
+      const Duration(milliseconds: 250),
       () {
         widget.onValueChanged(value.trim());
       },

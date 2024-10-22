@@ -81,7 +81,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                             ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
                           },
-                          child: const TaskContainer(firstWidget: true),
+                          child: TaskContainer(
+                            firstWidget: true,
+                            taskList: homeProvider.selectedFavorite!.taskList!,
+                          ),
                         );
                       } else {
                         return GestureDetector(

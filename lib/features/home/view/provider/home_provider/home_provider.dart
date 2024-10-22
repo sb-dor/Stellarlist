@@ -75,7 +75,10 @@ class HomeProvider extends _$HomeProvider {
     // Ensure the taskList exists, create one if null
     favoriteWithTaskList = _ensureTaskListExists(favoriteWithTaskList);
 
-    if ((favoriteWithTaskList.taskList?.tasks?.isNotEmpty ?? false)) return;
+    if ((favoriteWithTaskList.taskList?.tasks?.isNotEmpty ?? false)) {
+      state = state.clone(selectedFavorite: favoriteWithTaskList);
+      return;
+    }
 
     // Add the new task to the taskList
     final updatedTasks = List<TaskModel>.from(
@@ -85,10 +88,8 @@ class HomeProvider extends _$HomeProvider {
       );
 
     // Update the favorite's task list
-    favoriteWithTaskList = favoriteWithTaskList.copyWith(
-      taskList: favoriteWithTaskList.taskList!.copyWith(
-        tasks: updatedTasks,
-      ),
+    favoriteWithTaskList = favoriteWithTaskList.copyWith.taskList!(
+      tasks: updatedTasks,
     );
 
     // Update the state with the modified favorite

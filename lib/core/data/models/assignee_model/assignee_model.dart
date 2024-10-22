@@ -13,6 +13,12 @@ class AssigneeModel extends Assignee with _$AssigneeModel {
 
   factory AssigneeModel.fromJson(Map<String, Object?> json) => _$AssigneeModelFromJson(json);
 
+  factory AssigneeModel.fromFirebaseJson(Map<Object?, Object?> json) {
+    return AssigneeModel(
+      id: json['id'] as String?,
+    );
+  }
+
   static AssigneeModel? fromEntity(Assignee? assignee) {
     if (assignee == null) return null;
     return AssigneeModel(

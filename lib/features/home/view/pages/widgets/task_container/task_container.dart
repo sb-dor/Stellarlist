@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/core/animations/slide_animation.dart';
+import 'package:stellarlist/core/domain/entities/task.dart';
+import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 
 class TaskContainer extends ConsumerStatefulWidget {
+  final TaskList? taskList;
+  final Task? task;
   final bool firstWidget;
 
   const TaskContainer({
     super.key,
+    this.taskList,
+    this.task,
     required this.firstWidget,
   });
 
@@ -55,6 +61,63 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
         color: AppColors.containerColor,
         borderRadius: BorderRadius.circular(10),
       ),
+      child: widget.firstWidget
+          ? _FirstContainer(
+              taskList: widget.taskList,
+            )
+          : _SecondContainer(
+              task: widget.task,
+            ),
     );
+  }
+}
+
+// rename in the future
+class _FirstContainer extends StatefulWidget {
+  final TaskList? taskList;
+
+  const _FirstContainer({super.key, required this.taskList});
+
+  @override
+  State<_FirstContainer> createState() => _FirstContainerState();
+}
+
+class _FirstContainerState extends State<_FirstContainer> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(),
+                    ),
+                    backgroundColor: WidgetStatePropertyAll(
+                      AppColors.containerColor.withOpacity(0.9),
+                    )),
+                onPressed: () {},
+                child: Text("Share"),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+}
+
+// rename in the future
+class _SecondContainer extends StatelessWidget {
+  final Task? task;
+
+  const _SecondContainer({super.key, required this.task});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
