@@ -20,6 +20,13 @@ class TaskModel extends Task with _$TaskModel {
 
   factory TaskModel.fromJson(Map<String, Object?> json) => _$TaskModelFromJson(json);
 
+  factory TaskModel.fromFirebaseJson(Map<Object?, Object?> json, {String? remoteId}) {
+    return TaskModel(
+      id: json['id'] as String?,
+      title: json['title'] as String?,
+    );
+  }
+
   static TaskModel? fromEntity(Task? task) {
     if (task == null) return null;
     return TaskModel(

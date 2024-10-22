@@ -9,19 +9,19 @@ part of 'favorite_model.dart';
 _$FavoriteModelImpl _$$FavoriteModelImplFromJson(Map<String, dynamic> json) =>
     _$FavoriteModelImpl(
       id: json['id'] as String?,
-      userId: json['userId'] as String?,
+      userId: json['user_id'] as String?,
       section: json['section'] == null
           ? null
           : SectionModel.fromJson(json['section'] as Map<String, dynamic>),
-      taskList: json['taskList'] == null
+      taskList: json['task_list'] == null
           ? null
-          : TaskListModel.fromJson(json['taskList'] as Map<String, dynamic>),
+          : TaskListModel.fromJson(json['task_list'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$FavoriteModelImplToJson(_$FavoriteModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userId': instance.userId,
+      'user_id': instance.userId,
       'section': instance.section?.toJson(),
-      'taskList': instance.taskList?.toJson(),
+      'task_list': instance.taskList?.toJson(),
     };

@@ -21,8 +21,10 @@ FavoriteModel _$FavoriteModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FavoriteModel {
   String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "user_id")
   String? get userId => throw _privateConstructorUsedError;
   SectionModel? get section => throw _privateConstructorUsedError;
+  @JsonKey(name: "task_list")
   TaskListModel? get taskList => throw _privateConstructorUsedError;
 
   /// Serializes this FavoriteModel to a JSON map.
@@ -43,9 +45,9 @@ abstract class $FavoriteModelCopyWith<$Res> {
   @useResult
   $Res call(
       {String? id,
-      String? userId,
+      @JsonKey(name: "user_id") String? userId,
       SectionModel? section,
-      TaskListModel? taskList});
+      @JsonKey(name: "task_list") TaskListModel? taskList});
 
   $SectionModelCopyWith<$Res>? get section;
   $TaskListModelCopyWith<$Res>? get taskList;
@@ -130,9 +132,9 @@ abstract class _$$FavoriteModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {String? id,
-      String? userId,
+      @JsonKey(name: "user_id") String? userId,
       SectionModel? section,
-      TaskListModel? taskList});
+      @JsonKey(name: "task_list") TaskListModel? taskList});
 
   @override
   $SectionModelCopyWith<$Res>? get section;
@@ -182,7 +184,11 @@ class __$$FavoriteModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FavoriteModelImpl implements _FavoriteModel {
-  _$FavoriteModelImpl({this.id, this.userId, this.section, this.taskList});
+  _$FavoriteModelImpl(
+      {this.id,
+      @JsonKey(name: "user_id") this.userId,
+      this.section,
+      @JsonKey(name: "task_list") this.taskList});
 
   factory _$FavoriteModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$FavoriteModelImplFromJson(json);
@@ -190,10 +196,12 @@ class _$FavoriteModelImpl implements _FavoriteModel {
   @override
   final String? id;
   @override
+  @JsonKey(name: "user_id")
   final String? userId;
   @override
   final SectionModel? section;
   @override
+  @JsonKey(name: "task_list")
   final TaskListModel? taskList;
 
   @override
@@ -235,10 +243,11 @@ class _$FavoriteModelImpl implements _FavoriteModel {
 
 abstract class _FavoriteModel implements FavoriteModel {
   factory _FavoriteModel(
-      {final String? id,
-      final String? userId,
-      final SectionModel? section,
-      final TaskListModel? taskList}) = _$FavoriteModelImpl;
+          {final String? id,
+          @JsonKey(name: "user_id") final String? userId,
+          final SectionModel? section,
+          @JsonKey(name: "task_list") final TaskListModel? taskList}) =
+      _$FavoriteModelImpl;
 
   factory _FavoriteModel.fromJson(Map<String, dynamic> json) =
       _$FavoriteModelImpl.fromJson;
@@ -246,10 +255,12 @@ abstract class _FavoriteModel implements FavoriteModel {
   @override
   String? get id;
   @override
+  @JsonKey(name: "user_id")
   String? get userId;
   @override
   SectionModel? get section;
   @override
+  @JsonKey(name: "task_list")
   TaskListModel? get taskList;
 
   /// Create a copy of FavoriteModel

@@ -24,8 +24,9 @@ class _EditorHelperState extends State<EditorHelper> {
 
   @override
   void initState() {
-    _textEditingController.text = widget.title;
     super.initState();
+    _textEditingController.text = widget.title;
+    debugPrint("setting title is: ${widget.title}");
   }
 
   @override

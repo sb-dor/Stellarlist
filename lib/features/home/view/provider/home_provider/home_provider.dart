@@ -8,6 +8,7 @@ import 'package:stellarlist/core/data/models/task_model/task_model.dart';
 import 'package:stellarlist/core/domain/entities/favorite.dart';
 import 'package:stellarlist/core/domain/entities/section.dart';
 import 'package:collection/collection.dart';
+import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/features/home/domain/usecases/home_feature_repo_usecase.dart';
 import 'package:stellarlist/features/home/view/provider/favorites_stream_provider/favorites_stream_provider.dart';
@@ -40,7 +41,7 @@ class HomeProvider extends _$HomeProvider {
 
   void _addToFavorites(List<Favorite> favorites) {
     debugPrint("coming favorites");
-    state = state.clone(favorites: favorites);
+    state = state.clone(favorites: favorites.map((favorite) => favorite as Favorite).toList());
   }
 
 //
@@ -54,7 +55,7 @@ class HomeProvider extends _$HomeProvider {
       id: const Uuid().v4(),
       userId: ref.watch(registrationProviderProvider)?.user?.uid,
       section: null,
-      taskList: TaskListModel(
+      taskList: TaskList(
         id: const Uuid().v4(),
         tasks: [],
         title: "New List",

@@ -12,7 +12,7 @@ class SectionModel extends Section with _$SectionModel {
   factory SectionModel({
     String? id,
     String? title,
-    List<TaskListModel>? taskLists,
+    @JsonKey(name: "task_list") List<TaskListModel>? taskLists,
   }) = _SectionModel;
 
   factory SectionModel.fromJson(Map<String, Object?> json) => _$SectionModelFromJson(json);

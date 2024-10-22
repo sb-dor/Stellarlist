@@ -22,6 +22,7 @@ SectionModel _$SectionModelFromJson(Map<String, dynamic> json) {
 mixin _$SectionModel {
   String? get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  @JsonKey(name: "task_list")
   List<TaskListModel>? get taskLists => throw _privateConstructorUsedError;
 
   /// Serializes this SectionModel to a JSON map.
@@ -40,7 +41,10 @@ abstract class $SectionModelCopyWith<$Res> {
           SectionModel value, $Res Function(SectionModel) then) =
       _$SectionModelCopyWithImpl<$Res, SectionModel>;
   @useResult
-  $Res call({String? id, String? title, List<TaskListModel>? taskLists});
+  $Res call(
+      {String? id,
+      String? title,
+      @JsonKey(name: "task_list") List<TaskListModel>? taskLists});
 }
 
 /// @nodoc
@@ -87,7 +91,10 @@ abstract class _$$SectionModelImplCopyWith<$Res>
       __$$SectionModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? id, String? title, List<TaskListModel>? taskLists});
+  $Res call(
+      {String? id,
+      String? title,
+      @JsonKey(name: "task_list") List<TaskListModel>? taskLists});
 }
 
 /// @nodoc
@@ -128,7 +135,9 @@ class __$$SectionModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$SectionModelImpl implements _SectionModel {
   _$SectionModelImpl(
-      {this.id, this.title, final List<TaskListModel>? taskLists})
+      {this.id,
+      this.title,
+      @JsonKey(name: "task_list") final List<TaskListModel>? taskLists})
       : _taskLists = taskLists;
 
   factory _$SectionModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -140,6 +149,7 @@ class _$SectionModelImpl implements _SectionModel {
   final String? title;
   final List<TaskListModel>? _taskLists;
   @override
+  @JsonKey(name: "task_list")
   List<TaskListModel>? get taskLists {
     final value = _taskLists;
     if (value == null) return null;
@@ -187,9 +197,10 @@ class _$SectionModelImpl implements _SectionModel {
 
 abstract class _SectionModel implements SectionModel {
   factory _SectionModel(
-      {final String? id,
-      final String? title,
-      final List<TaskListModel>? taskLists}) = _$SectionModelImpl;
+          {final String? id,
+          final String? title,
+          @JsonKey(name: "task_list") final List<TaskListModel>? taskLists}) =
+      _$SectionModelImpl;
 
   factory _SectionModel.fromJson(Map<String, dynamic> json) =
       _$SectionModelImpl.fromJson;
@@ -199,6 +210,7 @@ abstract class _SectionModel implements SectionModel {
   @override
   String? get title;
   @override
+  @JsonKey(name: "task_list")
   List<TaskListModel>? get taskLists;
 
   /// Create a copy of SectionModel

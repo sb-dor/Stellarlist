@@ -66,10 +66,10 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
                 itemBuilder: (context, index) {
                   final favorite =
                       FavoriteModelFunctions.fromEntity(homeProvider.favorites?[index]);
-                  debugPrint("list id: ${favorite?.id}");
+                  debugPrint("list id: ${favorite?.title(getTaskListTitle: true) ?? ''}");
                   return AsbSectionWidget(
                     icon: Icons.note_alt,
-                    title: favorite?.title() ?? '',
+                    title: favorite?.title(getTaskListTitle: true) ?? '',
                     titleNameChange: true,
                     onTap: () {
                       ref.read(homeProviderProvider.notifier).addTaskForTaskListOnClick(favorite!);

@@ -17,9 +17,15 @@ class TaskListModel extends TaskList with _$TaskListModel {
   factory TaskListModel.fromJson(Map<String, Object?> json) => _$TaskListModelFromJson(json);
 
   factory TaskListModel.fromFirebaseJson(Map<Object?, Object?> json, {String? remoteId}) {
+    List<TaskModel> tasks = [];
+    if (json.containsKey('tasks')) {
+      List<dynamic> tasksD = json['tasks'] as List;
+      tasks = tasksD.map((e) => TaskModel.fromFirebaseJson(e as Map<Object?, Object?>)).toList();
+    }
     return TaskListModel(
       id: json['id'] as String?,
       title: json['title'] as String?,
+      tasks: tasks,
     );
   }
 

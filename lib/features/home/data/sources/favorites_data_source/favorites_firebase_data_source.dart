@@ -47,6 +47,7 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
         return data.entries.map(
           (entry) {
             // Handle casting each entry.value to Map<String, dynamic>
+            log("data from server: ${entry.value}");
             return FavoriteModel.fromFirebaseJson(
               entry.value as Map<Object?, Object?>,
             );
@@ -63,6 +64,8 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
     final DatabaseReference reference = _firebaseRTDatabase.ref(
       "$_favoritesRef/${favoriteModel?.userId}",
     );
+
+    debugPrint("path: ${"$_favoritesRef/${favorite.userId}"} | ${favorite.id}");
 
     await reference.child(favorite.id!).update(favoriteModel!.toJson());
   }

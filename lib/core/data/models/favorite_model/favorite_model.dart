@@ -11,9 +11,9 @@ part 'favorite_model.freezed.dart';
 class FavoriteModel extends Favorite with _$FavoriteModel {
   factory FavoriteModel({
     String? id,
-    String? userId,
+    @JsonKey(name: "user_id") String? userId,
     SectionModel? section,
-    TaskListModel? taskList,
+    @JsonKey(name: "task_list") TaskListModel? taskList,
   }) = _FavoriteModel;
 
   factory FavoriteModel.fromJson(Map<String, Object?> json) => _$FavoriteModelFromJson(json);
