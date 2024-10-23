@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/core/animations/slide_animation.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
@@ -93,14 +94,38 @@ class _FirstContainerState extends State<_FirstContainer> {
             children: [
               ElevatedButton(
                 style: ButtonStyle(
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(),
-                    ),
-                    backgroundColor: WidgetStatePropertyAll(
-                      AppColors.containerColor.withOpacity(0.9),
-                    )),
+                  shape: const WidgetStatePropertyAll(
+                    StadiumBorder(),
+                  ),
+                  padding: const WidgetStatePropertyAll(
+                    EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
+                  ),
+                  elevation: const WidgetStatePropertyAll(0.0),
+                  backgroundColor: WidgetStatePropertyAll(
+                    AppColors.buttonBackgroundColor,
+                  ),
+                  overlayColor: const WidgetStatePropertyAll(
+                    Colors.white,
+                  ),
+                ),
                 onPressed: () {},
-                child: Text("Share"),
+                child: Text(
+                  "Share",
+                  style: GoogleFonts.inter(color: Colors.grey),
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Expanded(
+                child: Text("This list is private"),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.star_border_rounded),
+              ),
+              const SizedBox(width: 10),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.more_vert),
               ),
             ],
           )
