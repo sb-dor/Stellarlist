@@ -8,6 +8,7 @@ import 'package:stellarlist/core/data/models/task_model/task_model.dart';
 import 'package:stellarlist/core/domain/entities/favorite.dart';
 import 'package:stellarlist/core/domain/entities/section.dart';
 import 'package:collection/collection.dart';
+import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/features/home/domain/usecases/home_feature_repo_usecase.dart';
@@ -163,5 +164,17 @@ class HomeProvider extends _$HomeProvider {
     _updateFavoriteInState(findFavorite);
 
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(findFavorite);
+  }
+
+  Favorite? findFavoriteByTaskList(TaskList? taskList) {
+    return state.favorites?.firstWhereOrNull((favorite) => favorite.taskList?.id == taskList?.id);
+  }
+
+  Favorite? findFavoriteByTask(Task? task) {
+    return state.favorites?.firstWhereOrNull((favorite) {
+      return (favorite.taskList?.tasks
+              ?.any((favoritesTaskListTask) => favoritesTaskListTask.id == task?.id) ??
+          false);
+    });
   }
 }

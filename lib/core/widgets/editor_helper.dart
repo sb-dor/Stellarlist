@@ -1,16 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EditorHelper extends StatefulWidget {
   final String title;
   final ValueChanged<String> onValueChanged;
   final String? hintText;
+  final double? textFontSize;
+  final FontWeight? fontWeight;
 
   const EditorHelper({
     super.key,
     required this.title,
     required this.onValueChanged,
+    this.textFontSize = 14,
+    this.fontWeight,
     this.hintText,
   });
 
@@ -59,7 +64,11 @@ class _EditorHelperState extends State<EditorHelper> {
         _onEnd(value);
       },
       onTapOutside: (v) => FocusManager.instance.primaryFocus?.unfocus(),
-      style: const TextStyle(color: Colors.white),
+      style: GoogleFonts.inter(
+        color: Colors.white,
+        fontSize: widget.textFontSize,
+        fontWeight: widget.fontWeight,
+      ),
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.all(0),
         isDense: true,

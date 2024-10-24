@@ -7,7 +7,9 @@ import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/utils/constants.dart';
+import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 class TaskContainer extends ConsumerStatefulWidget {
   final TaskList? taskList;
@@ -74,16 +76,19 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
 }
 
 // rename in the future
-class _FirstContainer extends StatefulWidget {
+class _FirstContainer extends ConsumerStatefulWidget {
   final TaskList? taskList;
 
-  const _FirstContainer({super.key, required this.taskList});
+  const _FirstContainer({
+    super.key,
+    required this.taskList,
+  });
 
   @override
-  State<_FirstContainer> createState() => _FirstContainerState();
+  ConsumerState createState() => __FirstContainerState();
 }
 
-class _FirstContainerState extends State<_FirstContainer> {
+class __FirstContainerState extends ConsumerState<_FirstContainer> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -115,8 +120,11 @@ class _FirstContainerState extends State<_FirstContainer> {
                 ),
               ),
               const SizedBox(width: 10),
-              const Expanded(
-                child: Text("This list is private"),
+              Expanded(
+                child: Text(
+                  "This list is private",
+                  style: GoogleFonts.inter(color: Colors.white),
+                ),
               ),
               IconButton(
                 onPressed: () {},
@@ -128,6 +136,30 @@ class _FirstContainerState extends State<_FirstContainer> {
                 icon: const Icon(Icons.more_vert),
               ),
             ],
+          ),
+          const SizedBox(height: 30),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                EditorHelper(
+                  title: widget.taskList?.title ?? '',
+                  onValueChanged: (value) {
+                    final favorite = ref
+                        .read(homeProviderProvider.notifier)
+                        .findFavoriteByTaskList(widget.taskList);
+                    if (favorite == null) return;
+                    debugPrint("favorite issis: ${favorite}");
+                    ref.read(homeProviderProvider.notifier).changeTaskListName(
+                          favorite,
+                          value,
+                        );
+                  },
+                  textFontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ],
+            ),
           )
         ],
       ),
