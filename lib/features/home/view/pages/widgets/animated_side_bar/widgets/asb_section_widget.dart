@@ -51,24 +51,28 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
                 size: 15,
               ),
               const SizedBox(width: 10),
-              if (widget.titleNameChange)
-                Expanded(
-                  child: EditorHelper(
-                    title: widget.title,
-                    onValueChanged: (String value) {
-                      if (widget.onTextChanged != null) {
-                        widget.onTextChanged!(value.trim());
-                      }
-                    },
-                  ),
-                )
-              else
-                Text(
-                  widget.title,
-                  style: GoogleFonts.inter(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14,
+              // if (widget.titleNameChange)
+              //   Expanded(
+              //     child: EditorHelper(
+              //       title: widget.title,
+              //       onValueChanged: (String value) {
+              //         if (widget.onTextChanged != null) {
+              //           widget.onTextChanged!(value.trim());
+              //         }
+              //       },
+              //     ),
+              //   )
+              // else
+                Flexible(
+                  child: Text(
+                    widget.title,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 )
             ],

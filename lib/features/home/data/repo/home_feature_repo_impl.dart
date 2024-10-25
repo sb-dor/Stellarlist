@@ -17,7 +17,9 @@ class HomeFeatureRepoImpl implements HomeFeatureRepo {
   Future<void> addFavorite(Favorite favorite) => _iFavoritesDataSource.addFavorite(favorite);
 
   @override
-  Stream<List<Favorite>> favorites(User? user) => _iFavoritesDataSource.favorites(user);
+  Stream<List<Favorite>> favorites(User? user) => _iFavoritesDataSource
+      .favorites(user)
+      .map((favoriteList) => favoriteList.map((fav) => fav as Favorite).toList());
 
   @override
   Future<void> updateFavorite(Favorite favorite) => _iFavoritesDataSource.updateFavorite(favorite);

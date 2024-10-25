@@ -41,8 +41,7 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void _addToFavorites(List<Favorite> favorites) {
-    debugPrint("coming favorites");
-    state = state.clone(favorites: favorites.map((favorite) => favorite as Favorite).toList());
+    state = state.clone(favorites: favorites);
   }
 
 //
