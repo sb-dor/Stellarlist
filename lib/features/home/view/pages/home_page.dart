@@ -58,9 +58,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                     itemScrollController: itemScrollController,
                     scrollDirection: Axis.horizontal,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: homeProvider.selectedFavorite?.taskList?.tasks?.length ?? 0,
+                    itemCount: homeProvider.selectedTaskList?.length ?? 0,
                     // temp
                     itemBuilder: (context, index) {
+                      final selectedTask = homeProvider.selectedTaskList;
                       final checkScreenSizeConValue =
                           ResponsiveBreakpoints.of(context).largerThan(TABLET);
                       double alignment = checkScreenSizeConValue
@@ -83,7 +84,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           },
                           child: TaskContainer(
                             firstWidget: true,
-                            taskList: homeProvider.selectedFavorite!.taskList!,
+                            taskList: selectedTask?.taskList,
                           ),
                         );
                       } else {
@@ -99,7 +100,10 @@ class _HomePageState extends ConsumerState<HomePage> {
                             ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
                             ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
                           },
-                          child: const TaskContainer(firstWidget: false),
+                          child: TaskContainer(
+                            firstWidget: false,
+                            task: selectedTask?.tasks?[index - 1],
+                          ),
                         );
                       }
                     },

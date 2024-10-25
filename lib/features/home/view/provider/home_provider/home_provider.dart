@@ -13,6 +13,7 @@ import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/features/home/domain/usecases/home_feature_repo_usecase.dart';
 import 'package:stellarlist/features/home/view/provider/favorites_stream_provider/favorites_stream_provider.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/state_model/selected_task_list.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'state_model/home_state_model.dart';
@@ -76,7 +77,13 @@ class HomeProvider extends _$HomeProvider {
     favoriteWithTaskList = _ensureTaskListExists(favoriteWithTaskList);
 
     if ((favoriteWithTaskList.taskList?.tasks?.isNotEmpty ?? false)) {
-      state = state.clone(selectedFavorite: favoriteWithTaskList);
+      debugPrint("cmifdsnfkdsnn berebdf : ${favoriteWithTaskList.taskList?.title}");
+      state = state.clone(
+        selectedTaskList: SelectedTaskList(
+          taskList: favoriteWithTaskList.taskList,
+          tasks: favoriteWithTaskList.taskList?.tasks,
+        ),
+      );
       return;
     }
 
@@ -128,7 +135,10 @@ class HomeProvider extends _$HomeProvider {
     // Update the state
     state = state.clone(
       favorites: updatedFavorites,
-      selectedFavorite: updatedFavorite,
+      selectedTaskList: SelectedTaskList(
+        taskList: updatedFavorite.taskList,
+        tasks: updatedFavorite.taskList?.tasks,
+      ),
     );
   }
 
@@ -154,10 +164,14 @@ class HomeProvider extends _$HomeProvider {
 
     if (findFavorite == null) return;
 
-    findFavorite = findFavorite.copyWith(
-      taskList: findFavorite.taskList!.copyWith(
-        title: value,
-      ),
+    // findFavorite = findFavorite.copyWith(
+    //   taskList: findFavorite.taskList!.copyWith(
+    //     title: value,
+    //   ),
+    // );
+
+    findFavorite = findFavorite.copyWith.taskList!(
+      title: value,
     );
 
     _updateFavoriteInState(findFavorite);
