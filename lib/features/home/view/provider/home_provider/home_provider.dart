@@ -195,4 +195,29 @@ class HomeProvider extends _$HomeProvider {
           false);
     });
   }
+
+  Future<void> changeTaskNameOfTaskList(Task? task, String? value) async {
+    var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
+
+    if (favorite == null) return;
+
+    debugPrint("favorite name is: ${favorite.taskList?.title}");
+
+    final taskModel = TaskModel.fromEntity(task);
+
+    var listOfTasks = List.of(favorite.taskList?.tasks ?? <TaskModel>[]);
+
+    final findTaskIndex = listOfTasks.indexWhere((task) => task.id == task.id);
+
+    if (findTaskIndex != -1 && taskModel != null) {
+      // when you changed favorite data
+      listOfTasks[findTaskIndex] = taskModel.copyWith(title: value);
+
+      favorite = favorite.copyWith.taskList!(
+        tasks: listOfTasks,
+      );
+    }
+
+    await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
+  }
 }

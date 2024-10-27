@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
-import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
+import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
-class TaskWidget extends StatefulWidget {
+class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
   final int index;
 
@@ -14,10 +15,10 @@ class TaskWidget extends StatefulWidget {
   });
 
   @override
-  State<TaskWidget> createState() => _TaskWidgetState();
+  ConsumerState createState() => _TaskWidgetState();
 }
 
-class _TaskWidgetState extends State<TaskWidget> {
+class _TaskWidgetState extends ConsumerState<TaskWidget> {
   bool _hovered = false;
 
   void setVal(bool val) => setState(() {
@@ -73,7 +74,11 @@ class _TaskWidgetState extends State<TaskWidget> {
                       fontWeight: FontWeight.w500,
                       textFontSize: 16,
                       onValueChanged: (String value) {
-                        //
+                        // change the code in the future in it will be necessary
+                        ref.read(homeProviderProvider.notifier).changeTaskNameOfTaskList(
+                              widget.task,
+                              value,
+                            );
                       },
                     ),
                     const SizedBox(height: 5),
