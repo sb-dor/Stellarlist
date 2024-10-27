@@ -31,6 +31,7 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
       onEnter: (val) => setVal(true),
       onExit: (val) => setVal(false),
       child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5),
         // color: Colors.amber,
         height: 50,
         child: IntrinsicHeight(
@@ -43,7 +44,8 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                   cursor: SystemMouseCursors.click,
                   child: Icon(
                     Icons.apps_outlined,
-                    color: Colors.white,
+                    color: Colors.grey,
+                    size: 20,
                   ),
                 ),
               ),
