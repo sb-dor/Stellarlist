@@ -77,11 +77,15 @@ class HomeProvider extends _$HomeProvider {
     favoriteWithTaskList = _ensureTaskListExists(favoriteWithTaskList);
 
     if ((favoriteWithTaskList.taskList?.tasks?.isNotEmpty ?? false)) {
-      debugPrint("cmifdsnfkdsnn berebdf : ${favoriteWithTaskList.taskList?.title}");
+      state = state.clone(
+        selectedTaskList: SelectedTaskList(),
+      );
+      await Future.delayed(const Duration(milliseconds: 150));
       state = state.clone(
         selectedTaskList: SelectedTaskList(
           taskList: favoriteWithTaskList.taskList,
-          tasks: favoriteWithTaskList.taskList?.tasks,
+          // keep the list empty on first click
+          // tasks: favoriteWithTaskList.taskList?.tasks,
         ),
       );
       return;
@@ -137,7 +141,8 @@ class HomeProvider extends _$HomeProvider {
       favorites: updatedFavorites,
       selectedTaskList: SelectedTaskList(
         taskList: updatedFavorite.taskList,
-        tasks: updatedFavorite.taskList?.tasks,
+        // keep the list empty on first click
+        // tasks: updatedFavorite.taskList?.tasks,
       ),
     );
   }

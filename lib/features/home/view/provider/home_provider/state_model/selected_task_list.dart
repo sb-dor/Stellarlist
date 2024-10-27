@@ -20,5 +20,8 @@ class SelectedTaskList {
         tasks: tasks ?? this.tasks,
       );
 
-  int get length => taskList != null && tasks != null && tasks!.isNotEmpty ? tasks!.length + 1 : 0;
+  int get length {
+    final getListLength = tasks?.length ?? 0;
+    return taskList != null ? getListLength + 1 : getListLength;
+  }
 }
