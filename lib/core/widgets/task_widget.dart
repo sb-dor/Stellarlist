@@ -80,6 +80,12 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                               value,
                             );
                       },
+                      createOnEnter: (String value) {
+                        ref.read(homeProviderProvider.notifier).addTaskInsideTaskList(
+                              widget.task,
+                              value,
+                            );
+                      },
                     ),
                     const SizedBox(height: 5),
                     Row(

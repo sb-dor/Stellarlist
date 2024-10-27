@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 class EditorHelper extends StatefulWidget {
   final String title;
   final ValueChanged<String> onValueChanged;
+  final ValueChanged<String>? createOnEnter;
   final String? hintText;
   final double? textFontSize;
   final FontWeight? fontWeight;
@@ -14,6 +15,7 @@ class EditorHelper extends StatefulWidget {
     super.key,
     required this.title,
     required this.onValueChanged,
+    this.createOnEnter,
     this.textFontSize = 14,
     this.fontWeight,
     this.hintText,
@@ -61,7 +63,17 @@ class _EditorHelperState extends State<EditorHelper> {
         _onEnd(value);
       },
       onSubmitted: (value) {
-        _onEnd(value);
+        if (widget.createOnEnter == null) return;
+        // _onEnd(value);
+        var cursorPos = _textEditingController.selection.base.offset;
+        final length = _textEditingController.text.trim().length;
+        if (cursorPos <= 0) return;
+        if (cursorPos >= length) {
+          widget.createOnEnter!('');
+        } else {
+          final text = _textEditingController.text.trim();
+          widget.createOnEnter!(text.substring(cursorPos, length));
+        }
       },
       onTapOutside: (v) => FocusManager.instance.primaryFocus?.unfocus(),
       style: GoogleFonts.inter(

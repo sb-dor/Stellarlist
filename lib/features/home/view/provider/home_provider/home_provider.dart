@@ -51,6 +51,8 @@ class HomeProvider extends _$HomeProvider {
     state = state.clone(startedToScrollTask: startedToScrollTask);
   }
 
+  TaskModel get _newTask => TaskModel(id: const Uuid().v4(), title: "Title for task");
+
   void addTaskList() {
     final favorite = Favorite(
       id: const Uuid().v4(),
@@ -95,7 +97,7 @@ class HomeProvider extends _$HomeProvider {
     final updatedTasks = List<TaskModel>.from(
       favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[],
     )..add(
-        TaskModel(id: const Uuid().v4(), title: "Title for task"),
+        _newTask,
       );
 
     // Update the favorite's task list
@@ -196,6 +198,13 @@ class HomeProvider extends _$HomeProvider {
     });
   }
 
+  TaskList? findTaskListByTask(Task? task) {
+    return state.favorites?.firstWhereOrNull((favorite) {
+      return favorite.taskList?.tasks?.any((taskInList) => taskInList.id == task?.id) ?? false;
+    })?.taskList;
+  }
+
+  // function that changes task title inside favorite's task list
   Future<void> changeTaskNameOfTaskList(Task? task, String? value) async {
     var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
 
@@ -217,6 +226,38 @@ class HomeProvider extends _$HomeProvider {
         tasks: listOfTasks,
       );
     }
+
+    await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
+  }
+
+  // function that added task inside task list of favorite
+  void addTaskInsideTaskList(Task? task, String value) async {
+    var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
+
+    if (favorite == null) return;
+
+    final newTask = _newTask;
+
+    final tasks = List<TaskModel>.from(favorite.taskList?.tasks ?? <TaskModel>[]);
+
+    // update favorite
+    favorite = favorite.copyWith.taskList!(
+      tasks: tasks
+        ..add(
+          newTask.copyWith(title: value),
+        ),
+    );
+
+    final taskListModel = state.selectedTaskList?.copyWith(
+      taskList: TaskListModel.fromEntity(state.selectedTaskList?.taskList)?.copyWith(
+        tasks: tasks,
+      ),
+    );
+
+    // update selected_task_list
+    state = state.clone(
+      selectedTaskList: taskListModel,
+    );
 
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
