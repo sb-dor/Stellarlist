@@ -6,19 +6,19 @@ import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
-class TaskListWidget extends ConsumerStatefulWidget {
+class ContainerTaskListWidget extends ConsumerStatefulWidget {
   final TaskList? taskList;
 
-  const TaskListWidget({
+  const ContainerTaskListWidget({
     super.key,
     required this.taskList,
   });
 
   @override
-  ConsumerState createState() => _TaskListWidgetState();
+  ConsumerState createState() => _ContainerTaskListWidgetState();
 }
 
-class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
+class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -90,7 +90,8 @@ class _TaskListWidgetState extends ConsumerState<TaskListWidget> {
                 ),
               ],
             ),
-          )
+          ),
+
         ],
       ),
     );

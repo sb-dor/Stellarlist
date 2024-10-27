@@ -9,10 +9,10 @@ import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/utils/constants.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
-import 'package:stellarlist/features/home/view/pages/widgets/task_container/widget/task_widget.dart';
+import 'package:stellarlist/features/home/view/pages/widgets/task_container/widget/container_task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
-import 'widget/tasklist_widget.dart';
+import 'widget/container_tasklist_widget.dart';
 
 class TaskContainer extends ConsumerStatefulWidget {
   final bool firstWidget;
@@ -68,10 +68,10 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: widget.firstWidget
-          ? TaskListWidget(
+          ? ContainerTaskListWidget(
               taskList: widget.taskList,
             )
-          : TaskWidget(
+          : ContainerTaskWidget(
               task: widget.task,
             ),
     );

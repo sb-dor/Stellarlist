@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
 
-class TaskWidget extends ConsumerStatefulWidget {
+class ContainerTaskWidget extends ConsumerStatefulWidget {
   final Task? task;
 
-  const TaskWidget({
+  const ContainerTaskWidget({
     super.key,
     required this.task,
   });
 
   @override
-  ConsumerState createState() => _TaskWidgetState();
+  ConsumerState createState() => _ContainerTaskWidgetState();
 }
 
-class _TaskWidgetState extends ConsumerState<TaskWidget> {
+class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return Container();

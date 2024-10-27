@@ -10,11 +10,14 @@ class Task {
   final Assignee? assignee;
   final Label? label;
 
+  final List<Task>? subtasks;
+
   Task({
     required this.id,
     required this.title,
     required this.section,
     required this.assignee,
     required this.label,
+    required this.subtasks,
   });
 }

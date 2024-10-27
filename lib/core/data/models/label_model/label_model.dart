@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:stellarlist/core/domain/entities/label.dart';
+import 'package:stellarlist/core/utils/typedefs.dart';
 
 part 'label_model.freezed.dart';
 
@@ -13,7 +14,7 @@ class LabelModel extends Label with _$LabelModel {
 
   factory LabelModel.fromJson(Map<String, Object?> json) => _$LabelModelFromJson(json);
 
-  factory LabelModel.fromFirebaseJson(Map<Object?, Object?> json) {
+  factory LabelModel.fromFirebaseJson(FirebaseMapObject json) {
     return LabelModel(
       id: json['id'] as String?,
     );

@@ -1,0 +1,1 @@
+typedef FirebaseMapObject = Map<Object?, Object?>;
