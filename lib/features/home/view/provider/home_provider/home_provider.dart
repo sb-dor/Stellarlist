@@ -63,7 +63,7 @@ class HomeProvider extends _$HomeProvider {
       ),
     );
     state = state.clone(
-      favorites: (state.favorites ?? <Favorite>[])..add(favorite),
+      favorites: (state.favorites ?? <Favorite>[])..insert(0, favorite),
     );
   }
 

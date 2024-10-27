@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
+import 'package:stellarlist/core/widgets/task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 class ContainerTaskListWidget extends ConsumerStatefulWidget {
@@ -70,28 +71,34 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                EditorHelper(
-                  title: widget.taskList?.title ?? '',
-                  onValueChanged: (value) {
-                    final favorite = ref
-                        .read(homeProviderProvider.notifier)
-                        .findFavoriteByTaskList(widget.taskList);
-                    if (favorite == null) return;
-                    debugPrint("favorite issis: ${favorite}");
-                    ref.read(homeProviderProvider.notifier).changeTaskListName(
-                          favorite,
-                          value,
-                        );
-                  },
-                  textFontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
-              ],
+            child: EditorHelper(
+              title: widget.taskList?.title ?? '',
+              onValueChanged: (value) {
+                final favorite = ref
+                    .read(homeProviderProvider.notifier)
+                    .findFavoriteByTaskList(widget.taskList);
+                if (favorite == null) return;
+                debugPrint("favorite issis: ${favorite}");
+                ref.read(homeProviderProvider.notifier).changeTaskListName(
+                      favorite,
+                      value,
+                    );
+              },
+              textFontSize: 40,
+              fontWeight: FontWeight.bold,
             ),
           ),
-
+          Expanded(
+            child: ListView.separated(
+              padding: const EdgeInsets.only(left: 30),
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
+              itemCount: widget.taskList?.tasks?.length ?? 0,
+              itemBuilder: (context, index) {
+                final task = widget.taskList?.tasks?[index];
+                return TaskWidget(task: task);
+              },
+            ),
+          ),
         ],
       ),
     );
