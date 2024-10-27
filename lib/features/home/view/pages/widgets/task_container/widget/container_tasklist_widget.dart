@@ -70,13 +70,12 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
           ),
           const SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(30.0),
             child: EditorHelper(
               title: widget.taskList?.title ?? '',
               onValueChanged: (value) {
-                final favorite = ref
-                    .read(homeProviderProvider.notifier)
-                    .findFavoriteByTaskList(widget.taskList);
+                final favorite =
+                    ref.read(homeProviderProvider.notifier).findFavoriteByTaskList(widget.taskList);
                 if (favorite == null) return;
                 debugPrint("favorite issis: ${favorite}");
                 ref.read(homeProviderProvider.notifier).changeTaskListName(
@@ -89,14 +88,27 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
             ),
           ),
           Expanded(
-            child: ListView.separated(
-              padding: const EdgeInsets.only(left: 30),
-              separatorBuilder: (context, index) => const SizedBox(height: 10),
-              itemCount: widget.taskList?.tasks?.length ?? 0,
-              itemBuilder: (context, index) {
-                final task = widget.taskList?.tasks?[index];
-                return TaskWidget(task: task);
-              },
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: AppColors.containerColor,
+                shadowColor: AppColors.containerColor,
+              ),
+              child: ReorderableListView.builder(
+                padding: const EdgeInsets.only(left: 30),
+                itemCount: widget.taskList?.tasks?.length ?? 0,
+                buildDefaultDragHandles: false,
+                itemBuilder: (context, index) {
+                  final task = widget.taskList?.tasks?[index];
+                  return TaskWidget(
+                    key: ValueKey(index),
+                    task: task,
+                    index: index,
+                  );
+                },
+                onReorder: (int oldIndex, int newIndex) {
+                  debugPrint("old: $oldIndex | new: $newIndex");
+                },
+              ),
             ),
           ),
         ],

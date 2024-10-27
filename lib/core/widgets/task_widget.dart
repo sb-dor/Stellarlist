@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 
 class TaskWidget extends StatefulWidget {
   final Task? task;
+  final int index;
 
   const TaskWidget({
     super.key,
     required this.task,
+    required this.index,
   });
 
   @override
@@ -33,9 +36,15 @@ class _TaskWidgetState extends State<TaskWidget> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
-                Icons.apps_outlined,
-                color: Colors.white,
+              ReorderableDragStartListener(
+                index: widget.index,
+                child: const MouseRegion(
+                  cursor: SystemMouseCursors.click,
+                  child: Icon(
+                    Icons.apps_outlined,
+                    color: Colors.white,
+                  ),
+                ),
               ),
               const SizedBox(width: 5),
               SizedBox(
@@ -50,7 +59,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(6.0),
                     ),
-                    side: BorderSide(color: Colors.grey),
+                    side: const BorderSide(color: Colors.grey),
                     onChanged: (bool? value) {},
                   ),
                 ),
@@ -68,6 +77,23 @@ class _TaskWidgetState extends State<TaskWidget> {
                       },
                     ),
                     const SizedBox(height: 5),
+                    Row(
+                      children: [
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          constraints: const BoxConstraints(),
+                          onPressed: () {},
+                          icon: const Icon(Icons.date_range, size: 15),
+                        ),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          padding: const EdgeInsets.all(0),
+                          constraints: const BoxConstraints(),
+                          onPressed: () {},
+                          icon: const Icon(Icons.label_important_outline, size: 20),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -78,25 +104,25 @@ class _TaskWidgetState extends State<TaskWidget> {
                       radius: 10,
                       backgroundColor: Colors.grey.shade800,
                       child: IconButton(
-                        padding: EdgeInsets.all(0),
-                        constraints: BoxConstraints(),
+                        padding: const EdgeInsets.all(0),
+                        constraints: const BoxConstraints(),
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.person,
                           size: 15,
                           color: Colors.white,
                         ),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     CircleAvatar(
                       radius: 10,
                       backgroundColor: Colors.grey,
                       child: IconButton(
-                        padding: EdgeInsets.all(0),
-                        constraints: BoxConstraints(),
+                        padding: const EdgeInsets.all(0),
+                        constraints: const BoxConstraints(),
                         onPressed: () {},
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_forward,
                           size: 15,
                           color: Colors.black,
@@ -110,17 +136,17 @@ class _TaskWidgetState extends State<TaskWidget> {
                   radius: 10,
                   backgroundColor: Colors.grey.shade800,
                   child: IconButton(
-                    padding: EdgeInsets.all(0),
-                    constraints: BoxConstraints(),
+                    padding: const EdgeInsets.all(0),
+                    constraints: const BoxConstraints(),
                     onPressed: () {},
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.filter_list_rounded,
                       size: 15,
                       color: Colors.white,
                     ),
                   ),
                 ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
             ],
           ),
         ),
