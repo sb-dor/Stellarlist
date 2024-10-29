@@ -51,7 +51,11 @@ class HomeProvider extends _$HomeProvider {
     state = state.clone(startedToScrollTask: startedToScrollTask);
   }
 
-  TaskModel get _newTask => TaskModel(id: const Uuid().v4(), title: "Title for task");
+  TaskModel _newTask() => TaskModel(
+        id: const Uuid().v4(),
+        title: "Title for task",
+        subtasks: [],
+      );
 
   void addTaskList() {
     final favorite = Favorite(
@@ -97,7 +101,7 @@ class HomeProvider extends _$HomeProvider {
     final updatedTasks = List<TaskModel>.from(
       favoriteWithTaskList.taskList!.tasks ?? <TaskModel>[],
     )..add(
-        _newTask,
+        _newTask(),
       );
 
     // Update the favorite's task list
@@ -216,7 +220,7 @@ class HomeProvider extends _$HomeProvider {
 
     var listOfTasks = List.of(favorite.taskList?.tasks ?? <TaskModel>[]);
 
-    final findTaskIndex = listOfTasks.indexWhere((task) => task.id == task.id);
+    final findTaskIndex = listOfTasks.indexWhere((taskInList) => taskInList.id == task?.id);
 
     if (findTaskIndex != -1 && taskModel != null) {
       // when you changed favorite data
@@ -236,16 +240,20 @@ class HomeProvider extends _$HomeProvider {
 
     if (favorite == null) return;
 
-    final newTask = _newTask;
+    final newTask = _newTask();
 
     final tasks = List<TaskModel>.from(favorite.taskList?.tasks ?? <TaskModel>[]);
 
+    tasks.add(
+      newTask.copyWith(
+        title: value,
+        id: const Uuid().v4(),
+      ),
+    );
+
     // update favorite
     favorite = favorite.copyWith.taskList!(
-      tasks: tasks
-        ..add(
-          newTask.copyWith(title: value),
-        ),
+      tasks: tasks,
     );
 
     final taskListModel = state.selectedTaskList?.copyWith(
@@ -271,6 +279,8 @@ class HomeProvider extends _$HomeProvider {
     final tasks = List<TaskModel>.from(favorite.taskList?.tasks ?? <TaskModel>[]);
 
     tasks.removeWhere((taskInList) => taskInList.id == task?.id);
+
+    debugPrint("deleteting taasl: ${task?.title} | ${task?.id}");
 
     favorite = favorite.copyWith.taskList!(
       tasks: tasks,
