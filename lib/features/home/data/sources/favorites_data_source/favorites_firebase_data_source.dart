@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -28,7 +29,6 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
       // favorites/user_id
       "$_favoritesRef/${favorite.userId}",
     );
-
     // set your own Id for record
     await databaseReference.child(model!.id!).set(model.toJson());
   }
@@ -64,8 +64,6 @@ class FavoritesFirebaseDataSource implements IFavoritesDataSource {
     final DatabaseReference reference = _firebaseRTDatabase.ref(
       "$_favoritesRef/${favoriteModel?.userId}",
     );
-
-    debugPrint("path: ${"$_favoritesRef/${favorite.userId}"} | ${favorite.id}");
 
     await reference.child(favorite.id!).update(favoriteModel!.toJson());
   }

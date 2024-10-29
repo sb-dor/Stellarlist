@@ -22,6 +22,7 @@ _$TaskModelImpl _$$TaskModelImplFromJson(Map<String, dynamic> json) =>
       subtasks: (json['subtasks'] as List<dynamic>?)
           ?.map((e) => TaskModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isDone: json['is_done'] as bool?,
     );
 
 Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
@@ -32,4 +33,5 @@ Map<String, dynamic> _$$TaskModelImplToJson(_$TaskModelImpl instance) =>
       'assignee': instance.assignee?.toJson(),
       'label': instance.label?.toJson(),
       'subtasks': instance.subtasks?.map((e) => e.toJson()).toList(),
+      'is_done': instance.isDone,
     };

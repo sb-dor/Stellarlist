@@ -26,6 +26,8 @@ mixin _$TaskModel {
   AssigneeModel? get assignee => throw _privateConstructorUsedError;
   LabelModel? get label => throw _privateConstructorUsedError;
   List<TaskModel>? get subtasks => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_done")
+  bool? get isDone => throw _privateConstructorUsedError;
 
   /// Serializes this TaskModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -48,7 +50,8 @@ abstract class $TaskModelCopyWith<$Res> {
       SectionModel? section,
       AssigneeModel? assignee,
       LabelModel? label,
-      List<TaskModel>? subtasks});
+      List<TaskModel>? subtasks,
+      @JsonKey(name: "is_done") bool? isDone});
 
   $SectionModelCopyWith<$Res>? get section;
   $AssigneeModelCopyWith<$Res>? get assignee;
@@ -76,6 +79,7 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
     Object? assignee = freezed,
     Object? label = freezed,
     Object? subtasks = freezed,
+    Object? isDone = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -102,6 +106,10 @@ class _$TaskModelCopyWithImpl<$Res, $Val extends TaskModel>
           ? _value.subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<TaskModel>?,
+      isDone: freezed == isDone
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -162,7 +170,8 @@ abstract class _$$TaskModelImplCopyWith<$Res>
       SectionModel? section,
       AssigneeModel? assignee,
       LabelModel? label,
-      List<TaskModel>? subtasks});
+      List<TaskModel>? subtasks,
+      @JsonKey(name: "is_done") bool? isDone});
 
   @override
   $SectionModelCopyWith<$Res>? get section;
@@ -191,6 +200,7 @@ class __$$TaskModelImplCopyWithImpl<$Res>
     Object? assignee = freezed,
     Object? label = freezed,
     Object? subtasks = freezed,
+    Object? isDone = freezed,
   }) {
     return _then(_$TaskModelImpl(
       id: freezed == id
@@ -217,6 +227,10 @@ class __$$TaskModelImplCopyWithImpl<$Res>
           ? _value._subtasks
           : subtasks // ignore: cast_nullable_to_non_nullable
               as List<TaskModel>?,
+      isDone: freezed == isDone
+          ? _value.isDone
+          : isDone // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -230,7 +244,8 @@ class _$TaskModelImpl implements _TaskModel {
       this.section,
       this.assignee,
       this.label,
-      final List<TaskModel>? subtasks})
+      final List<TaskModel>? subtasks,
+      @JsonKey(name: "is_done") this.isDone})
       : _subtasks = subtasks;
 
   factory _$TaskModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -257,8 +272,12 @@ class _$TaskModelImpl implements _TaskModel {
   }
 
   @override
+  @JsonKey(name: "is_done")
+  final bool? isDone;
+
+  @override
   String toString() {
-    return 'TaskModel(id: $id, title: $title, section: $section, assignee: $assignee, label: $label, subtasks: $subtasks)';
+    return 'TaskModel(id: $id, title: $title, section: $section, assignee: $assignee, label: $label, subtasks: $subtasks, isDone: $isDone)';
   }
 
   @override
@@ -272,13 +291,14 @@ class _$TaskModelImpl implements _TaskModel {
             (identical(other.assignee, assignee) ||
                 other.assignee == assignee) &&
             (identical(other.label, label) || other.label == label) &&
-            const DeepCollectionEquality().equals(other._subtasks, _subtasks));
+            const DeepCollectionEquality().equals(other._subtasks, _subtasks) &&
+            (identical(other.isDone, isDone) || other.isDone == isDone));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, title, section, assignee,
-      label, const DeepCollectionEquality().hash(_subtasks));
+      label, const DeepCollectionEquality().hash(_subtasks), isDone);
 
   /// Create a copy of TaskModel
   /// with the given fields replaced by the non-null parameter values.
@@ -303,7 +323,8 @@ abstract class _TaskModel implements TaskModel {
       final SectionModel? section,
       final AssigneeModel? assignee,
       final LabelModel? label,
-      final List<TaskModel>? subtasks}) = _$TaskModelImpl;
+      final List<TaskModel>? subtasks,
+      @JsonKey(name: "is_done") final bool? isDone}) = _$TaskModelImpl;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$TaskModelImpl.fromJson;
@@ -320,6 +341,9 @@ abstract class _TaskModel implements TaskModel {
   LabelModel? get label;
   @override
   List<TaskModel>? get subtasks;
+  @override
+  @JsonKey(name: "is_done")
+  bool? get isDone;
 
   /// Create a copy of TaskModel
   /// with the given fields replaced by the non-null parameter values.

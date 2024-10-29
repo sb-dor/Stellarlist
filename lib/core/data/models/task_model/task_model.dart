@@ -18,6 +18,7 @@ class TaskModel extends Task with _$TaskModel {
     AssigneeModel? assignee,
     LabelModel? label,
     List<TaskModel>? subtasks,
+    @JsonKey(name: "is_done") bool? isDone,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, Object?> json) => _$TaskModelFromJson(json);
@@ -42,6 +43,7 @@ class TaskModel extends Task with _$TaskModel {
           ? null
           : LabelModel.fromFirebaseJson(json['label'] as FirebaseMapObject),
       subtasks: subtasks,
+      isDone: bool.tryParse("${json['is_done']}")
     );
   }
 
@@ -54,6 +56,7 @@ class TaskModel extends Task with _$TaskModel {
       assignee: AssigneeModel.fromEntity(task.assignee),
       label: LabelModel.fromEntity(task.label),
       subtasks: task.subtasks?.map((el) => TaskModel.fromEntity(el)!).toList(),
+      isDone: task.isDone,
     );
   }
 }

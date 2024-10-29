@@ -9,6 +9,7 @@ class Task {
   final Section? section;
   final Assignee? assignee;
   final Label? label;
+  final bool? isDone;
 
   final List<Task>? subtasks;
 
@@ -19,5 +20,6 @@ class Task {
     required this.assignee,
     required this.label,
     required this.subtasks,
+    required this.isDone,
   });
 }

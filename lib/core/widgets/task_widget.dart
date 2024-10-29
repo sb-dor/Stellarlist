@@ -4,6 +4,8 @@ import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
+import 'context_menu_region_widget.dart';
+
 class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
   final int index;
@@ -27,140 +29,161 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onEnter: (val) => setVal(true),
-      onExit: (val) => setVal(false),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5),
-        // color: Colors.amber,
-        height: 50,
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ReorderableDragStartListener(
-                index: widget.index,
-                child: const MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: Icon(
-                    Icons.apps_outlined,
-                    color: Colors.grey,
-                    size: 20,
+    return ContextMenuRegionWidget(
+      contextMenuBuilder: (BuildContext context, Offset offset) {
+        return AdaptiveTextSelectionToolbar.buttonItems(
+          anchors: TextSelectionToolbarAnchors(
+            primaryAnchor: offset,
+          ),
+          buttonItems: <ContextMenuButtonItem>[
+            ContextMenuButtonItem(
+              onPressed: () async {
+                ContextMenuController.removeAny();
+                await ref.read(homeProviderProvider.notifier).deleteTaskFromTaskList(
+                      widget.task,
+                    );
+              },
+              label: 'Delete',
+              type: ContextMenuButtonType.delete,
+            ),
+          ],
+        );
+      },
+      child: MouseRegion(
+        onEnter: (val) => setVal(true),
+        onExit: (val) => setVal(false),
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 5),
+          // color: Colors.amber,
+          height: 50,
+          child: IntrinsicHeight(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ReorderableDragStartListener(
+                  index: widget.index,
+                  child: const MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: Icon(
+                      Icons.apps_outlined,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 5),
-              SizedBox(
-                height: 24.0,
-                width: 24.0,
-                child: Theme(
-                  data: ThemeData(
-                    unselectedWidgetColor: Colors.red,
-                  ),
-                  child: Checkbox(
-                    value: false,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
+                const SizedBox(width: 5),
+                SizedBox(
+                  height: 24.0,
+                  width: 24.0,
+                  child: Theme(
+                    data: ThemeData(
+                      unselectedWidgetColor: Colors.red,
                     ),
-                    side: const BorderSide(color: Colors.grey),
-                    onChanged: (bool? value) {},
+                    child: Checkbox(
+                      value: false,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      side: const BorderSide(color: Colors.grey),
+                      onChanged: (bool? value) {},
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  children: [
-                    EditorHelper(
-                      title: widget.task?.title ?? '',
-                      fontWeight: FontWeight.w500,
-                      textFontSize: 16,
-                      onValueChanged: (String value) {
-                        // change the code in the future in it will be necessary
-                        ref.read(homeProviderProvider.notifier).changeTaskNameOfTaskList(
-                              widget.task,
-                              value,
-                            );
-                      },
-                      createOnEnter: (String value) {
-                        ref.read(homeProviderProvider.notifier).addTaskInsideTaskList(
-                              widget.task,
-                              value,
-                            );
-                      },
-                    ),
-                    const SizedBox(height: 5),
-                    Row(
-                      children: [
-                        IconButton(
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    children: [
+                      EditorHelper(
+                        title: widget.task?.title ?? '',
+                        fontWeight: FontWeight.w500,
+                        textFontSize: 16,
+                        onValueChanged: (String value) {
+                          // change the code in the future in it will be necessary
+                          ref.read(homeProviderProvider.notifier).changeTaskNameOfTaskList(
+                                widget.task,
+                                value,
+                              );
+                        },
+                        createOnEnter: (String value) {
+                          ref.read(homeProviderProvider.notifier).addTaskInsideTaskList(
+                                widget.task,
+                                value,
+                              );
+                        },
+                      ),
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          IconButton(
+                            padding: const EdgeInsets.all(0),
+                            constraints: const BoxConstraints(),
+                            onPressed: () {},
+                            icon: const Icon(Icons.date_range, size: 15),
+                          ),
+                          const SizedBox(width: 10),
+                          IconButton(
+                            padding: const EdgeInsets.all(0),
+                            constraints: const BoxConstraints(),
+                            onPressed: () {},
+                            icon: const Icon(Icons.label_important_outline, size: 20),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                if (_hovered)
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.grey.shade800,
+                        child: IconButton(
                           padding: const EdgeInsets.all(0),
                           constraints: const BoxConstraints(),
                           onPressed: () {},
-                          icon: const Icon(Icons.date_range, size: 15),
+                          icon: const Icon(
+                            Icons.person,
+                            size: 15,
+                            color: Colors.white,
+                          ),
                         ),
-                        const SizedBox(width: 10),
-                        IconButton(
+                      ),
+                      const SizedBox(width: 10),
+                      CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.grey,
+                        child: IconButton(
                           padding: const EdgeInsets.all(0),
                           constraints: const BoxConstraints(),
                           onPressed: () {},
-                          icon: const Icon(Icons.label_important_outline, size: 20),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              if (_hovered)
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.grey.shade800,
-                      child: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        constraints: const BoxConstraints(),
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.person,
-                          size: 15,
-                          color: Colors.white,
+                          icon: const Icon(
+                            Icons.arrow_forward,
+                            size: 15,
+                            color: Colors.black,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Colors.grey,
-                      child: IconButton(
-                        padding: const EdgeInsets.all(0),
-                        constraints: const BoxConstraints(),
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.arrow_forward,
-                          size: 15,
-                          color: Colors.black,
-                        ),
+                    ],
+                  )
+                else
+                  CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.grey.shade800,
+                    child: IconButton(
+                      padding: const EdgeInsets.all(0),
+                      constraints: const BoxConstraints(),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.filter_list_rounded,
+                        size: 15,
+                        color: Colors.white,
                       ),
-                    ),
-                  ],
-                )
-              else
-                CircleAvatar(
-                  radius: 10,
-                  backgroundColor: Colors.grey.shade800,
-                  child: IconButton(
-                    padding: const EdgeInsets.all(0),
-                    constraints: const BoxConstraints(),
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.filter_list_rounded,
-                      size: 15,
-                      color: Colors.white,
                     ),
                   ),
-                ),
-              const SizedBox(width: 10),
-            ],
+                const SizedBox(width: 10),
+              ],
+            ),
           ),
         ),
       ),

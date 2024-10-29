@@ -37,115 +37,124 @@ class _HomePageState extends ConsumerState<HomePage> {
   Widget build(BuildContext context) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
     final homeProvider = ref.watch(homeProviderProvider);
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            bottom: 0,
-            left: 15,
-            right: 15,
-            child: Row(
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 100),
-                  width: (animSidebarProvider.stuck ?? false) ? Constants.appBarStuckWidth : 0,
-                ),
-                Expanded(
-                  child: ScrollablePositionedList.separated(
-                    separatorBuilder: (context, index) => const SizedBox(width: 15),
-                    itemScrollController: itemScrollController,
-                    scrollDirection: Axis.horizontal,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: homeProvider.selectedTaskList?.length ?? 0,
-                    // temp
-                    itemBuilder: (context, index) {
-                      final selectedTask = homeProvider.selectedTaskList;
-                      final checkScreenSizeConValue =
-                          ResponsiveBreakpoints.of(context).largerThan(TABLET);
-                      double alignment = checkScreenSizeConValue
-                          ? index == 0
-                              ? 0
-                              : 0.630
-                          : 0;
-                      if (index < 1) {
-                        return GestureDetector(
-                          onTap: () {
-                            // for test
-
-                            itemScrollController.scrollTo(
-                              index: index,
-                              duration: const Duration(milliseconds: 400),
-                              alignment: alignment,
-                            );
-                            ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
-                            ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
-                          },
-                          child: TaskContainer(
-                            firstWidget: true,
-                            taskList: selectedTask?.taskList,
-                          ),
-                        );
-                      } else {
-                        return GestureDetector(
-                          onTap: () {
-                            // for test
-
-                            itemScrollController.scrollTo(
-                              index: index + 1,
-                              duration: const Duration(milliseconds: 400),
-                              alignment: alignment,
-                            );
-                            ref.read(homeProviderProvider.notifier).changeStartedToScrollTask(true);
-                            ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
-                          },
-                          child: TaskContainer(
-                            firstWidget: false,
-                            task: selectedTask?.tasks?[index - 1],
-                          ),
-                        );
-                      }
-                    },
+    return GestureDetector(
+      onTap: () {
+        ContextMenuController.removeAny();
+      },
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        body: Stack(
+          children: [
+            Positioned(
+              top: 0,
+              bottom: 0,
+              left: 15,
+              right: 15,
+              child: Row(
+                children: [
+                  AnimatedContainer(
+                    duration: const Duration(milliseconds: 100),
+                    width: (animSidebarProvider.stuck ?? false) ? Constants.appBarStuckWidth : 0,
                   ),
-                ),
-              ],
-            ),
-          ),
-          AnimatedPositioned(
-            bottom: (animSidebarProvider.stuck ?? false) ? 0 : 5,
-            left: (animSidebarProvider.stuck ?? false)
-                ? 0
-                : (animSidebarProvider.closed ?? false)
-                    ? -1000
-                    : 5,
-            top: (animSidebarProvider.stuck ?? false) ? 0 : 5,
-            duration: const Duration(milliseconds: 300),
-            child: const AnimatedSideBar(),
-          ),
-          // if ((animSidebarProvider.stuck ?? false))
-          Positioned(
-            bottom: 0,
-            left: 0,
-            top: 0,
-            child: MouseRegion(
-              onHover: (value) {
-                if (!(animSidebarProvider.stuck ?? false) &&
-                    (animSidebarProvider.closed ?? false)) {
-                  ref.read(animatedSidebarProviderProvider.notifier).openCloseSideBar(
-                        closed: false,
-                        stuck: false,
-                      );
-                }
-              },
-              onExit: (value) {},
-              child: Container(
-                width: 15,
-                color: Colors.transparent,
+                  Expanded(
+                    child: ScrollablePositionedList.separated(
+                      separatorBuilder: (context, index) => const SizedBox(width: 15),
+                      itemScrollController: itemScrollController,
+                      scrollDirection: Axis.horizontal,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: homeProvider.selectedTaskList?.length ?? 0,
+                      // temp
+                      itemBuilder: (context, index) {
+                        final selectedTask = homeProvider.selectedTaskList;
+                        final checkScreenSizeConValue =
+                            ResponsiveBreakpoints.of(context).largerThan(TABLET);
+                        double alignment = checkScreenSizeConValue
+                            ? index == 0
+                                ? 0
+                                : 0.630
+                            : 0;
+                        if (index < 1) {
+                          return GestureDetector(
+                            onTap: () {
+                              // for test
+
+                              itemScrollController.scrollTo(
+                                index: index,
+                                duration: const Duration(milliseconds: 400),
+                                alignment: alignment,
+                              );
+                              ref
+                                  .read(homeProviderProvider.notifier)
+                                  .changeStartedToScrollTask(true);
+                              ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
+                            },
+                            child: TaskContainer(
+                              firstWidget: true,
+                              taskList: selectedTask?.taskList,
+                            ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              // for test
+
+                              itemScrollController.scrollTo(
+                                index: index + 1,
+                                duration: const Duration(milliseconds: 400),
+                                alignment: alignment,
+                              );
+                              ref
+                                  .read(homeProviderProvider.notifier)
+                                  .changeStartedToScrollTask(true);
+                              ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
+                            },
+                            child: TaskContainer(
+                              firstWidget: false,
+                              task: selectedTask?.tasks?[index - 1],
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
-          ),
-        ],
+            AnimatedPositioned(
+              bottom: (animSidebarProvider.stuck ?? false) ? 0 : 5,
+              left: (animSidebarProvider.stuck ?? false)
+                  ? 0
+                  : (animSidebarProvider.closed ?? false)
+                      ? -1000
+                      : 5,
+              top: (animSidebarProvider.stuck ?? false) ? 0 : 5,
+              duration: const Duration(milliseconds: 300),
+              child: const AnimatedSideBar(),
+            ),
+            // if ((animSidebarProvider.stuck ?? false))
+            Positioned(
+              bottom: 0,
+              left: 0,
+              top: 0,
+              child: MouseRegion(
+                onHover: (value) {
+                  if (!(animSidebarProvider.stuck ?? false) &&
+                      (animSidebarProvider.closed ?? false)) {
+                    ref.read(animatedSidebarProviderProvider.notifier).openCloseSideBar(
+                          closed: false,
+                          stuck: false,
+                        );
+                  }
+                },
+                onExit: (value) {},
+                child: Container(
+                  width: 15,
+                  color: Colors.transparent,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

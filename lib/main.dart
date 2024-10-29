@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/core/services/auto_route_service/auto_route_service.dart';
@@ -21,6 +22,9 @@ void main() async {
 
   if (kIsWeb) {
     setPathUrlStrategy();
+    // On web, disable the browser's context menu since this example uses a custom
+    // Flutter-rendered context menu.
+    BrowserContextMenu.disableContextMenu();
   }
 
   await Injections.inject();

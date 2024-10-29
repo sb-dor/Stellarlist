@@ -18,14 +18,16 @@ class GoogleAuthService implements AuthService {
   @override
   Future<User?> auth({AuthData? authData}) async {
     try {
+      // if (kIsWeb) {
+      //   await _webAuth(authData: authData);
+      // } else {
       GoogleSignInAccount? googleUser;
 
-      if (kIsWeb) {
-        googleUser = await _googleSignIn.signInSilently();
-      }
-      {
-        googleUser = await _googleSignIn.signIn();
-      }
+      // if (kIsWeb) {
+      //   googleUser = await _googleSignIn.signInSilently();
+      // } else {
+      googleUser = await _googleSignIn.signIn();
+      // }
 
       // If the user cancels the sign-in process, return
       if (googleUser == null) return null;
@@ -59,6 +61,7 @@ class GoogleAuthService implements AuthService {
 
       // Sign in to Firebase with the new credential
       await _firebaseAuth.signInWithCredential(googleAuthCredential);
+      // }
 
       final data = _firebaseAuth.currentUser;
 
@@ -70,6 +73,17 @@ class GoogleAuthService implements AuthService {
       debugPrint("error is $e");
       return null;
     }
+  }
+
+  Future<void> _webAuth({AuthData? authData}) async {
+    GoogleAuthProvider googleAuthProvider = GoogleAuthProvider();
+
+    googleAuthProvider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+    googleAuthProvider.setCustomParameters({
+      "login_hint": authData?.email,
+    });
+
+    _firebaseAuth.signInWithPopup(googleAuthProvider);
   }
 
   @override

@@ -261,4 +261,31 @@ class HomeProvider extends _$HomeProvider {
 
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
+
+  //
+  Future<void> deleteTaskFromTaskList(Task? task) async {
+    var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
+
+    if (favorite == null) return;
+
+    final tasks = List<TaskModel>.from(favorite.taskList?.tasks ?? <TaskModel>[]);
+
+    tasks.removeWhere((taskInList) => taskInList.id == task?.id);
+
+    favorite = favorite.copyWith.taskList!(
+      tasks: tasks,
+    );
+
+    final clonedSelectedTaskList = state.selectedTaskList?.copyWith(
+      taskList: TaskListModel.fromEntity(state.selectedTaskList?.taskList)?.copyWith(
+        tasks: tasks,
+      ),
+    );
+
+    state = state.clone(
+      selectedTaskList: clonedSelectedTaskList,
+    );
+
+    await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
+  }
 }
