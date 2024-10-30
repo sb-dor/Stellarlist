@@ -297,7 +297,7 @@ class HomeProvider extends _$HomeProvider {
       selectedTaskList: SelectedTaskList(),
     );
 
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future.delayed(const Duration(milliseconds: 50));
 
     state = state.clone(
       selectedTaskList: SelectedTaskList(
@@ -306,6 +306,6 @@ class HomeProvider extends _$HomeProvider {
       ),
     );
 
-    // await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
+    await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
 }
