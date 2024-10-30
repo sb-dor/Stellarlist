@@ -276,26 +276,36 @@ class HomeProvider extends _$HomeProvider {
 
     if (favorite == null) return;
 
-    final tasks = List<TaskModel>.from(favorite.taskList?.tasks ?? <TaskModel>[]);
+    final tasks =
+        List<TaskModel>.from(state.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]).toList();
 
     tasks.removeWhere((taskInList) => taskInList.id == task?.id);
-
-    debugPrint("deleteting taasl: ${task?.title} | ${task?.id}");
 
     favorite = favorite.copyWith.taskList!(
       tasks: tasks,
     );
 
+    final taskListFromEntity = TaskListModel.fromEntity(state.selectedTaskList?.taskList);
+
     final clonedSelectedTaskList = state.selectedTaskList?.copyWith(
-      taskList: TaskListModel.fromEntity(state.selectedTaskList?.taskList)?.copyWith(
+      taskList: taskListFromEntity?.copyWith(
         tasks: tasks,
       ),
     );
 
     state = state.clone(
-      selectedTaskList: clonedSelectedTaskList,
+      selectedTaskList: SelectedTaskList(),
     );
 
-    await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
+    await Future.delayed(const Duration(milliseconds: 150));
+
+    state = state.clone(
+      selectedTaskList: SelectedTaskList(
+        taskList: clonedSelectedTaskList?.taskList,
+        tasks: clonedSelectedTaskList?.tasks,
+      ),
+    );
+
+    // await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:stellarlist/core/animations/slide_animation.dart';
+import 'package:stellarlist/core/data/models/task_model/task_model.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
@@ -31,6 +32,15 @@ class TaskContainer extends ConsumerStatefulWidget {
 }
 
 class _TaskContainerState extends ConsumerState<TaskContainer> {
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("setting tasklist data");
+    for (final each in widget.taskList?.tasks ?? <TaskModel>[]) {
+      debugPrint("okay setting data is: ${each.title}");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQueryWidth = MediaQuery.of(context).size.width;
