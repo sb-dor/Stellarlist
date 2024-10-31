@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
+import 'package:stellarlist/core/widgets/icon_button_widget.dart';
 import 'package:stellarlist/core/widgets/task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
@@ -23,7 +24,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(top: 30, right: 25, left: 25),
       child: Column(
         children: [
           Row(
@@ -38,10 +39,10 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                   ),
                   elevation: const WidgetStatePropertyAll(0.0),
                   backgroundColor: WidgetStatePropertyAll(
-                    AppColors.buttonBackgroundColor,
+                    AppColors.iconButtonBackgroundColor,
                   ),
-                  overlayColor: const WidgetStatePropertyAll(
-                    Colors.white,
+                  overlayColor: WidgetStatePropertyAll(
+                    AppColors.iconButtonBackgroundHoverColor,
                   ),
                 ),
                 onPressed: () {},
@@ -57,20 +58,20 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                   style: GoogleFonts.inter(color: Colors.white),
                 ),
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.star_border_rounded),
+              IconButtonWidget(
+                icon: Icons.star_border_rounded,
+                onTap: () {},
               ),
               const SizedBox(width: 10),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
+              IconButtonWidget(
+                icon: Icons.more_vert,
+                onTap: () {},
               ),
             ],
           ),
           const SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: EditorHelper(
               title: widget.taskList?.title ?? '',
               onValueChanged: (value) {
@@ -86,6 +87,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
               fontWeight: FontWeight.bold,
             ),
           ),
+          const SizedBox(height: 15),
           Expanded(
             child: Theme(
               data: Theme.of(context).copyWith(

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stellarlist/core/widgets/editor_helper.dart';
-import 'package:super_editor/super_editor.dart';
 
 class AsbSectionWidget extends StatefulWidget {
   final IconData icon;
@@ -63,18 +61,18 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
               //     ),
               //   )
               // else
-                Flexible(
-                  child: Text(
-                    widget.title,
-                    style: GoogleFonts.inter(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                    ),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+              Flexible(
+                child: Text(
+                  widget.title,
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 14,
                   ),
-                )
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              )
             ],
           ),
         ),
