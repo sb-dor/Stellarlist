@@ -77,7 +77,6 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                 final favorite =
                     ref.read(homeProviderProvider.notifier).findFavoriteByTaskList(widget.taskList);
                 if (favorite == null) return;
-                debugPrint("favorite issis: ${favorite}");
                 ref.read(homeProviderProvider.notifier).changeTaskListName(
                       favorite,
                       value,
@@ -100,7 +99,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                 itemBuilder: (context, index) {
                   final task = widget.taskList?.tasks?[index];
                   return TaskWidget(
-                    key: ValueKey(index),
+                    key: ValueKey("${index}_${task?.id}"),
                     task: task,
                     index: index,
                   );

@@ -36,7 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final animSidebarProvider = ref.watch(animatedSidebarProviderProvider);
-    final homeProvider = ref.watch(homeProviderProvider);
+    // final homeProvider = ref.watch(homeProviderProvider);
     return GestureDetector(
       onTap: () {
         ContextMenuController.removeAny();
@@ -57,63 +57,68 @@ class _HomePageState extends ConsumerState<HomePage> {
                     width: (animSidebarProvider.stuck ?? false) ? Constants.appBarStuckWidth : 0,
                   ),
                   Expanded(
-                    child: ScrollablePositionedList.separated(
-                      separatorBuilder: (context, index) => const SizedBox(width: 15),
-                      itemScrollController: itemScrollController,
-                      scrollDirection: Axis.horizontal,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: homeProvider.selectedTaskList?.length ?? 0,
-                      // temp
-                      itemBuilder: (context, index) {
-                        final selectedTask = homeProvider.selectedTaskList;
-                        final checkScreenSizeConValue =
-                            ResponsiveBreakpoints.of(context).largerThan(TABLET);
-                        double alignment = checkScreenSizeConValue
-                            ? index == 0
-                                ? 0
-                                : 0.630
-                            : 0;
-                        if (index < 1) {
-                          return GestureDetector(
-                            onTap: () {
-                              // for test
+                    child: Consumer(
+                      builder: (context, ref, child) {
+                        final homeProvider = ref.watch(homeProviderProvider);
+                        return ScrollablePositionedList.separated(
+                          separatorBuilder: (context, index) => const SizedBox(width: 15),
+                          itemScrollController: itemScrollController,
+                          scrollDirection: Axis.horizontal,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: homeProvider.selectedTaskList?.length ?? 0,
+                          // temp
+                          itemBuilder: (context, index) {
+                            final selectedTask = homeProvider.selectedTaskList;
+                            final checkScreenSizeConValue =
+                                ResponsiveBreakpoints.of(context).largerThan(TABLET);
+                            double alignment = checkScreenSizeConValue
+                                ? index == 0
+                                    ? 0
+                                    : 0.630
+                                : 0;
+                            if (index < 1) {
+                              return GestureDetector(
+                                onTap: () {
+                                  // for test
 
-                              itemScrollController.scrollTo(
-                                index: index,
-                                duration: const Duration(milliseconds: 400),
-                                alignment: alignment,
+                                  itemScrollController.scrollTo(
+                                    index: index,
+                                    duration: const Duration(milliseconds: 400),
+                                    alignment: alignment,
+                                  );
+                                  ref
+                                      .read(homeProviderProvider.notifier)
+                                      .changeStartedToScrollTask(true);
+                                  ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
+                                },
+                                child: TaskContainer(
+                                  firstWidget: true,
+                                  taskList: selectedTask?.taskList,
+                                ),
                               );
-                              ref
-                                  .read(homeProviderProvider.notifier)
-                                  .changeStartedToScrollTask(true);
-                              ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
-                            },
-                            child: TaskContainer(
-                              firstWidget: true,
-                              taskList: selectedTask?.taskList,
-                            ),
-                          );
-                        } else {
-                          return GestureDetector(
-                            onTap: () {
-                              // for test
+                            } else {
+                              return GestureDetector(
+                                onTap: () {
+                                  // for test
 
-                              itemScrollController.scrollTo(
-                                index: index + 1,
-                                duration: const Duration(milliseconds: 400),
-                                alignment: alignment,
+                                  itemScrollController.scrollTo(
+                                    index: index + 1,
+                                    duration: const Duration(milliseconds: 400),
+                                    alignment: alignment,
+                                  );
+                                  ref
+                                      .read(homeProviderProvider.notifier)
+                                      .changeStartedToScrollTask(true);
+                                  ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
+                                },
+                                child: TaskContainer(
+                                  firstWidget: false,
+                                  task: selectedTask?.tasks?[index - 1],
+                                ),
                               );
-                              ref
-                                  .read(homeProviderProvider.notifier)
-                                  .changeStartedToScrollTask(true);
-                              ref.read(homeProviderProvider.notifier).addCurrentIndex(index);
-                            },
-                            child: TaskContainer(
-                              firstWidget: false,
-                              task: selectedTask?.tasks?[index - 1],
-                            ),
-                          );
-                        }
+                            }
+                          },
+                        );
                       },
                     ),
                   ),
