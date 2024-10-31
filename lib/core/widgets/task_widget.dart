@@ -156,7 +156,11 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                         child: IconButton(
                           padding: const EdgeInsets.all(0),
                           constraints: const BoxConstraints(),
-                          onPressed: () {},
+                          onPressed: () {
+                            ref.read(homeProviderProvider.notifier).addTaskForFurtherChange(
+                                  widget.task,
+                                );
+                          },
                           icon: const Icon(
                             Icons.arrow_forward,
                             size: 15,

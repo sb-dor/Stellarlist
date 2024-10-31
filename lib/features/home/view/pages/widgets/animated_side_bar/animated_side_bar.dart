@@ -75,7 +75,7 @@ class _AnimatedSideBarState extends ConsumerState<AnimatedSideBar> {
                       ref.read(homeProviderProvider.notifier).addTaskForTaskListOnClick(favorite!);
                     },
                     onTextChanged: (String value) {
-                      debugPrint("on value changing: ${value}");
+                      debugPrint("on value changing: $value");
                       ref.read(homeProviderProvider.notifier).changeTaskListName(
                             favorite!,
                             value,

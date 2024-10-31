@@ -99,6 +99,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                 itemBuilder: (context, index) {
                   final task = widget.taskList?.tasks?[index];
                   return TaskWidget(
+                    // reason was properly setting key for each task
                     key: ValueKey("${index}_${task?.id}"),
                     task: task,
                     index: index,

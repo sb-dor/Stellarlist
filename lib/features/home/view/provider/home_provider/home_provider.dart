@@ -327,4 +327,15 @@ class HomeProvider extends _$HomeProvider {
     // Perform any final operations, like updating favorite
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
+
+  void addTaskForFurtherChange(Task? task, {bool mainTask = true}) {
+    if (task == null) return;
+    final tempState = state.clone();
+    if (mainTask) {
+      tempState.selectedTaskList?.tasks?.clear();
+    }
+    tempState.selectedTaskList?.tasks ??= <Task>[];
+    tempState.selectedTaskList?.tasks?.add(task);
+    state = tempState;
+  }
 }
