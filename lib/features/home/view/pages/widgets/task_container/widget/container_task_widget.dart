@@ -34,7 +34,11 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                 children: [
                   IconButtonWidget(
                     icon: Icons.close,
-                    onTap: () {},
+                    onTap: () {
+                      ref.read(homeProviderProvider.notifier).removeTaskFromSelectedTaskList(
+                            widget.task,
+                          );
+                    },
                   ),
                   const Expanded(
                     child: SizedBox.shrink(),

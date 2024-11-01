@@ -157,7 +157,7 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                           padding: const EdgeInsets.all(0),
                           constraints: const BoxConstraints(),
                           onPressed: () {
-                            ref.read(homeProviderProvider.notifier).addTaskForFurtherChange(
+                            ref.read(homeProviderProvider.notifier).addTaskForSelectedTaskList(
                                   widget.task,
                                 );
                           },

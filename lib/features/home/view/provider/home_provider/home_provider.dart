@@ -328,7 +328,7 @@ class HomeProvider extends _$HomeProvider {
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }
 
-  void addTaskForFurtherChange(Task? task, {bool mainTask = true}) {
+  void addTaskForSelectedTaskList(Task? task, {bool mainTask = true}) {
     if (task == null) return;
     final tempState = state.clone();
     if (mainTask) {
@@ -336,6 +336,12 @@ class HomeProvider extends _$HomeProvider {
     }
     tempState.selectedTaskList?.tasks ??= <Task>[];
     tempState.selectedTaskList?.tasks?.add(task);
+    state = tempState;
+  }
+
+  void removeTaskFromSelectedTaskList(Task? task) {
+    final tempState = state.clone();
+    tempState.selectedTaskList?.tasks?.removeWhere((taskInList) => taskInList.id == task?.id);
     state = tempState;
   }
 }
