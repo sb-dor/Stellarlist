@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -102,7 +104,8 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                   final task = widget.taskList?.tasks?[index];
                   return TaskWidget(
                     // reason was properly setting key for each task
-                    key: ValueKey("${index}_${task?.id}"),
+                    // solve somehow the problem of random generating for key
+                    key: ValueKey("${index}_${task?.id}_${Random().nextInt(100)}"),
                     task: task,
                     index: index,
                   );

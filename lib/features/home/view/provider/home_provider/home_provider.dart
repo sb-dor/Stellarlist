@@ -214,12 +214,14 @@ class HomeProvider extends _$HomeProvider {
 
     if (favorite == null) return;
 
+    final clonedState = state.clone();
+
     debugPrint("favorite name is: ${favorite.taskList?.title}");
 
     final taskModel = TaskModel.fromEntity(task);
 
     var listOfTasks =
-        List<TaskModel>.from(state.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]);
+        List<TaskModel>.from(clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]);
 
     final findTaskIndex = listOfTasks.indexWhere((taskInList) => taskInList.id == task?.id);
 
@@ -233,21 +235,21 @@ class HomeProvider extends _$HomeProvider {
     }
 
     final taskListFromEntity = TaskListModel.fromEntity(
-      state.selectedTaskList?.taskList,
+      clonedState.selectedTaskList?.taskList,
     );
 
     // Update selectedTaskList in a new cloned state
-    final clonedSelectedTaskList = state.selectedTaskList?.copyWith(
+    final clonedSelectedTaskList = clonedState.selectedTaskList?.copyWith(
       taskList: taskListFromEntity?.copyWith(tasks: listOfTasks),
     );
 
     // Set updated selectedTaskList with cloned task list and tasks
-    state = state.clone(
-      selectedTaskList: SelectedTaskList(
-        taskList: clonedSelectedTaskList?.taskList,
-        tasks: clonedSelectedTaskList?.tasks,
-      ),
+    clonedState.selectedTaskList = SelectedTaskList(
+      taskList: clonedSelectedTaskList?.taskList,
+      tasks: clonedSelectedTaskList?.tasks,
     );
+
+    state = clonedState;
 
     await getIt<HomeFeatureRepoUseCase>().updateFavorite(favorite);
   }

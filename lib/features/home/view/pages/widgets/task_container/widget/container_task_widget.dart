@@ -128,7 +128,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: DottedBorder(
@@ -154,7 +154,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: DottedBorder(
