@@ -9,6 +9,7 @@ import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/core/widgets/icon_button_widget.dart';
 import 'package:stellarlist/core/widgets/task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class ContainerTaskListWidget extends ConsumerStatefulWidget {
   final TaskList? taskList;
@@ -103,11 +104,13 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                 itemBuilder: (context, index) {
                   final task = widget.taskList?.tasks?[index];
                   return TaskWidget(
-                    // reason was properly setting key for each task
-                    // solve somehow the problem of random generating for key
-                    key: ValueKey("${index}_${task?.id}_${Random().nextInt(100)}"),
+                    // problem was solved by creating didUpdateDependencies inside
+                    // EditorHelper widget which will update textEditingController
+                    // without creating specific key in order to refresh whole widget
+                    key: ValueKey("${index}_${task?.id}"),
                     task: task,
                     index: index,
+                    textFiledMaxLines: 1,
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) {

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/core/utils/text_selection_controls.dart';
 
 class EditorHelper extends StatefulWidget {
   final String title;
@@ -10,6 +11,7 @@ class EditorHelper extends StatefulWidget {
   final String? hintText;
   final double? textFontSize;
   final FontWeight? fontWeight;
+  final int textFiledMaxLines;
 
   const EditorHelper({
     super.key,
@@ -19,6 +21,7 @@ class EditorHelper extends StatefulWidget {
     this.textFontSize = 14,
     this.fontWeight,
     this.hintText,
+    this.textFiledMaxLines = 3,
   });
 
   @override
@@ -37,9 +40,28 @@ class _EditorHelperState extends State<EditorHelper> {
   }
 
   @override
+  void didUpdateWidget(covariant EditorHelper oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if the title has changed and update the controller's text if necessary
+    if (oldWidget.title.trim() != widget.title.trim()) {
+      final previousSelection = _textEditingController.selection;
+      _textEditingController.text = "${widget.title} ";
+
+      // Calculate a safe cursor position within the bounds of the new text
+      int newOffset = previousSelection.baseOffset.clamp(
+        0,
+        _textEditingController.text.length,
+      );
+      _textEditingController.selection = TextSelection.collapsed(offset: newOffset);
+    }
+  }
+
+  @override
   void dispose() {
     _textEditingController.dispose();
     _timerForFinishingEdit?.cancel();
+    debugPrint("is dispose working inside editor helper");
     super.dispose();
   }
 
@@ -62,6 +84,10 @@ class _EditorHelperState extends State<EditorHelper> {
       onChanged: (value) {
         _onEnd(value);
       },
+      selectionControls: NoCopyTextSelectionControls(),
+      autofocus: false,
+      autocorrect: false,
+      // enableInteractiveSelection: false,
       onSubmitted: (value) {
         if (widget.createOnEnter == null) return;
         // _onEnd(value);
@@ -91,6 +117,8 @@ class _EditorHelperState extends State<EditorHelper> {
         border: InputBorder.none,
         hintText: widget.hintText ?? "Edit Text",
       ),
+      maxLines: widget.textFiledMaxLines,
+      minLines: 1,
     );
   }
 }

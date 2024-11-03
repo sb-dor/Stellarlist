@@ -63,6 +63,7 @@ dependencies:
   collection: ^1.18.0
   flutter_platform_widgets: ^7.0.1
   dotted_border: ^2.1.0
+  stack_trace: ^1.11.1
 
 dev_dependencies:
   flutter_test:

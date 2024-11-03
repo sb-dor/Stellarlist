@@ -9,11 +9,13 @@ import 'context_menu_region_widget.dart';
 class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
   final int index;
+  final int textFiledMaxLines;
 
   const TaskWidget({
     super.key,
     required this.task,
     required this.index,
+    this.textFiledMaxLines = 3,
   });
 
   @override
@@ -110,6 +112,7 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                                 value,
                               );
                         },
+                        textFiledMaxLines: widget.textFiledMaxLines,
                       ),
                       const SizedBox(height: 5),
                       Row(

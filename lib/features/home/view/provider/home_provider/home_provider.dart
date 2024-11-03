@@ -22,7 +22,7 @@ part 'home_provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class HomeProvider extends _$HomeProvider {
-  late final StreamSubscription<List<Favorite>> _favoritesListener;
+  StreamSubscription<List<Favorite>>? _favoritesListener;
 
   //
   @override
@@ -31,6 +31,7 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void initFavoritesStreamListener() {
+    debugPrint("favorites subs initing");
     _favoritesListener =
         ref.watch<FavoritesStreamProvider>(favoritesStreamProviderProvider.notifier).build().listen(
               _addToFavorites,
@@ -38,7 +39,8 @@ class HomeProvider extends _$HomeProvider {
   }
 
   void disposeSubscriptions() {
-    _favoritesListener.cancel();
+    debugPrint("favorites subs disposing");
+    _favoritesListener?.cancel();
   }
 
   void _addToFavorites(List<Favorite> favorites) {
@@ -69,7 +71,7 @@ class HomeProvider extends _$HomeProvider {
       ),
     );
     state = state.clone(
-      favorites: (state.favorites ?? <Favorite>[])..insert(0, favorite),
+      favorites: (state.favorites ?? <Favorite>[])..add(favorite),
     );
   }
 
@@ -220,8 +222,9 @@ class HomeProvider extends _$HomeProvider {
 
     final taskModel = TaskModel.fromEntity(task);
 
-    var listOfTasks =
-        List<TaskModel>.from(clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]);
+    var listOfTasks = List<TaskModel>.from(
+      clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[],
+    );
 
     final findTaskIndex = listOfTasks.indexWhere((taskInList) => taskInList.id == task?.id);
 
@@ -233,6 +236,18 @@ class HomeProvider extends _$HomeProvider {
         tasks: listOfTasks,
       );
     }
+    // the list from selected tasks, not selected taskList's task
+    var listSelectedTasks = List<TaskModel>.from(
+      clonedState.selectedTaskList?.tasks ?? <TaskModel>[],
+    );
+
+    final findTaskIndexSelectedTask = listSelectedTasks.indexWhere(
+      (taskInList) => taskInList.id == task?.id,
+    );
+
+    if (findTaskIndexSelectedTask != -1 && taskModel != null) {
+      listSelectedTasks[findTaskIndexSelectedTask] = taskModel.copyWith(title: value);
+    }
 
     final taskListFromEntity = TaskListModel.fromEntity(
       clonedState.selectedTaskList?.taskList,
@@ -241,6 +256,7 @@ class HomeProvider extends _$HomeProvider {
     // Update selectedTaskList in a new cloned state
     final clonedSelectedTaskList = clonedState.selectedTaskList?.copyWith(
       taskList: taskListFromEntity?.copyWith(tasks: listOfTasks),
+      tasks: listSelectedTasks,
     );
 
     // Set updated selectedTaskList with cloned task list and tasks

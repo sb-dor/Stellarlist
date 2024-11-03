@@ -95,6 +95,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                               value,
                             );
                       },
+                      textFiledMaxLines: 5,
                     ),
                   ),
                 ],

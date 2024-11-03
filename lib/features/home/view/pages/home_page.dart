@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,6 +11,7 @@ import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/a
 import 'package:stellarlist/features/home/view/pages/widgets/animated_side_bar/provider/anim_sidebar_provider.dart';
 import 'package:stellarlist/features/home/view/pages/widgets/task_container/task_container.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
+import 'package:uuid/uuid.dart';
 
 final ItemScrollController itemScrollController = ItemScrollController();
 
@@ -29,7 +32,9 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   void dispose() {
-    ref.read(homeProviderProvider.notifier).disposeSubscriptions();
+    if(ref.context.mounted) {
+      ref.read(homeProviderProvider.notifier).disposeSubscriptions();
+    }
     super.dispose();
   }
 
@@ -97,6 +102,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 ),
                               );
                             } else {
+                              final task = selectedTask?.tasks?[index - 1];
                               return GestureDetector(
                                 onTap: () {
                                   // for test
@@ -113,7 +119,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 },
                                 child: TaskContainer(
                                   firstWidget: false,
-                                  task: selectedTask?.tasks?[index - 1],
+                                  task: task,
                                 ),
                               );
                             }
