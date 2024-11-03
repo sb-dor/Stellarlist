@@ -194,6 +194,9 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
           EmptyTaskWidget(
             onTap: () {
               debugPrint("on taptap worked");
+              ref.read(homeProviderProvider.notifier).addTaskInsideSubTaskOfSpecificTask(
+                    widget.task,
+                  );
             },
           )
         else

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:stellarlist/core/domain/entities/task.dart';
+import 'package:stellarlist/core/widgets/context_menu_region_widget.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
-import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
-import '../context_menu_region_widget.dart';
 
 class EmptyTaskWidget extends ConsumerStatefulWidget {
   final VoidCallback onTap;
@@ -15,10 +13,10 @@ class EmptyTaskWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState createState() => _TaskWidgetState();
+  ConsumerState createState() => _EmptyTaskWidgetState();
 }
 
-class _TaskWidgetState extends ConsumerState<EmptyTaskWidget> {
+class _EmptyTaskWidgetState extends ConsumerState<EmptyTaskWidget> {
   @override
   Widget build(BuildContext context) {
     return ContextMenuRegionWidget(

@@ -88,7 +88,7 @@ class HomeProvider extends _$HomeProvider {
       state = state.clone(
         selectedTaskList: SelectedTaskList(),
       );
-      await Future.delayed(const Duration(milliseconds: 150));
+      // await Future.delayed(const Duration(milliseconds: 150));
       state = state.clone(
         selectedTaskList: SelectedTaskList(
           taskList: favoriteWithTaskList.taskList,
@@ -310,6 +310,7 @@ class HomeProvider extends _$HomeProvider {
   Future<void> deleteTaskFromTaskList(Task? task) async {
     // Find and check if favorite exists
     var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
+
     if (favorite == null) return;
 
     // Get a cloned list of tasks and remove the specified task
@@ -361,5 +362,76 @@ class HomeProvider extends _$HomeProvider {
     final tempState = state.clone();
     tempState.selectedTaskList?.tasks?.removeWhere((taskInList) => taskInList.id == task?.id);
     state = tempState;
+  }
+
+  //
+  void addTaskInsideSubTaskOfSpecificTask(Task? mainTask) {
+    final favorite = findFavoriteByTask(mainTask);
+
+    if (favorite == null) return;
+
+    var taskModel = TaskModel.fromEntity(mainTask);
+
+    var clonedState = state.clone();
+
+    final listSubtaskFromTask = List<TaskModel>.from(taskModel?.subtasks ?? <TaskModel>[]);
+
+    taskModel = taskModel?.copyWith(
+      subtasks: listSubtaskFromTask,
+    );
+
+
+    // final clonedTaskListTasks = List<Task>.from(
+    //   clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[],
+    // );
+    //
+    // final clonedSelectedTasks = List<Task>.from(
+    //   clonedState.selectedTaskList?.tasks ?? <Task>[],
+    // );
+    //
+    // for (final task in clonedTaskListTasks) {
+    //   _recurseSearchInSideTaskList(
+    //     TaskModel.fromEntity(task),
+    //     taskModel,
+    //   );
+    // }
+    //
+    // for (final task in clonedSelectedTasks) {
+    //   _recurseSearchInSideTaskList(
+    //     TaskModel.fromEntity(task),
+    //     taskModel,
+    //   );
+    // }
+    //
+    // clonedState = clonedState.clone(
+    //   selectedTaskList: clonedState.selectedTaskList?.copyWith(
+    //     taskList: TaskListModel.fromEntity(clonedState.selectedTaskList?.taskList)?.copyWith(
+    //       tasks: clonedTaskListTasks.map((e) => TaskModel.fromEntity(e)!).toList(),
+    //     ),
+    //     tasks: clonedSelectedTasks,
+    //   ),
+    // );
+    //
+    // for (final each in clonedState.selectedTaskList?.tasks ?? <TaskModel>[]) {}
+
+    state = clonedState;
+  }
+
+  void _recurseSearchInSideTaskList(
+    TaskModel? task,
+    TaskModel? taskForChange,
+  ) {
+    if (task?.id == taskForChange?.id) {
+      task = task?.copyWith(
+        title: taskForChange?.title,
+        subtasks: taskForChange?.subtasks,
+      );
+    }
+
+    if ((task?.subtasks?.isEmpty ?? false)) return;
+
+    for (final eachSubtask in task?.subtasks ?? <TaskModel>[]) {
+      _recurseSearchInSideTaskList(eachSubtask, taskForChange);
+    }
   }
 }
