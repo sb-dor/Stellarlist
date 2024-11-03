@@ -1,4 +1,4 @@
-Huge Thanks for this guy -> https://github.com/hawkkiller
+Huge Thanks for this guy -> https://github.com/hawkkiller \
 Implementation for this analytics was taken from this link -> https://github.com/hawkkiller/sizzle_starter
 
 

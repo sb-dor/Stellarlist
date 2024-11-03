@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
+import 'package:stellarlist/core/widgets/icon_button_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
-import 'context_menu_region_widget.dart';
+import '../context_menu_region_widget.dart';
 
 class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
@@ -62,17 +63,31 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ReorderableDragStartListener(
-                  index: widget.index,
-                  child: const MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Icon(
-                      Icons.apps_outlined,
-                      color: Colors.grey,
-                      size: 20,
-                    ),
-                  ),
-                ),
+                if (_hovered)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ReorderableDragStartListener(
+                        index: widget.index,
+                        child: const MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Icon(
+                            Icons.apps_outlined,
+                            color: Colors.grey,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      IconButtonWidget(
+                        icon: Icons.check_circle,
+                        onTap: () {},
+                        buttonPadding: EdgeInsets.zero,
+                      ),
+                    ],
+                  )
+                else
+                  const SizedBox(width: 45),
                 const SizedBox(width: 5),
                 SizedBox(
                   height: 24.0,

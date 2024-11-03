@@ -7,7 +7,7 @@ import 'package:stellarlist/core/domain/entities/task_list.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/core/widgets/icon_button_widget.dart';
-import 'package:stellarlist/core/widgets/task_widget.dart';
+import 'package:stellarlist/core/widgets/task_widgets/task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -27,7 +27,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, right: 25, left: 25),
+      padding: const EdgeInsets.only(top: 30, right: 25, left: 5),
       child: Column(
         children: [
           Row(
@@ -98,7 +98,6 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                 shadowColor: AppColors.containerColor,
               ),
               child: ReorderableListView.builder(
-                padding: const EdgeInsets.only(left: 30),
                 itemCount: widget.taskList?.tasks?.length ?? 0,
                 buildDefaultDragHandles: false,
                 itemBuilder: (context, index) {

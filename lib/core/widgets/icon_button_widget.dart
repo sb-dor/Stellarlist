@@ -6,6 +6,7 @@ class IconButtonWidget extends StatelessWidget {
   final VoidCallback onTap;
   final double? size;
   final Color? color;
+  final EdgeInsets? buttonPadding;
 
   const IconButtonWidget({
     super.key,
@@ -13,6 +14,7 @@ class IconButtonWidget extends StatelessWidget {
     required this.onTap,
     this.size = 20,
     this.color,
+    this.buttonPadding,
   });
 
   @override
@@ -22,9 +24,11 @@ class IconButtonWidget extends StatelessWidget {
         shape: const WidgetStatePropertyAll(
           StadiumBorder(),
         ),
-        padding: const WidgetStatePropertyAll(
-          EdgeInsets.all(6.0),
-        ),
+        padding: buttonPadding != null
+            ? WidgetStatePropertyAll(buttonPadding)
+            : const WidgetStatePropertyAll(
+                EdgeInsets.all(6.0),
+              ),
         elevation: const WidgetStatePropertyAll(0.0),
         backgroundColor: WidgetStatePropertyAll(
           AppColors.iconButtonBackgroundColor,

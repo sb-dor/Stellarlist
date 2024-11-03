@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/core/injections/injections.dart';
 import 'package:stellarlist/core/services/analytics/analytics_reporter.dart';
 import 'package:stellarlist/core/services/analytics/firebase_analytics_reporter.dart';
+import 'package:stellarlist/core/services/analytics/firebase_analytics_reporter_event_constants.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
@@ -57,9 +58,6 @@ class _LetsGetStartedRegistrationWidgetState
           width: 250,
           child: ElevatedButton(
             onPressed: () async {
-              getIt<FirebaseAnalyticsReporter>().logEvent(
-                const AnalyticsEvent('google_registration'),
-              );
               await ref.read(registrationProviderProvider.notifier).googleAuth(
                     getIt<RegistrationRepo>(),
                   );
@@ -91,9 +89,9 @@ class _LetsGetStartedRegistrationWidgetState
           width: 250,
           child: ElevatedButton(
             clipBehavior: Clip.none,
-            onPressed: () {
-              ref.read(registrationProviderProvider.notifier).changeStateInEmailRegistration(
-                    LetsGetStartedState.showEmailRegistration,
+            onPressed: () async {
+              await ref.read(registrationProviderProvider.notifier).facebookAuth(
+                    getIt<RegistrationRepo>(),
                   );
             },
             child: Row(
@@ -153,7 +151,7 @@ class _LetsGetStartedRegistrationWidgetState
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FaIcon(
-                      FontAwesomeIcons.facebook,
+                      Icons.mail_outline,
                       color: _onShowEmailRegistrationHover ? Colors.black : Colors.white,
                       size: 20,
                     ),

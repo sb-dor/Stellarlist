@@ -6,6 +6,8 @@ import 'package:stellarlist/core/domain/entities/task.dart';
 import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/core/widgets/icon_button_widget.dart';
+import 'package:stellarlist/core/widgets/task_widgets/empty_task_widget.dart';
+import 'package:stellarlist/core/widgets/task_widgets/task_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
 
 class ContainerTaskWidget extends ConsumerStatefulWidget {
@@ -186,7 +188,42 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
               const SizedBox(height: 20),
             ],
           ),
-        )
+        ),
+        const SizedBox(height: 15),
+        if ((widget.task?.subtasks?.isEmpty ?? false))
+          EmptyTaskWidget(
+            onTap: () {
+              debugPrint("on taptap worked");
+            },
+          )
+        else
+          Expanded(
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                canvasColor: AppColors.containerColor,
+                shadowColor: AppColors.containerColor,
+              ),
+              child: ReorderableListView.builder(
+                itemCount: widget.task?.subtasks?.length ?? 0,
+                buildDefaultDragHandles: false,
+                itemBuilder: (context, index) {
+                  final task = widget.task?.subtasks?[index];
+                  return TaskWidget(
+                    // problem was solved by creating didUpdateDependencies inside
+                    // EditorHelper widget which will update textEditingController
+                    // without creating specific key in order to refresh whole widget
+                    key: ValueKey("${index}_${task?.id}"),
+                    task: task,
+                    index: index,
+                    textFiledMaxLines: 1,
+                  );
+                },
+                onReorder: (int oldIndex, int newIndex) {
+                  debugPrint("old: $oldIndex | new: $newIndex");
+                },
+              ),
+            ),
+          ),
       ],
     );
   }

@@ -5,9 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/core/utils/text_selection_controls.dart';
 
 class EditorHelper extends StatefulWidget {
-  final String title;
+  final String? title;
   final ValueChanged<String> onValueChanged;
   final ValueChanged<String>? createOnEnter;
+  final VoidCallback? onTap;
   final String? hintText;
   final double? textFontSize;
   final FontWeight? fontWeight;
@@ -15,9 +16,10 @@ class EditorHelper extends StatefulWidget {
 
   const EditorHelper({
     super.key,
-    required this.title,
+    this.title,
     required this.onValueChanged,
     this.createOnEnter,
+    this.onTap,
     this.textFontSize = 14,
     this.fontWeight,
     this.hintText,
@@ -35,7 +37,7 @@ class _EditorHelperState extends State<EditorHelper> {
   @override
   void initState() {
     super.initState();
-    _textEditingController.text = widget.title;
+    _textEditingController.text = widget.title ?? '';
     debugPrint("setting title is: ${widget.title}");
   }
 
@@ -44,7 +46,7 @@ class _EditorHelperState extends State<EditorHelper> {
     super.didUpdateWidget(oldWidget);
 
     // Check if the title has changed and update the controller's text if necessary
-    if (oldWidget.title.trim() != widget.title.trim()) {
+    if (oldWidget.title?.trim() != widget.title?.trim()) {
       final previousSelection = _textEditingController.selection;
       _textEditingController.text = "${widget.title} ";
 
@@ -83,6 +85,10 @@ class _EditorHelperState extends State<EditorHelper> {
       controller: _textEditingController,
       onChanged: (value) {
         _onEnd(value);
+      },
+      onTap: () {
+        if (widget.onTap == null) return;
+        widget.onTap!();
       },
       selectionControls: NoCopyTextSelectionControls(),
       autofocus: false,
