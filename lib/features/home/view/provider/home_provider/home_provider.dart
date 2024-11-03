@@ -376,25 +376,42 @@ class HomeProvider extends _$HomeProvider {
 
     final listSubtaskFromTask = List<TaskModel>.from(taskModel?.subtasks ?? <TaskModel>[]);
 
+    listSubtaskFromTask.add(_newTask());
+
     taskModel = taskModel?.copyWith(
       subtasks: listSubtaskFromTask,
     );
 
+    final clonedTaskListTasks = List<Task>.from(
+      clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[],
+    );
 
-    // final clonedTaskListTasks = List<Task>.from(
-    //   clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[],
-    // );
-    //
     // final clonedSelectedTasks = List<Task>.from(
     //   clonedState.selectedTaskList?.tasks ?? <Task>[],
     // );
     //
-    // for (final task in clonedTaskListTasks) {
-    //   _recurseSearchInSideTaskList(
-    //     TaskModel.fromEntity(task),
-    //     taskModel,
-    //   );
-    // }
+    final updatedTasks = _updateTaskInList(
+      List<Task>.from(clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[]),
+      taskModel,
+    );
+
+    final updatedSelectedTasks = _updateTaskInList(
+      List<Task>.from(clonedState.selectedTaskList?.tasks ?? <Task>[]),
+      taskModel,
+    );
+
+    clonedState.selectedTaskList = clonedState.selectedTaskList?.copyWith(
+      taskList: TaskListModel.fromEntity(clonedState.selectedTaskList?.taskList)?.copyWith(
+        tasks: updatedTasks.map((e) => e!).toList(),
+      ),
+      tasks: updatedSelectedTasks.map((e) => e!).toList(),
+    );
+
+    for (final each in clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]) {
+      debugPrint("length of tasks subtask length : ${each.subtasks?.length}");
+    }
+
+    state = clonedState;
     //
     // for (final task in clonedSelectedTasks) {
     //   _recurseSearchInSideTaskList(
@@ -413,25 +430,22 @@ class HomeProvider extends _$HomeProvider {
     // );
     //
     // for (final each in clonedState.selectedTaskList?.tasks ?? <TaskModel>[]) {}
-
-    state = clonedState;
   }
 
-  void _recurseSearchInSideTaskList(
-    TaskModel? task,
-    TaskModel? taskForChange,
-  ) {
-    if (task?.id == taskForChange?.id) {
-      task = task?.copyWith(
-        title: taskForChange?.title,
-        subtasks: taskForChange?.subtasks,
-      );
-    }
-
-    if ((task?.subtasks?.isEmpty ?? false)) return;
-
-    for (final eachSubtask in task?.subtasks ?? <TaskModel>[]) {
-      _recurseSearchInSideTaskList(eachSubtask, taskForChange);
-    }
+  List<TaskModel?> _updateTaskInList(List<Task> tasks, TaskModel? taskForChange) {
+    return tasks.map((task) {
+      // If the task matches the taskForChange, update it with the new subtasks
+      if (task.id == taskForChange?.id) {
+        return TaskModel.fromEntity(task)?.copyWith(
+          title: taskForChange?.title,
+          subtasks: taskForChange?.subtasks,
+        );
+      } else {
+        // Otherwise, recursively update its subtasks
+        return TaskModel.fromEntity(task)?.copyWith(
+          subtasks: _updateTaskInList(task.subtasks ?? [], taskForChange).map((e) => e!).toList(),
+        );
+      }
+    }).toList();
   }
 }
