@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stellarlist/core/injections/injections.dart';
+import 'package:stellarlist/core/services/analytics/analytics_reporter.dart';
+import 'package:stellarlist/core/services/analytics/firebase_analytics_reporter.dart';
 import 'package:stellarlist/features/registration/domain/repo/registration_repo.dart';
 import 'package:stellarlist/features/registration/view/provider/registration_provider.dart';
 import 'package:stellarlist/features/registration/view/provider/state_model/registration_state_model.dart';
@@ -55,6 +57,9 @@ class _LetsGetStartedRegistrationWidgetState
           width: 250,
           child: ElevatedButton(
             onPressed: () async {
+              getIt<FirebaseAnalyticsReporter>().logEvent(
+                const AnalyticsEvent('google_registration'),
+              );
               await ref.read(registrationProviderProvider.notifier).googleAuth(
                     getIt<RegistrationRepo>(),
                   );
