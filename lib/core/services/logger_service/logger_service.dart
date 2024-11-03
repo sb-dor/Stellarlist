@@ -4,6 +4,9 @@ import 'package:clock/clock.dart';
 import 'package:flutter/foundation.dart';
 import 'package:stack_trace/stack_trace.dart';
 
+/// [NOTE] : is using from
+/// https://github.com/hawkkiller/sizzle_starter
+
 /// Logger global instance.
 ///
 /// This is the default logger used by the application.

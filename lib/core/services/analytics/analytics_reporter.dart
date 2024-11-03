@@ -1,5 +1,8 @@
 import 'package:collection/collection.dart';
 
+/// [NOTE] : is using from
+/// https://github.com/hawkkiller/sizzle_starter
+
 /// {@template analytics_reporter}
 /// Interface for reporting analytics events.
 ///

@@ -3,6 +3,9 @@ import 'package:stellarlist/core/services/logger_service/logger_service.dart';
 
 import 'analytics_reporter.dart';
 
+/// [NOTE] : is using from
+/// https://github.com/hawkkiller/sizzle_starter
+
 /// {@template firebase_analytics_reporter}
 /// An implementation of [AnalyticsReporter] that reports events to Firebase
 /// Analytics.
