@@ -109,7 +109,7 @@ class _ContainerTaskListWidgetState extends ConsumerState<ContainerTaskListWidge
                     key: ValueKey("${index}_${task?.id}"),
                     task: task,
                     index: index,
-                    textFiledMaxLines: 1,
+                    textFiledMaxLines: null,
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) {

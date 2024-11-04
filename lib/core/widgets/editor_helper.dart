@@ -12,7 +12,7 @@ class EditorHelper extends StatefulWidget {
   final String? hintText;
   final double? textFontSize;
   final FontWeight? fontWeight;
-  final int textFiledMaxLines;
+  final int? textFiledMaxLines;
 
   const EditorHelper({
     super.key,

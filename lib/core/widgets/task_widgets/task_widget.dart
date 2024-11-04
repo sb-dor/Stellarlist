@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stellarlist/core/domain/entities/task.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 import 'package:stellarlist/core/widgets/icon_button_widget.dart';
 import 'package:stellarlist/features/home/view/provider/home_provider/home_provider.dart';
@@ -10,14 +11,14 @@ import '../context_menu_region_widget.dart';
 class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
   final int index;
-  final int textFiledMaxLines;
+  final int? textFiledMaxLines;
   final bool mainTask;
 
   const TaskWidget({
     super.key,
     required this.task,
     required this.index,
-    this.textFiledMaxLines = 3,
+    this.textFiledMaxLines,
     this.mainTask = true,
   });
 
@@ -60,7 +61,7 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 5),
           // color: Colors.amber,
-          height: 50,
+          // height: 50,
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -96,15 +97,20 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                   width: 24.0,
                   child: Theme(
                     data: ThemeData(
-                      unselectedWidgetColor: Colors.red,
+                      unselectedWidgetColor: AppColors.mainAppColor,
                     ),
                     child: Checkbox(
-                      value: false,
+                      value: widget.task?.isDone ?? false,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6.0),
                       ),
                       side: const BorderSide(color: Colors.grey),
-                      onChanged: (bool? value) {},
+                      activeColor: AppColors.mainAppColor,
+                      onChanged: (bool? value) {
+                        ref.read(homeProviderProvider.notifier).completeTask(
+                              widget.task,
+                            );
+                      },
                     ),
                   ),
                 ),
@@ -112,26 +118,28 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                 Expanded(
                   child: Column(
                     children: [
-                      EditorHelper(
-                        title: widget.task?.title ?? '',
-                        fontWeight: FontWeight.w500,
-                        textFontSize: 16,
-                        onValueChanged: (String value) {
-                          // change the code in the future in it will be necessary
-                          ref.read(homeProviderProvider.notifier).changeTaskNameOfTaskList(
-                                widget.task,
-                                value,
-                              );
-                        },
-                        createOnEnter: (String value) {
-                          ref.read(homeProviderProvider.notifier).addTaskInsideTaskList(
-                                widget.task,
-                                value,
-                              );
-                        },
-                        textFiledMaxLines: widget.textFiledMaxLines,
+                      Expanded(
+                        child: EditorHelper(
+                          title: widget.task?.title ?? '',
+                          fontWeight: FontWeight.w500,
+                          textFontSize: 16,
+                          onValueChanged: (String value) {
+                            // change the code in the future in it will be necessary
+                            ref.read(homeProviderProvider.notifier).changeTaskNameOfTaskList(
+                                  widget.task,
+                                  value,
+                                );
+                          },
+                          createOnEnter: (String value) {
+                            ref.read(homeProviderProvider.notifier).addTaskInsideTaskList(
+                                  widget.task,
+                                  value,
+                                );
+                          },
+                          textFiledMaxLines: widget.textFiledMaxLines,
+                        ),
                       ),
-                      const SizedBox(height: 5),
+                      const SizedBox(height: 15),
                       Row(
                         children: [
                           IconButton(

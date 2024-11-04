@@ -63,7 +63,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                     width: 40.0,
                     child: Theme(
                       data: ThemeData(
-                        unselectedWidgetColor: Colors.red,
+                        unselectedWidgetColor: AppColors.mainAppColor,
                       ),
                       child: Transform.scale(
                         scale: 1.4,
@@ -218,7 +218,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                     key: ValueKey("${index}_${task?.id}"),
                     task: task,
                     index: index,
-                    textFiledMaxLines: 1,
+                    textFiledMaxLines: null,
                     mainTask: false,
                   );
                 },

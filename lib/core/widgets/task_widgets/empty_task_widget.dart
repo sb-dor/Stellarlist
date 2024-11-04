@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 import 'package:stellarlist/core/widgets/context_menu_region_widget.dart';
 import 'package:stellarlist/core/widgets/editor_helper.dart';
 
@@ -52,7 +53,7 @@ class _EmptyTaskWidgetState extends ConsumerState<EmptyTaskWidget> {
                 width: 24.0,
                 child: Theme(
                   data: ThemeData(
-                    unselectedWidgetColor: Colors.red,
+                    unselectedWidgetColor: AppColors.mainAppColor,
                   ),
                   child: Checkbox(
                     value: false,

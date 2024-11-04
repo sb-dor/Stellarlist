@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stellarlist/core/utils/app_colors.dart';
 
 class AsbSectionWidget extends StatefulWidget {
   final IconData icon;
@@ -45,7 +46,7 @@ class _AsbSectionWidgetState extends State<AsbSectionWidget> {
               const SizedBox(width: 25),
               Icon(
                 widget.icon,
-                color: Colors.red,
+                color: AppColors.mainAppColor,
                 size: 15,
               ),
               const SizedBox(width: 10),

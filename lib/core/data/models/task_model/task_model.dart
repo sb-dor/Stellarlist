@@ -31,20 +31,19 @@ class TaskModel extends Task with _$TaskModel {
     }
 
     return TaskModel(
-      id: json['id'] as String?,
-      title: json['title'] as String?,
-      section: json['section'] == null
-          ? null
-          : SectionModel.fromFirebaseJson(json['section'] as FirebaseMapObject),
-      assignee: json['assignee'] == null
-          ? null
-          : AssigneeModel.fromFirebaseJson(json['assignee'] as FirebaseMapObject),
-      label: json['label'] == null
-          ? null
-          : LabelModel.fromFirebaseJson(json['label'] as FirebaseMapObject),
-      subtasks: subtasks,
-      isDone: bool.tryParse("${json['is_done']}")
-    );
+        id: json['id'] as String?,
+        title: json['title'] as String?,
+        section: json['section'] == null
+            ? null
+            : SectionModel.fromFirebaseJson(json['section'] as FirebaseMapObject),
+        assignee: json['assignee'] == null
+            ? null
+            : AssigneeModel.fromFirebaseJson(json['assignee'] as FirebaseMapObject),
+        label: json['label'] == null
+            ? null
+            : LabelModel.fromFirebaseJson(json['label'] as FirebaseMapObject),
+        subtasks: subtasks,
+        isDone: bool.tryParse("${json['is_done']}"));
   }
 
   static TaskModel? fromEntity(Task? task) {
@@ -58,5 +57,9 @@ class TaskModel extends Task with _$TaskModel {
       subtasks: task.subtasks?.map((el) => TaskModel.fromEntity(el)!).toList(),
       isDone: task.isDone,
     );
+  }
+
+  static TaskModel? fromTaskModel(Task? task) {
+    if(task == null) return null;
   }
 }
