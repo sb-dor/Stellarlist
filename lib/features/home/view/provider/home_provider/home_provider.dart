@@ -204,6 +204,22 @@ class HomeProvider extends _$HomeProvider {
     });
   }
 
+  Favorite? findFavoriteBySubtask(Task? task) {
+    bool found(Task? mainTask, Task? targetTask) {
+      if (mainTask?.id == targetTask?.id) return true;
+
+      for (final subtask in mainTask?.subtasks ?? <Task>[]) {
+        if (found(subtask, targetTask)) return true;
+      }
+
+      return false;
+    }
+
+    return state.favorites?.firstWhereOrNull((favorite) {
+      return favorite.taskList?.tasks?.any((mainTask) => found(mainTask, task)) ?? false;
+    });
+  }
+
   TaskList? findTaskListByTask(Task? task) {
     return state.favorites?.firstWhereOrNull((favorite) {
       return favorite.taskList?.tasks?.any((taskInList) => taskInList.id == task?.id) ?? false;
@@ -212,58 +228,71 @@ class HomeProvider extends _$HomeProvider {
 
   // function that changes task title inside favorite's task list
   Future<void> changeTaskNameOfTaskList(Task? task, String? value) async {
-    var favorite = FavoriteModel.fromEntity(findFavoriteByTask(task));
+    var favorite = FavoriteModel.fromEntity(findFavoriteBySubtask(task));
+
+    debugPrint("favorite name is: ${favorite?.taskList?.title}");
 
     if (favorite == null) return;
 
     final clonedState = state.clone();
 
-    debugPrint("favorite name is: ${favorite.taskList?.title}");
+    var taskModel = TaskModel.fromEntity(task);
 
-    final taskModel = TaskModel.fromEntity(task);
+    taskModel = taskModel?.copyWith(title: value);
 
-    var listOfTasks = List<TaskModel>.from(
-      clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[],
+    _updateSelectedTask(
+      clonedState,
+      taskModel,
     );
 
-    final findTaskIndex = listOfTasks.indexWhere((taskInList) => taskInList.id == task?.id);
-
-    if (findTaskIndex != -1 && taskModel != null) {
-      // when you changed favorite data
-      listOfTasks[findTaskIndex] = taskModel.copyWith(title: value);
-
-      favorite = favorite.copyWith.taskList!(
-        tasks: listOfTasks,
-      );
-    }
-    // the list from selected tasks, not selected taskList's task
-    var listSelectedTasks = List<TaskModel>.from(
-      clonedState.selectedTaskList?.tasks ?? <TaskModel>[],
+    favorite = favorite.copyWith(
+      taskList: TaskListModel.fromEntity(clonedState.selectedTaskList?.taskList),
     );
 
-    final findTaskIndexSelectedTask = listSelectedTasks.indexWhere(
-      (taskInList) => taskInList.id == task?.id,
-    );
+    // TODO: you have to update favorite here
 
-    if (findTaskIndexSelectedTask != -1 && taskModel != null) {
-      listSelectedTasks[findTaskIndexSelectedTask] = taskModel.copyWith(title: value);
-    }
-
-    final taskListFromEntity = TaskListModel.fromEntity(
-      clonedState.selectedTaskList?.taskList,
-    );
-
-    // Update selectedTaskList in a new cloned state
-    final clonedSelectedTaskList = clonedState.selectedTaskList?.copyWith(
-      taskList: taskListFromEntity?.copyWith(tasks: listOfTasks),
-      tasks: listSelectedTasks,
-    );
-
-    // Set updated selectedTaskList with cloned task list and tasks
-    clonedState.selectedTaskList = SelectedTaskList(
-      taskList: clonedSelectedTaskList?.taskList,
-      tasks: clonedSelectedTaskList?.tasks,
-    );
+    // var listOfTasks = List<TaskModel>.from(
+    //   clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[],
+    // );
+    //
+    // final findTaskIndex = listOfTasks.indexWhere((taskInList) => taskInList.id == task?.id);
+    //
+    // if (findTaskIndex != -1 && taskModel != null) {
+    //   // when you changed favorite data
+    //   listOfTasks[findTaskIndex] = taskModel.copyWith(title: value);
+    //
+    //   favorite = favorite.copyWith.taskList!(
+    //     tasks: listOfTasks,
+    //   );
+    // }
+    // // the list from selected tasks, not selected taskList's task
+    // var listSelectedTasks = List<TaskModel>.from(
+    //   clonedState.selectedTaskList?.tasks ?? <TaskModel>[],
+    // );
+    //
+    // final findTaskIndexSelectedTask = listSelectedTasks.indexWhere(
+    //   (taskInList) => taskInList.id == task?.id,
+    // );
+    //
+    // if (findTaskIndexSelectedTask != -1 && taskModel != null) {
+    //   listSelectedTasks[findTaskIndexSelectedTask] = taskModel.copyWith(title: value);
+    // }
+    //
+    // final taskListFromEntity = TaskListModel.fromEntity(
+    //   clonedState.selectedTaskList?.taskList,
+    // );
+    //
+    // // Update selectedTaskList in a new cloned state
+    // final clonedSelectedTaskList = clonedState.selectedTaskList?.copyWith(
+    //   taskList: taskListFromEntity?.copyWith(tasks: listOfTasks),
+    //   tasks: listSelectedTasks,
+    // );
+    //
+    // // Set updated selectedTaskList with cloned task list and tasks
+    // clonedState.selectedTaskList = SelectedTaskList(
+    //   taskList: clonedSelectedTaskList?.taskList,
+    //   tasks: clonedSelectedTaskList?.tasks,
+    // );
 
     state = clonedState;
 
@@ -366,7 +395,7 @@ class HomeProvider extends _$HomeProvider {
 
   //
   void addTaskInsideSubTaskOfSpecificTask(Task? mainTask) {
-    final favorite = findFavoriteByTask(mainTask);
+    final favorite = findFavoriteBySubtask(mainTask);
 
     if (favorite == null) return;
 
@@ -382,36 +411,13 @@ class HomeProvider extends _$HomeProvider {
       subtasks: listSubtaskFromTask,
     );
 
-    final clonedTaskListTasks = List<Task>.from(
-      clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[],
-    );
-
-    // final clonedSelectedTasks = List<Task>.from(
-    //   clonedState.selectedTaskList?.tasks ?? <Task>[],
-    // );
-    //
-    final updatedTasks = _updateTaskInList(
-      List<Task>.from(clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[]),
+    _updateSelectedTask(
+      clonedState,
       taskModel,
     );
-
-    final updatedSelectedTasks = _updateTaskInList(
-      List<Task>.from(clonedState.selectedTaskList?.tasks ?? <Task>[]),
-      taskModel,
-    );
-
-    clonedState.selectedTaskList = clonedState.selectedTaskList?.copyWith(
-      taskList: TaskListModel.fromEntity(clonedState.selectedTaskList?.taskList)?.copyWith(
-        tasks: updatedTasks.map((e) => e!).toList(),
-      ),
-      tasks: updatedSelectedTasks.map((e) => e!).toList(),
-    );
-
-    for (final each in clonedState.selectedTaskList?.taskList?.tasks ?? <TaskModel>[]) {
-      debugPrint("length of tasks subtask length : ${each.subtasks?.length}");
-    }
 
     state = clonedState;
+
     //
     // for (final task in clonedSelectedTasks) {
     //   _recurseSearchInSideTaskList(
@@ -430,6 +436,30 @@ class HomeProvider extends _$HomeProvider {
     // );
     //
     // for (final each in clonedState.selectedTaskList?.tasks ?? <TaskModel>[]) {}
+  }
+
+  void _updateSelectedTask(
+    HomeStateModel clonedState,
+    TaskModel? taskModel,
+  ) {
+    final updatedTasks = _updateTaskInList(
+      List<Task>.from(clonedState.selectedTaskList?.taskList?.tasks ?? <Task>[]),
+      taskModel,
+    );
+
+    final updatedSelectedTasks = _updateTaskInList(
+      List<Task>.from(clonedState.selectedTaskList?.tasks ?? <Task>[]),
+      taskModel,
+    );
+
+    final selectedTask = clonedState.selectedTaskList?.copyWith(
+      taskList: TaskListModel.fromEntity(clonedState.selectedTaskList?.taskList)?.copyWith(
+        tasks: updatedTasks.map((e) => e!).toList(),
+      ),
+      tasks: updatedSelectedTasks.map((e) => e!).toList(),
+    );
+
+    clonedState.selectedTaskList = selectedTask;
   }
 
   List<TaskModel?> _updateTaskInList(List<Task> tasks, TaskModel? taskForChange) {

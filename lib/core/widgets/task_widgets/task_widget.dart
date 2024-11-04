@@ -11,12 +11,14 @@ class TaskWidget extends ConsumerStatefulWidget {
   final Task? task;
   final int index;
   final int textFiledMaxLines;
+  final bool mainTask;
 
   const TaskWidget({
     super.key,
     required this.task,
     required this.index,
     this.textFiledMaxLines = 3,
+    this.mainTask = true,
   });
 
   @override
@@ -177,6 +179,7 @@ class _TaskWidgetState extends ConsumerState<TaskWidget> {
                           onPressed: () {
                             ref.read(homeProviderProvider.notifier).addTaskForSelectedTaskList(
                                   widget.task,
+                                  mainTask: widget.mainTask,
                                 );
                           },
                           icon: const Icon(

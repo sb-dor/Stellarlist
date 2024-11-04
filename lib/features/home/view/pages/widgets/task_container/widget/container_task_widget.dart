@@ -219,6 +219,7 @@ class _ContainerTaskWidgetState extends ConsumerState<ContainerTaskWidget> {
                     task: task,
                     index: index,
                     textFiledMaxLines: 1,
+                    mainTask: false,
                   );
                 },
                 onReorder: (int oldIndex, int newIndex) {
