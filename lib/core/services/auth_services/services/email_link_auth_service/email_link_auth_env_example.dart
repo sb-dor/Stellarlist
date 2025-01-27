@@ -1,3 +1,3 @@
 abstract final class EmailLinkAuthEnvExample {
-  final String url = '';
+  static const String url = '';
 }
